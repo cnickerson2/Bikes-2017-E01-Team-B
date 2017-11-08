@@ -16,8 +16,8 @@ namespace BikesSystem.BLL
 
         public int CategoryID { get; set; }
 
-        [Required]
-        [StringLength(40)]
+        [Required(ErrorMessage = "The category must have a description.")]
+        [StringLength(40, ErrorMessage = "The category's description can not be any longer than 40 characters.")]
         public string Description { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

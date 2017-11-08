@@ -17,7 +17,9 @@ namespace BikesSystem.BLL
 
         public int CouponID { get; set; }
 
-        [Required]
+        // I'm not sure what this field is for.
+        // I need some context to know what the error messages should be.
+        [Required(ErrorMessage = "Required")]
         [StringLength(10)]
         public string CouponIDValue { get; set; }
 

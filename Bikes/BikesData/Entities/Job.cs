@@ -31,12 +31,12 @@ namespace BikesSystem.BLL
 
         public decimal ShopRate { get; set; }
 
-        [Required]
-        [StringLength(1)]
+        [Required(ErrorMessage = "The job must have a status code.")]
+        [StringLength(1, ErrorMessage = "The job status code must be a single character.")]
         public string StatusCode { get; set; }
 
-        [Required]
-        [StringLength(50)]
+        [Required(ErrorMessage = "The vehicle for the job must be identified.")]
+        [StringLength(50, ErrorMessage = "The job's identified vehicle must be described in less than 50 characters.")]
         public string VehicleIdentification { get; set; }
 
         public virtual Customer Customer { get; set; }
