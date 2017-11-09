@@ -50,9 +50,10 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a runat="server" href="~/">Home</a></li>
-                        <li><a runat="server" href="~/About">About</a></li>
-                        <li><a runat="server" href="~/Contact">Contact</a></li>
+                        <li><a runat="server" href="~/Jobing/Jobing.aspx">Jobing</a></li>
+                        <li><a runat="server" href="~/Purchasing/Purchasing.aspx">Purchasing</a></li>
+                        <li><a runat="server" href="~/Receiving/Receiving.aspx">Receiving</a></li>
+                        <li><a runat="server" href="~/Sales/Sales.aspx">Sales</a></li>
                     </ul>
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
@@ -70,7 +71,7 @@
                             </ul>
                         </LoggedInTemplate>
                     </asp:LoginView>
-                    <asp:Menu ID="navMenu" runat="server"
+                    <!--<asp:Menu ID="navMenu" runat="server"
                          BackColor="#000000" BorderColor="Red"
                          StaticMenuItemStyle-ForeColor="#999999"
                          StaticMenuItemStyle-Font-Size="Larger"
@@ -86,7 +87,7 @@
                             <asp:MenuItem Text="Receiving" NavigateUrl="~/Receiving/Receiving.aspx"></asp:MenuItem>
                             <asp:MenuItem Text="Sales" NavigateUrl="~/Sales/Sales.aspx"></asp:MenuItem>
                         </Items>
-                    </asp:Menu>
+                    </asp:Menu> commented out due to merging navigation menus for smoother styling. -->
                 </div>
             </div>
         </div>
