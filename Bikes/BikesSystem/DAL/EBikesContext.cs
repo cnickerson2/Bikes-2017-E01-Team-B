@@ -5,7 +5,7 @@ namespace BikesSystem.BLL
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class EBikesContext : DbContext
+    internal partial class EBikesContext : DbContext
     {
         public EBikesContext()
             : base("name=EBikesContext")
