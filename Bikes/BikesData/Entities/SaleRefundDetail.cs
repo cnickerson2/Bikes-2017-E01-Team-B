@@ -19,7 +19,7 @@ namespace BikesSystem.BLL
         [Column(TypeName = "money")]
         public decimal SellingPrice { get; set; }
 
-        [StringLength(150)]
+        [StringLength(150, ErrorMessage = "The sale refund must have a reason.")]
         public string Reason { get; set; }
 
         public virtual Part Part { get; set; }

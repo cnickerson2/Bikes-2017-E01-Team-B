@@ -26,7 +26,7 @@ namespace BikesSystem.BLL
         [Column(TypeName = "money")]
         public decimal PurchasePrice { get; set; }
 
-        [StringLength(50)]
+        [StringLength(50, ErrorMessage = "The purchase order's detail vendor part number can not be longer than 50 characters long.")]
         public string VendorPartNumber { get; set; }
 
         public virtual Part Part { get; set; }

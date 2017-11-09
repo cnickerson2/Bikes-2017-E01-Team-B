@@ -14,16 +14,16 @@ namespace BikesSystem.BLL
 
         public int? PurchaseOrderDetailID { get; set; }
 
-        [StringLength(50)]
+        [StringLength(50, ErrorMessage = "The return order's item description can not be longer than 50 characters.")]
         public string ItemDescription { get; set; }
 
         public int Quantity { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "The return order's reason can not be longer than 50 characters.")]
         [StringLength(50)]
         public string Reason { get; set; }
 
-        [StringLength(50)]
+        [StringLength(50, ErrorMessage = "The return order's vendor part number can not be longer than 50 characters.")]
         public string VendorPartNumber { get; set; }
 
         public virtual PurchaseOrderDetail PurchaseOrderDetail { get; set; }

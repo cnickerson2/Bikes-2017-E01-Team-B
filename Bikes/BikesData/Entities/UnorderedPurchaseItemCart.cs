@@ -14,11 +14,11 @@ namespace BikesSystem.BLL
 
         public int PurchaseOrderNumber { get; set; }
 
-        [StringLength(100)]
+        [StringLength(100, ErrorMessage = "The description for the item being purchased must be less than 100 characters.")]
         public string Description { get; set; }
 
-        [Required]
-        [StringLength(50)]
+        [Required(ErrorMessage = "The vendor part number for the item being purchased must be provided.")]
+        [StringLength(50, ErrorMessage = "The vendor part number for the item being purchased can not be longer than 50 characters.")]
         public string VendorPartNumber { get; set; }
 
         public int Quantity { get; set; }

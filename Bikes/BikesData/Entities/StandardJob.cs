@@ -16,8 +16,8 @@ namespace BikesSystem.BLL
 
         public int StandardJobID { get; set; }
 
-        [Required]
-        [StringLength(100)]
+        [Required(ErrorMessage = "The job must have a description.")]
+        [StringLength(100, ErrorMessage = "The job's description can not be longer than 100 characters.")]
         public string Description { get; set; }
 
         public decimal StandardHours { get; set; }

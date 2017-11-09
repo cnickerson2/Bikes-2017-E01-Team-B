@@ -17,7 +17,7 @@ namespace BikesSystem.BLL
 
         public int OnlineCustomerID { get; set; }
 
-        [StringLength(128)]
+        [StringLength(128, ErrorMessage = "The customer's online username can not be any longer than 128 characters.")]
         public string UserName { get; set; }
 
         public Guid? TrackingCookie { get; set; }

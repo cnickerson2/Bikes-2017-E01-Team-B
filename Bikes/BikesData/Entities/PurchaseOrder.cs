@@ -29,7 +29,7 @@ namespace BikesSystem.BLL
 
         public bool Closed { get; set; }
 
-        [StringLength(100)]
+        [StringLength(100, ErrorMessage = "The purchase order's note can not be longer than 100 characters.")]
         public string Notes { get; set; }
 
         public int EmployeeID { get; set; }

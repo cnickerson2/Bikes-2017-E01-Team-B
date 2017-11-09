@@ -16,8 +16,8 @@ namespace BikesSystem.BLL
 
         public int PositionID { get; set; }
 
-        [Required]
-        [StringLength(40)]
+        [Required(ErrorMessage = "The position must have a description.")]
+        [StringLength(40, ErrorMessage = "The position's description can not be any longer then 40 characters.")]
         public string Description { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
