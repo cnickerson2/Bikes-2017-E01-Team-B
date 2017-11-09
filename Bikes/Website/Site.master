@@ -54,6 +54,7 @@
                         <li><a runat="server" href="~/Purchasing/Purchasing.aspx">Purchasing</a></li>
                         <li><a runat="server" href="~/Receiving/Receiving.aspx">Receiving</a></li>
                         <li><a runat="server" href="~/Sales/Sales.aspx">Sales</a></li>
+                        <li><a runat="server" href="~/About">About</a></li>
                     </ul>
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
