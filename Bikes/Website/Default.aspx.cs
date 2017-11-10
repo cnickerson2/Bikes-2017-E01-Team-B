@@ -11,4 +11,15 @@ public partial class _Default : Page
     {
 
     }
+
+    protected void TaskList_Load(object sender, EventArgs e)
+    {
+        foreach(ListItem li in TaskList.Items)
+        {
+            if(li.Selected)
+            {
+                li.Attributes["style"] = "color:green";
+            }
+        }
+    }
 }
