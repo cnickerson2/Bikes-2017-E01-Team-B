@@ -37,8 +37,7 @@ namespace BikesSystem.BLL
         [RegularExpression("[ABCEGHJKLMNPRSTVXY][0-9][ABCEGHJKLMNPRSTVWXYZ][0-9][ABCEGHJKLMNPRSTVWXYZ][0-9]",
             ErrorMessage = "The customer's postal code must be valid (format: A0A0A0).")]
         public string PostalCode { get; set; }
-
-        // Can a contact number be separated by any other character other than a dot?
+        
         [RegularExpression("[0-9][0-9][0-9]\\.[0-9][0-9][0-9]\\.[0-9][0-9][0-9][0-9]",
             ErrorMessage = "The customer's phone number must be valid (format: 000.000.0000).")]
         public string ContactPhone { get; set; }

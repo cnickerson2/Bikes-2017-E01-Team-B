@@ -20,8 +20,7 @@ namespace BikesSystem.BLL
         [Required(ErrorMessage = "The vendor must have a name.")]
         [StringLength(100, ErrorMessage = "The vendor's name can not be longer than 100 characters.")]
         public string VendorName { get; set; }
-
-        // Same question as with the customer's contact number...
+        
         [Required(ErrorMessage = "The vendor must have a phone number.")]
         [RegularExpression("[0-9][0-9][0-9]\\.[0-9][0-9][0-9]\\.[0-9][0-9][0-9][0-9]",
             ErrorMessage = "The vendor's phone number must be valid (format: 000.000.0000).")]

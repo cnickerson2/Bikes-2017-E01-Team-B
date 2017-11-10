@@ -16,11 +16,9 @@ namespace BikesSystem.BLL
         }
 
         public int CouponID { get; set; }
-
-        // I'm not sure what this field is for.
-        // I need some context to know what the error messages should be.
-        [Required(ErrorMessage = "Required")]
-        [StringLength(10)]
+        
+        [Required(ErrorMessage = "The coupon id value is required.")]
+        [StringLength(10, ErrorMessage = "The coupon id value can not be longer than 10 characters.")]
         public string CouponIDValue { get; set; }
 
         public DateTime StartDate { get; set; }

@@ -23,9 +23,7 @@ namespace BikesSystem.BLL
         [RegularExpression("[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]",
             ErrorMessage = "The employee must provide a valid Social Insurance Number (format: 000000000).")]
         public string SocialInsuranceNumber { get; set; }
-
-        // What if the user has a name that is longer than 30 characters? Should I suggest truncating it?
-
+        
         [Required(ErrorMessage = "The employee must provide their last name.")]
         [StringLength(30, ErrorMessage = "The employee must have a last name less then 30 characters.")]
         public string LastName { get; set; }
@@ -47,8 +45,7 @@ namespace BikesSystem.BLL
         [RegularExpression("[ABCEGHJKLMNPRSTVXY][0-9][ABCEGHJKLMNPRSTVWXYZ][0-9][ABCEGHJKLMNPRSTVWXYZ][0-9]",
             ErrorMessage = "The employee's postal code must be valid (format: A0A0A0).")]
         public string PostalCode { get; set; }
-
-        // Same question as from the Customer ContactPhone...
+        
         [RegularExpression("[0-9][0-9][0-9]\\.[0-9][0-9][0-9]\\.[0-9][0-9][0-9][0-9]",
             ErrorMessage = "The customer's phone number must be valid (format: 000.000.0000).")]
         public string HomePhone { get; set; }
