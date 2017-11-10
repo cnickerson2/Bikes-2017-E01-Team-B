@@ -38,10 +38,9 @@ namespace BikesSystem.BLL
         public int QuantityOnOrder { get; set; }
 
         public int CategoryID { get; set; }
-
-        // Are only y, and n allowed? And is it always meant to be uppercase?
+        
         [Required(ErrorMessage = "The part must be either refundable or non-refundable (Y, or N).")]
-        [RegularExpression("[YNyn]", ErrorMessage = "The part must be labeled as refundable or non-refundable using a \"y\", or \"n\".")]
+        [RegularExpression("[YN]", ErrorMessage = "The part must be labeled as refundable or non-refundable using a \"y\", or \"n\".")]
         public string Refundable { get; set; }
 
         public bool Discontinued { get; set; }

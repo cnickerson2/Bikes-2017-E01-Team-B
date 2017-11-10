@@ -18,8 +18,7 @@ namespace BikesSystem.BLL
         public int SaleID { get; set; }
 
         public DateTime SaleDate { get; set; }
-
-        // Why does a sale have a username?
+        
         [StringLength(128, ErrorMessage = "The sale's username can not be longer than 128 characters.")]
         public string UserName { get; set; }
 
@@ -32,10 +31,9 @@ namespace BikesSystem.BLL
         public decimal SubTotal { get; set; }
 
         public int? CouponID { get; set; }
-
-        // Will the payment type always be a letter?
+        
         [Required(ErrorMessage = "The scale must have a payment type.")]
-        [RegularExpression("[a-zA-Z]", ErrorMessage = "The payment type must be a letter.")]
+        [RegularExpression("[A-Z]", ErrorMessage = "The payment type must be a letter.")]
         public string PaymentType { get; set; }
 
         public Guid? PaymentToken { get; set; }
