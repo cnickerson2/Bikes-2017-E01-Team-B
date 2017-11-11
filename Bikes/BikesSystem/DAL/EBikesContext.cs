@@ -8,7 +8,7 @@ namespace BikesSystem.BLL
     internal partial class EBikesContext : DbContext
     {
         public EBikesContext()
-            : base("name=EBikesContext")
+            : base("name=eBikesDB")
         {
         }
 
