@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\OutstandingPurchaseOrderDetails.cs" />
+    <Compile Include="POCOs\OutstandingPurchaseOrders.cs" />
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Coupon.cs" />
     <Compile Include="Entities\Customer.cs" />
@@ -74,12 +76,10 @@
     <Compile Include="Entities\StandardJobPart.cs" />
     <Compile Include="Entities\UnorderedPurchaseItemCart.cs" />
     <Compile Include="Entities\Vendor.cs" />
+    <Compile Include="POCOs\ReturnedOrderDetailsForOutstandingOrders.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DTOs\" />
-    <Folder Include="POCOs\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
