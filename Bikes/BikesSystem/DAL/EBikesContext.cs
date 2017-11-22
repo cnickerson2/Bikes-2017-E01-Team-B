@@ -1,10 +1,13 @@
-namespace BikesSystem.BLL
-{
-    using System;
-    using System.Data.Entity;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Linq;
 
+using System;
+using System.Data.Entity;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using BikesSystem.BLL;
+using BikesData.Entities;
+
+namespace BikesSystem.DAL
+{
     internal partial class EBikesContext : DbContext
     {
         public EBikesContext()

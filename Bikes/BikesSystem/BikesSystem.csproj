@@ -59,12 +59,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\PurchaseOrderController.cs" />
+    <Compile Include="BLL\PurchaseOrderDetailsController.cs" />
     <Compile Include="DAL\EBikesContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="BLL\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\BikesData\BikesData.csproj">
       <Project>{ef22a990-4666-4ef4-8ac4-024314e115ce}</Project>
