@@ -6,6 +6,7 @@
     using System.Data.Entity.Spatial;
 namespace BikesData.Entities
 {
+    [Table("PurchaseOrderDetails")]
     public partial class PurchaseOrderDetail
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]

@@ -6,6 +6,7 @@
     using System.Data.Entity.Spatial;
 namespace BikesData.Entities
 {
+    [Table("StandardJobParts")]
     public partial class StandardJobPart
     {
         public int StandardJobPartID { get; set; }
