@@ -11,4 +11,10 @@ public partial class Receiving_Receiving : System.Web.UI.Page
     {
 
     }
+
+    protected void ViewOrderTextLink_Click(object sender, CommandEventArgs e)
+    {
+        Label1.Text = e.CommandArgument.ToString();
+    }
+    
 }
