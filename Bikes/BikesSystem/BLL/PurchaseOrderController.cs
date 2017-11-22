@@ -16,11 +16,12 @@ namespace BikesSystem.BLL
     [DataObject]
     public class PurchaseOrderController
     {
-        [DataObjectMethod(DataObjectMethodType.Select,false)]
+        
         /// <summary>
         /// Get a list of Outstanding Orders
         /// </summary>
         /// <returns>Returns a list of orders that are NOT closed, have an order date and a Purchase Order Number</returns>
+        [DataObjectMethod(DataObjectMethodType.Select,false)]
         public List<OutstandingPurchaseOrders> PurchaseOrders_ListOutstandingOrders()
         {
             using (var context = new EBikesContext())
@@ -39,5 +40,6 @@ namespace BikesSystem.BLL
             }
 
         }
+        
     }
 }

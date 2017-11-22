@@ -10,7 +10,7 @@ namespace BikesData.DTOs
 {
     public class OutstandingPurchaseOrderDetails
     {
-        public int PurchaseOrderNumber { get; set; }
+        public int? PurchaseOrderNumber { get; set; }
         public string VendorName { get; set; }
         public string VendorContactPhone { get; set; }
         public int PurchaseOrderID { get; set; }
@@ -19,7 +19,7 @@ namespace BikesData.DTOs
         public int QuantityOnOrder { get; set; }
         public int QuantityOutstanding { get; set; }
         public IEnumerable<ReceiveOrderDetail> ReceiveOrderDetails { get; set; }
-        public IEnumerable<ReturnedOrderDetailsForOutstandingOrders> ReturnedOrderDetails { get; set; }
+        public IEnumerable<ReturnedOrderDetail> ReturnedOrderDetails { get; set; }
 
 
     }
