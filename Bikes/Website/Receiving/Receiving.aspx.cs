@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -9,12 +10,12 @@ public partial class Receiving_Receiving : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        
     }
 
-    protected void ViewOrderTextLink_Click(object sender, CommandEventArgs e)
+
+    protected void OutstandingOrderGridView_SelectedIndexChanged(object sender, EventArgs e)
     {
-        Label1.Text = e.CommandArgument.ToString();
+
     }
-    
 }
