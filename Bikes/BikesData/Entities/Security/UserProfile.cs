@@ -17,7 +17,7 @@ namespace BikesData.Entities.Security
         public string LastName { get; set; }
         public string Email { get; set; }
         public bool EmailConfirmation { get; set; }
-        public string RequestedPassord { get; set; }
+        public string RequestedPassword { get; set; }
         public IEnumerable<string> RoleMemberships { get; set; }
     }
 
