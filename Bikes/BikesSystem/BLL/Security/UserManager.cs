@@ -1,4 +1,5 @@
-﻿using BikesData.Entities.Security;
+﻿using BikesData.Entities;
+using BikesData.Entities.Security;
 using BikesData.POCOs;
 using BikesSystem.DAL;
 using BikesSystem.DAL.Security;
@@ -6,12 +7,14 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BikesSystem.BLL.Security
 {
+    [DataObject]
     public class UserManager : UserManager<ApplicationUser>
     {
         #region Constraints
@@ -102,5 +105,97 @@ namespace BikesSystem.BLL.Security
             }
             return verifiedUserName;
         }
+
+        #region UserRole Administration
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public List<UserProfile> ListAllUsers()
+        {
+            var rm = new RoleManager();
+            List<UserProfile> results = new List<UserProfile>();
+            var tempResults = from x in Users.ToList()
+                              select new UserProfile
+                              {
+                                  UserId = x.Id,
+                                  UserName = x.UserName,
+                                  Email = x.Email,
+                                  EmailConfirmation = x.EmailConfirmed,
+                                  EmployeeId = x.EmployeeID,
+                                  CustomerId = x.CustomerID,
+                                  RoleMemberships = x.Roles.Select(r => rm.FindById(r.RoleId).Name)
+
+                              };
+            using (var context = new EBikesContext())
+            {
+                Employee tempEmployee;
+
+                foreach(var person in tempResults)
+                {
+                    if(person.EmployeeId.HasValue)
+                    {
+                        tempEmployee = context.Employees.Find(person.EmployeeId);
+                        if(tempEmployee != null)
+                        {
+                            person.FirstName = tempEmployee.FirstName;
+                            person.LastName = tempEmployee.LastName;
+                        }
+                    }
+                    results.Add(person);
+                }
+            }
+            return results.ToList();
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Insert, false)]
+        public void AddUser(UserProfile userInfo)
+        {
+            if (string.IsNullOrEmpty(userInfo.EmployeeId.ToString()))
+            {
+                throw new Exception("Employee ID is missing. Remember, employees must be on file to get an account");
+            }
+            else
+            {
+                EmployeeController sysmgr = new EmployeeController();
+                Employee existing = sysmgr.Employee_Get(int.Parse(userInfo.EmployeeId.ToString()));
+                if(existing == null)
+                {
+                    throw new Exception("Employee must be on file to get an account.");
+
+                }
+                else
+                {
+                    var userAccount = new ApplicationUser()
+                    {
+                        EmployeeID = userInfo.EmployeeId,
+                        CustomerID = userInfo.CustomerId,
+                        UserName = userInfo.UserName,
+                        Email = userInfo.Email
+                    };
+                    IdentityResult result = this.Create(userAccount, string.IsNullOrEmpty(userInfo.RequestedPassword) ? STR_DEFAULT_PASSWORD : userInfo.RequestedPassword);
+                    if (!result.Succeeded)
+                    {
+                        userAccount.UserName = VerifyNewUserName(userInfo.UserName);
+                        this.Create(userAccount, STR_DEFAULT_PASSWORD);
+                    }
+                    foreach (var roleName in userInfo.RoleMemberships)
+                    {
+                        AddUserToRole(userAccount, roleName);
+                    }
+                }
+            }
+        }
+
+        public void AddUserToRole (ApplicationUser userAccount, string roleName)
+        {
+            this.AddToRole(userAccount.Id, roleName);
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Delete, false)]
+        public void RemoveUser (UserProfile userInfo)
+        {
+            this.Delete(this.FindById(userInfo.UserId));
+        }
+
+        #endregion
     }
 }
