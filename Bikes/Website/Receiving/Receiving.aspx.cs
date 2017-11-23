@@ -20,7 +20,7 @@ public partial class Receiving_Receiving : System.Web.UI.Page
 
         SelectedOrderFormView.Enabled = true;
         SelectedOrderFormView.Visible = true;
-        OutstandingDetailsListView.Enabled = true;
-        OutstandingDetailsListView.Visible = true;
+        OutstandingDetailsGridView.Enabled = true;
+        OutstandingDetailsGridView.Visible = true;
     }
 }

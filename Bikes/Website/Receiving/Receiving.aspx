@@ -10,19 +10,42 @@
     <div class="row" id="SelectedInfo">
         <div class="col-md-12">
             <div class="tab-content">
-                <asp:GridView ID="OutstandingOrderGridView" runat="server" DataSourceID="OutstandingOrderODS" AutoGenerateColumns="False" AllowPaging="True" OnSelectedIndexChanged="OutstandingOrderGridView_SelectedIndexChanged" DataKeyNames="PurchaseOrderID">
+                <asp:GridView ID="OutstandingOrderGridView" runat="server" DataSourceID="OutstandingOrderODS" AutoGenerateColumns="False" AllowPaging="True" OnSelectedIndexChanged="OutstandingOrderGridView_SelectedIndexChanged" DataKeyNames="PurchaseOrderID" CellPadding="4" GridLines="None" ForeColor="#333333">
+                    <AlternatingRowStyle BackColor="White" ForeColor="#284775"></AlternatingRowStyle>
                     <Columns>
                         <asp:BoundField DataField="PurchaseOrderNumber" HeaderText="Order" SortExpression="PurchaseOrderNumber" />
                         <asp:BoundField DataField="OrderDate" HeaderText="Order Date" SortExpression="OrderDate" DataFormatString="{0:MMM dd, yyyy}" />
                         <asp:BoundField DataField="VendorName" HeaderText="Vendor" SortExpression="VendorName" />
                         <asp:BoundField DataField="VendorContactPhone" HeaderText="Contact" SortExpression="VendorContactPhone" />
-                        <asp:CommandField ShowSelectButton="True" SelectText="View Order"  />
+                        <asp:CommandField ShowSelectButton="True" SelectText="View Order" ItemStyle-HorizontalAlign="Right" ItemStyle-Width="100px" />
                     </Columns>
+                    <EditRowStyle BackColor="#999999"></EditRowStyle>
                     <EmptyDataTemplate>
                         No Results Found
                     </EmptyDataTemplate>
+                    <FooterStyle BackColor="#5D7B9D" ForeColor="White" Font-Bold="True"></FooterStyle>
+
+                    <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White"></HeaderStyle>
+
+                    <PagerStyle HorizontalAlign="Center" BackColor="#284775" ForeColor="White"></PagerStyle>
+
+                    <RowStyle BackColor="#F7F6F3" ForeColor="#333333"></RowStyle>
+
+                    <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333"></SelectedRowStyle>
+
+                    <SortedAscendingCellStyle BackColor="#E9E7E2"></SortedAscendingCellStyle>
+
+                    <SortedAscendingHeaderStyle BackColor="#506C8C"></SortedAscendingHeaderStyle>
+
+                    <SortedDescendingCellStyle BackColor="#FFFDF8"></SortedDescendingCellStyle>
+
+                    <SortedDescendingHeaderStyle BackColor="#6F8DAE"></SortedDescendingHeaderStyle>
                 </asp:GridView>
+                <br />
                 <asp:FormView ID="SelectedOrderFormView" runat="server" DataSourceID="SelectedOrderODS" Enabled="False" Visible="False">
+                    <EmptyDataTemplate>
+                        No data was returned.
+                    </EmptyDataTemplate>
                     <ItemTemplate>
                         PO:
                         <asp:Label ID="PO" runat="server" Text='<%# Eval("PurchaseOrderNumber", "{0}") %>'></asp:Label>
@@ -30,124 +53,48 @@
                         &nbsp;&nbsp;&nbsp; Contact:<asp:Label ID="Contact" runat="server" Text='<%# Eval("VendorContactPhone") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:FormView>
-                <asp:ListView ID="OutstandingDetailsListView" runat="server" DataSourceID="SelectedOrderODS" Enabled="False" Visible="False">
-                    <AlternatingItemTemplate>
-                        <tr style="background-color:#FFF8DC;">
-                            <td>
-                                <asp:Label ID="PartIDLabel" runat="server" Text='<%# Eval("PartID") %>' />
-                            </td>
-                            <td>
-                                <asp:Label ID="PartDescriptionLabel" runat="server" Text='<%# Eval("PartDescription") %>' />
-                            </td>
-                            <td>
-                                <asp:Label ID="QuantityOnOrderLabel" runat="server" Text='<%# Eval("QuantityOnOrder") %>' />
-                            </td>
-                            <td>
-                                <asp:Label ID="QuantityOutstandingLabel" runat="server" Text='<%# Eval("QuantityOutstanding") %>' />
-                            </td>
-                        </tr>
-                    </AlternatingItemTemplate>
-                    <EditItemTemplate>
-                        <tr style="background-color:#008A8C;color: #FFFFFF;">
-                            <td>
-                                <asp:Button ID="UpdateButton" runat="server" CommandName="Update" Text="Update" />
-                                <asp:Button ID="CancelButton" runat="server" CommandName="Cancel" Text="Cancel" />
-                            </td>
-                            <td>
-                                <asp:TextBox ID="PartIDTextBox" runat="server" Text='<%# Bind("PartID") %>' />
-                            </td>
-                            <td>
-                                <asp:TextBox ID="PartDescriptionTextBox" runat="server" Text='<%# Bind("PartDescription") %>' />
-                            </td>
-                            <td>
-                                <asp:TextBox ID="QuantityOnOrderTextBox" runat="server" Text='<%# Bind("QuantityOnOrder") %>' />
-                            </td>
-                            <td>
-                                <asp:TextBox ID="QuantityOutstandingTextBox" runat="server" Text='<%# Bind("QuantityOutstanding") %>' />
-                            </td>
-                        </tr>
-                    </EditItemTemplate>
-                    <EmptyDataTemplate>
-                        <table runat="server" style="background-color: #FFFFFF;border-collapse: collapse;border-color: #999999;border-style:none;border-width:1px;">
-                            <tr>
-                                <td>No data was returned.</td>
-                            </tr>
-                        </table>
-                    </EmptyDataTemplate>
-                    <InsertItemTemplate>
-                        <tr style="">
-                            <td>
-                                <asp:TextBox ID="PurchaseOrderIDTextBox" runat="server" Text='<%# Bind("PurchaseOrderID") %>' />
-                            </td>
-                            <td>
-                                <asp:TextBox ID="PartIDTextBox" runat="server" Text='<%# Bind("PartID") %>' />
-                            </td>
-                            <td>
-                                <asp:TextBox ID="PartDescriptionTextBox" runat="server" Text='<%# Bind("PartDescription") %>' />
-                            </td>
-                            <td>
-                                <asp:TextBox ID="QuantityOnOrderTextBox" runat="server" Text='<%# Bind("QuantityOnOrder") %>' />
-                            </td>
-                            <td>
-                                <asp:TextBox ID="QuantityOutstandingTextBox" runat="server" Text='<%# Bind("QuantityOutstanding") %>' />
-                            </td>
-                        </tr>
-                    </InsertItemTemplate>
-                    <ItemTemplate>
-                        <tr style="background-color:#DCDCDC;color: #000000;">
-                            <td>
-                                <asp:Label ID="PartIDLabel" runat="server" Text='<%# Eval("PartID") %>' />
-                            </td>
-                            <td>
-                                <asp:Label ID="PartDescriptionLabel" runat="server" Text='<%# Eval("PartDescription") %>' />
-                            </td>
-                            <td>
-                                <asp:Label ID="QuantityOnOrderLabel" runat="server" Text='<%# Eval("QuantityOnOrder") %>' />
-                            </td>
-                            <td>
-                                <asp:Label ID="QuantityOutstandingLabel" runat="server" Text='<%# Eval("QuantityOutstanding") %>' />
-                            </td>
-                        </tr>
-                    </ItemTemplate>
-                    <LayoutTemplate>
-                        <table runat="server">
-                            <tr runat="server">
-                                <td runat="server">
-                                    <table id="itemPlaceholderContainer" runat="server" border="1" style="background-color: #FFFFFF;border-collapse: collapse;border-color: #999999;border-style:none;border-width:1px;font-family: Verdana, Arial, Helvetica, sans-serif;">
-                                        <tr runat="server" style="background-color:#DCDCDC;color: #000000;">
-                                            <th runat="server">Part#</th>
-                                            <th runat="server">Description</th>
-                                            <th runat="server">Ordered</th>
-                                            <th runat="server">Outstanding</th>
-                                        </tr>
-                                        <tr id="itemPlaceholder" runat="server">
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr runat="server">
-                                <td runat="server" style="text-align: center;background-color: #CCCCCC;font-family: Verdana, Arial, Helvetica, sans-serif;color: #000000;"></td>
-                            </tr>
-                        </table>
-                    </LayoutTemplate>
-                    <SelectedItemTemplate>
-                        <tr style="background-color:#008A8C;font-weight: bold;color: #FFFFFF;">
-                            <td>
-                                <asp:Label ID="PartIDLabel" runat="server" Text='<%# Eval("PartID") %>' />
-                            </td>
-                            <td>
-                                <asp:Label ID="PartDescriptionLabel" runat="server" Text='<%# Eval("PartDescription") %>' />
-                            </td>
-                            <td>
-                                <asp:Label ID="QuantityOnOrderLabel" runat="server" Text='<%# Eval("QuantityOnOrder") %>' />
-                            </td>
-                            <td>
-                                <asp:Label ID="QuantityOutstandingLabel" runat="server" Text='<%# Eval("QuantityOutstanding") %>' />
-                            </td>
-                        </tr>
-                    </SelectedItemTemplate>
+                <br />
+                <asp:GridView ID="OutstandingDetailsGridView" runat="server" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SelectedOrderODS" Enabled="False" ForeColor="#333333" GridLines="None" Visible="False">
+                    <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+                    <Columns>
+                        <asp:BoundField DataField="PartID" HeaderText="Part #" SortExpression="PartID" HeaderStyle-CssClass="text-center" />
+                        <asp:BoundField DataField="PartDescription" HeaderText="Description" SortExpression="PartDescription" HeaderStyle-CssClass="text-center" />
+                        <asp:BoundField DataField="QuantityOnOrder" HeaderText="Ordered" SortExpression="QuantityOnOrder" ItemStyle-HorizontalAlign="Right" HeaderStyle-CssClass="text-center" />
+                        <asp:BoundField DataField="QuantityOutstanding" HeaderText="Outstanding" SortExpression="QuantityOutstanding" ItemStyle-HorizontalAlign="Right" HeaderStyle-CssClass="text-center" />
+                        <asp:TemplateField HeaderText="Receiving" HeaderStyle-CssClass="text-center" ItemStyle-HorizontalAlign="Center">
+                            <ItemTemplate>
+                                <asp:TextBox ID="ReceivingTextBox" runat="server" Height="16px" TextMode="Number" ToolTip="Receiving #" Width="50px" min="0"></asp:TextBox>
+                            </ItemTemplate>
 
-                </asp:ListView>
+                            <HeaderStyle VerticalAlign="Middle"></HeaderStyle>
+
+                            <ItemStyle VerticalAlign="Middle" Width="100px" />
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Returning" HeaderStyle-CssClass="text-center" ItemStyle-HorizontalAlign="Center">
+                            <ItemTemplate>
+                                <asp:TextBox ID="ReturningTextBox" runat="server" Height="16px" TextMode="Number" ToolTip="Return #" Width="50px"></asp:TextBox>
+                            </ItemTemplate>
+                            <HeaderStyle HorizontalAlign="Center" />
+                            <ItemStyle Width="100px" />
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Reason">
+                            <ItemTemplate>
+                                <asp:TextBox ID="ReasonTextBox" runat="server" Height="16px" ToolTip="Reason for Returning" Width="100%"></asp:TextBox>
+                            </ItemTemplate>
+                            <ItemStyle Width="300px" />
+                        </asp:TemplateField>
+                    </Columns>
+                    <EditRowStyle BackColor="#999999" />
+                    <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                    <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                    <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                    <RowStyle BackColor="#F7F6F3" ForeColor="#333333" Width="100px" />
+                    <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+                    <SortedAscendingCellStyle BackColor="#E9E7E2" />
+                    <SortedAscendingHeaderStyle BackColor="#506C8C" />
+                    <SortedDescendingCellStyle BackColor="#FFFDF8" />
+                    <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+                </asp:GridView>
             </div>
         </div>
     </div>
