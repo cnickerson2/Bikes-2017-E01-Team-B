@@ -18,8 +18,6 @@ namespace BikesData.DTOs
         public string PartDescription { get; set; }
         public int QuantityOnOrder { get; set; }
         public int QuantityOutstanding { get; set; }
-        public IEnumerable<ReceiveOrderDetail> ReceiveOrderDetails { get; set; }
-        public IEnumerable<ReturnedOrderDetail> ReturnedOrderDetails { get; set; }
 
 
     }

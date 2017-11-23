@@ -22,12 +22,13 @@ namespace BikesSystem.BLL
         /// <param name="purchaseOrderID"></param>
         /// <returns></returns>
         [DataObjectMethod(DataObjectMethodType.Select, false)]
-        public OutstandingPurchaseOrderDetails PurchaseOrder_GetOutstandingOrder(int purchaseOrderID)
+        public List<OutstandingPurchaseOrderDetails> PurchaseOrderDetails_GetOutstandingOrdersByPurchaseOrder(int purchaseOrderID)
         {
             using (var context = new EBikesContext())
             {
                 var results = from x in context.PurchaseOrderDetails
                               where x.PurchaseOrderID.Equals(purchaseOrderID)
+                              orderby x.PartID
                               select new OutstandingPurchaseOrderDetails
                               {
                                   PurchaseOrderID = x.PurchaseOrderID,
@@ -37,11 +38,12 @@ namespace BikesSystem.BLL
                                   PartID = x.PartID,
                                   PartDescription = x.Part.Description,
                                   QuantityOnOrder = x.Quantity,
-                                  QuantityOutstanding = x.Quantity,
-                                  ReceiveOrderDetails = x.ReceiveOrderDetails,
-                                  ReturnedOrderDetails = x.ReturnedOrderDetails
+                                  //If there is some received already, remove that amount from the Ordered, else just show the ordered
+                                  QuantityOutstanding = x.ReceiveOrderDetails.Count.Equals(0) ? x.Quantity : x.Quantity - (from y in x.ReceiveOrderDetails
+                                                                                                                           where y.PurchaseOrderDetailID == x.PurchaseOrderDetailID
+                                                                                                                           select y.QuantityReceived).Sum()
                               };
-                return results.First();
+                return results.ToList();
             }
         }
     }
