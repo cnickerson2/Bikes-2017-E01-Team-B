@@ -97,6 +97,9 @@
                     <SortedDescendingCellStyle BackColor="#E5E5E5" />
                     <SortedDescendingHeaderStyle BackColor="#275353" />
                 </asp:GridView>
+                <br />
+                <asp:Button ID="Button1" runat="server" Text="Receive" /> &nbsp; &nbsp; &nbsp;
+                <asp:Button ID="Button2" runat="server" Text="Force Closer" />
             </div>
         </div>
     </div>
