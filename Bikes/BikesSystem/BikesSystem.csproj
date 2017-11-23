@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="BLL\PurchaseOrderController.cs" />
     <Compile Include="BLL\PurchaseOrderDetailsController.cs" />
+    <Compile Include="BLL\Security\RoleManager.cs" />
     <Compile Include="BLL\Security\UserManager.cs" />
     <Compile Include="DAL\EBikesContext.cs" />
     <Compile Include="DAL\Security\ApplicationDbContext.cs" />
