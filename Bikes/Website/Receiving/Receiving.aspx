@@ -1,6 +1,15 @@
 ﻿<%@ Page Title="Receiving" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Receiving.aspx.cs" Inherits="Receiving_Receiving" %>
 
+
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
+    <style>
+        .paddingCell
+        {
+            padding-right:10px;
+            padding-left:10px;
+        }
+    </style>
     <h1>Receiving</h1>
     <div class="row">
         <div class="col-md-12">
@@ -10,90 +19,83 @@
     <div class="row" id="SelectedInfo">
         <div class="col-md-12">
             <div class="tab-content">
-                <asp:GridView ID="OutstandingOrderGridView" runat="server" DataSourceID="OutstandingOrderODS" AutoGenerateColumns="False" AllowPaging="True" OnSelectedIndexChanged="OutstandingOrderGridView_SelectedIndexChanged" DataKeyNames="PurchaseOrderID" CellPadding="4" GridLines="None" ForeColor="#333333">
-                    <AlternatingRowStyle BackColor="White" ForeColor="#284775"></AlternatingRowStyle>
+                <asp:GridView ID="OutstandingOrderGridView" runat="server" DataSourceID="OutstandingOrderODS" AutoGenerateColumns="False" AllowPaging="True" OnSelectedIndexChanged="OutstandingOrderGridView_SelectedIndexChanged" DataKeyNames="PurchaseOrderID" CellPadding="4" BackColor="White" BorderColor="#336666" BorderStyle="Double" BorderWidth="3px" Width="75%">
                     <Columns>
-                        <asp:BoundField DataField="PurchaseOrderNumber" HeaderText="Order" SortExpression="PurchaseOrderNumber" />
-                        <asp:BoundField DataField="OrderDate" HeaderText="Order Date" SortExpression="OrderDate" DataFormatString="{0:MMM dd, yyyy}" />
-                        <asp:BoundField DataField="VendorName" HeaderText="Vendor" SortExpression="VendorName" />
-                        <asp:BoundField DataField="VendorContactPhone" HeaderText="Contact" SortExpression="VendorContactPhone" />
-                        <asp:CommandField ShowSelectButton="True" SelectText="View Order" ItemStyle-HorizontalAlign="Right" ItemStyle-Width="100px" />
+                        <asp:BoundField DataField="PurchaseOrderNumber" HeaderText="Order" ItemStyle-Width="50px" SortExpression="PurchaseOrderNumber" ItemStyle-HorizontalAlign="Right"  ItemStyle-CssClass="paddingCell" />
+                        <asp:BoundField DataField="OrderDate" HeaderText="Order Date" SortExpression="OrderDate" DataFormatString="{0:MMM dd, yyyy}" ItemStyle-CssClass="paddingCell" ItemStyle-Width="150px" />
+                        <asp:BoundField DataField="VendorName" HeaderText="Vendor" SortExpression="VendorName" ItemStyle-CssClass="paddingCell" />
+                        <asp:BoundField DataField="VendorContactPhone" HeaderText="Contact" SortExpression="VendorContactPhone" ItemStyle-CssClass="paddingCell" />
+                        <asp:CommandField ShowSelectButton="True" SelectText="View Order" ItemStyle-CssClass="paddingCell" ItemStyle-Width="100px">
+                        </asp:CommandField>
                     </Columns>
-                    <EditRowStyle BackColor="#999999"></EditRowStyle>
                     <EmptyDataTemplate>
                         No Results Found
                     </EmptyDataTemplate>
-                    <FooterStyle BackColor="#5D7B9D" ForeColor="White" Font-Bold="True"></FooterStyle>
+                    <FooterStyle BackColor="White" ForeColor="#333333"></FooterStyle>
 
-                    <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White"></HeaderStyle>
+                    <HeaderStyle BackColor="#336666" Font-Bold="True" ForeColor="White"></HeaderStyle>
 
-                    <PagerStyle HorizontalAlign="Center" BackColor="#284775" ForeColor="White"></PagerStyle>
+                    <PagerStyle HorizontalAlign="Center" BackColor="#336666" ForeColor="White"></PagerStyle>
 
-                    <RowStyle BackColor="#F7F6F3" ForeColor="#333333"></RowStyle>
+                    <RowStyle BackColor="White" ForeColor="#333333"></RowStyle>
 
-                    <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333"></SelectedRowStyle>
+                    <SelectedRowStyle BackColor="#339966" Font-Bold="True" ForeColor="White"></SelectedRowStyle>
 
-                    <SortedAscendingCellStyle BackColor="#E9E7E2"></SortedAscendingCellStyle>
+                    <SortedAscendingCellStyle BackColor="#F7F7F7"></SortedAscendingCellStyle>
 
-                    <SortedAscendingHeaderStyle BackColor="#506C8C"></SortedAscendingHeaderStyle>
+                    <SortedAscendingHeaderStyle BackColor="#487575"></SortedAscendingHeaderStyle>
 
-                    <SortedDescendingCellStyle BackColor="#FFFDF8"></SortedDescendingCellStyle>
+                    <SortedDescendingCellStyle BackColor="#E5E5E5"></SortedDescendingCellStyle>
 
-                    <SortedDescendingHeaderStyle BackColor="#6F8DAE"></SortedDescendingHeaderStyle>
+                    <SortedDescendingHeaderStyle BackColor="#275353"></SortedDescendingHeaderStyle>
                 </asp:GridView>
                 <br />
-                <asp:FormView ID="SelectedOrderFormView" runat="server" DataSourceID="SelectedOrderODS" Enabled="False" Visible="False">
+                <asp:FormView ID="SelectedOrderFormView" runat="server" DataSourceID="SelectedOrderODS" Enabled="False" Visible="False" Width="75%">
                     <EmptyDataTemplate>
                         No data was returned.
                     </EmptyDataTemplate>
                     <ItemTemplate>
-                        PO:
-                        <asp:Label ID="PO" runat="server" Text='<%# Eval("PurchaseOrderNumber", "{0}") %>'></asp:Label>
-                        &nbsp;&nbsp;&nbsp; Vendor:<asp:Label ID="Vendor" runat="server" Text='<%# Eval("VendorName", "{0}") %>'></asp:Label>
-                        &nbsp;&nbsp;&nbsp; Contact:<asp:Label ID="Contact" runat="server" Text='<%# Eval("VendorContactPhone") %>'></asp:Label>
+                        <b>PO:</b>&nbsp;<asp:Label ID="PO" runat="server" Text='<%# Eval("PurchaseOrderNumber", "{0}") %>'></asp:Label>
+                        &nbsp;&nbsp;&nbsp; <b>Vendor:</b>&nbsp;<asp:Label ID="Vendor" runat="server" Text='<%# Eval("VendorName", "{0}") %>'></asp:Label>
+                        &nbsp;&nbsp;&nbsp; <b>Contact:</b>&nbsp;<asp:Label ID="Contact" runat="server" Text='<%# Eval("VendorContactPhone") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:FormView>
                 <br />
-                <asp:GridView ID="OutstandingDetailsGridView" runat="server" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SelectedOrderODS" Enabled="False" ForeColor="#333333" GridLines="None" Visible="False">
-                    <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+                <asp:GridView ID="OutstandingDetailsGridView" runat="server" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SelectedOrderODS" Enabled="False" Visible="False" BackColor="White" BorderColor="#336666" BorderStyle="Double" BorderWidth="3px" Width="75%">
                     <Columns>
-                        <asp:BoundField DataField="PartID" HeaderText="Part #" SortExpression="PartID" HeaderStyle-CssClass="text-center" />
-                        <asp:BoundField DataField="PartDescription" HeaderText="Description" SortExpression="PartDescription" HeaderStyle-CssClass="text-center" />
-                        <asp:BoundField DataField="QuantityOnOrder" HeaderText="Ordered" SortExpression="QuantityOnOrder" ItemStyle-HorizontalAlign="Right" HeaderStyle-CssClass="text-center" />
-                        <asp:BoundField DataField="QuantityOutstanding" HeaderText="Outstanding" SortExpression="QuantityOutstanding" ItemStyle-HorizontalAlign="Right" HeaderStyle-CssClass="text-center" />
-                        <asp:TemplateField HeaderText="Receiving" HeaderStyle-CssClass="text-center" ItemStyle-HorizontalAlign="Center">
+                        <asp:BoundField DataField="PartID" HeaderText="Part #" ItemStyle-Width="50px" SortExpression="PartID" ItemStyle-HorizontalAlign="Right" HeaderStyle-CssClass="text-center" ItemStyle-CssClass="paddingCell">
+                        </asp:BoundField>
+                        <asp:BoundField DataField="PartDescription" HeaderText="Description" ItemStyle-Width="250px" SortExpression="PartDescription" HeaderStyle-CssClass="text-center" ItemStyle-CssClass="paddingCell">
+                        </asp:BoundField>
+                        <asp:BoundField DataField="QuantityOnOrder" HeaderText="Ordered" ItemStyle-Width="75px" SortExpression="QuantityOnOrder" ItemStyle-HorizontalAlign="Right" HeaderStyle-CssClass="text-center" ItemStyle-CssClass="paddingCell">
+                        </asp:BoundField>
+                        <asp:BoundField DataField="QuantityOutstanding" HeaderText="Outstanding" ItemStyle-Width="75px" SortExpression="QuantityOutstanding" ItemStyle-HorizontalAlign="Right" HeaderStyle-CssClass="text-center" ItemStyle-CssClass="paddingCell">
+                        </asp:BoundField>
+                        <asp:TemplateField HeaderText="Receiving" HeaderStyle-CssClass="text-center"  ItemStyle-Width="75px" ItemStyle-HorizontalAlign="Center" ItemStyle-CssClass="paddingCell">
                             <ItemTemplate>
                                 <asp:TextBox ID="ReceivingTextBox" runat="server" Height="16px" TextMode="Number" ToolTip="Receiving #" Width="50px" min="0"></asp:TextBox>
                             </ItemTemplate>
-
-                            <HeaderStyle VerticalAlign="Middle"></HeaderStyle>
-
-                            <ItemStyle VerticalAlign="Middle" Width="100px" />
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Returning" HeaderStyle-CssClass="text-center" ItemStyle-HorizontalAlign="Center">
+                        <asp:TemplateField HeaderText="Returning" HeaderStyle-CssClass="text-center" ItemStyle-HorizontalAlign="Center" ItemStyle-Width="75px" ItemStyle-CssClass="paddingCell">
                             <ItemTemplate>
                                 <asp:TextBox ID="ReturningTextBox" runat="server" Height="16px" TextMode="Number" ToolTip="Return #" Width="50px"></asp:TextBox>
                             </ItemTemplate>
-                            <HeaderStyle HorizontalAlign="Center" />
-                            <ItemStyle Width="100px" />
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Reason">
+                        <asp:TemplateField HeaderText="Reason" ItemStyle-CssClass="paddingCell" ItemStyle-Width="300px">
                             <ItemTemplate>
                                 <asp:TextBox ID="ReasonTextBox" runat="server" Height="16px" ToolTip="Reason for Returning" Width="100%"></asp:TextBox>
                             </ItemTemplate>
-                            <ItemStyle Width="300px" />
                         </asp:TemplateField>
                     </Columns>
-                    <EditRowStyle BackColor="#999999" />
-                    <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-                    <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-                    <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
-                    <RowStyle BackColor="#F7F6F3" ForeColor="#333333" Width="100px" />
-                    <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
-                    <SortedAscendingCellStyle BackColor="#E9E7E2" />
-                    <SortedAscendingHeaderStyle BackColor="#506C8C" />
-                    <SortedDescendingCellStyle BackColor="#FFFDF8" />
-                    <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+                    <FooterStyle BackColor="White" ForeColor="#333333" />
+                    <HeaderStyle BackColor="#336666" Font-Bold="True" ForeColor="White" />
+                    <PagerStyle BackColor="#336666" ForeColor="White" HorizontalAlign="Center" />
+                    <RowStyle BackColor="White" ForeColor="#333333" Width="100px" />
+                    <SelectedRowStyle BackColor="#339966" Font-Bold="True" ForeColor="White" />
+                    <SortedAscendingCellStyle BackColor="#F7F7F7" />
+                    <SortedAscendingHeaderStyle BackColor="#487575" />
+                    <SortedDescendingCellStyle BackColor="#E5E5E5" />
+                    <SortedDescendingHeaderStyle BackColor="#275353" />
                 </asp:GridView>
             </div>
         </div>
