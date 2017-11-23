@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using BikesData.Entities.Security;
+using BikesSystem.BLL.Security;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Linq;
 using System.Web.UI;

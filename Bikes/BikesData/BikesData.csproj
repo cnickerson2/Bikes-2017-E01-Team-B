@@ -38,6 +38,9 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\Website\Bin\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -50,6 +53,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTOs\OutstandingPurchaseOrderDetails.cs" />
+    <Compile Include="Entities\Security\ApplicationUser.cs" />
+    <Compile Include="Entities\Security\RoleProfile.cs" />
+    <Compile Include="Entities\Security\SecurityRoles.cs" />
+    <Compile Include="Entities\Security\UserProfile.cs" />
     <Compile Include="POCOs\OutstandingPurchaseOrders.cs" />
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Coupon.cs" />
