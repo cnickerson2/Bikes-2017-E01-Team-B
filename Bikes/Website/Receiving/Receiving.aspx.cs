@@ -16,6 +16,11 @@ public partial class Receiving_Receiving : System.Web.UI.Page
 
     protected void OutstandingOrderGridView_SelectedIndexChanged(object sender, EventArgs e)
     {
+        SelectedOrderODS.DataBind();
 
+        SelectedOrderFormView.Enabled = true;
+        SelectedOrderFormView.Visible = true;
+        OutstandingDetailsListView.Enabled = true;
+        OutstandingDetailsListView.Visible = true;
     }
 }
