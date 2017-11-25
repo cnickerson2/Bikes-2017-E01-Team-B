@@ -57,6 +57,7 @@
     <Compile Include="Entities\Security\RoleProfile.cs" />
     <Compile Include="Entities\Security\SecurityRoles.cs" />
     <Compile Include="Entities\Security\UserProfile.cs" />
+    <Compile Include="POCOs\CurrentJob.cs" />
     <Compile Include="POCOs\EmployeeListPOCO.cs" />
     <Compile Include="POCOs\OutstandingPurchaseOrders.cs" />
     <Compile Include="Entities\Category.cs" />
