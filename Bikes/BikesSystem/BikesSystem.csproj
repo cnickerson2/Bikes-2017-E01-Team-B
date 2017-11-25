@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="BLL\EmployeeController.cs" />
     <Compile Include="BLL\JobController.cs" />
+    <Compile Include="BLL\JobDetailsController.cs" />
     <Compile Include="BLL\PurchaseOrderController.cs" />
     <Compile Include="BLL\PurchaseOrderDetailsController.cs" />
     <Compile Include="BLL\Security\RoleManager.cs" />

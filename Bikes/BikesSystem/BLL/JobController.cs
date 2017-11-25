@@ -3,6 +3,7 @@ using BikesData.POCOs;
 using BikesSystem.DAL;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace BikesSystem.BLL
 {
     public class JobController
     {
+        [DataObjectMethod(DataObjectMethodType.Select,false)]
         public List<Job> Job_List()
         {
             using (var context = new EBikesContext())
@@ -19,6 +21,7 @@ namespace BikesSystem.BLL
             }
         }
 
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
         public List<CurrentJob> CurrentJob_List()
         {
             using (var context = new EBikesContext())
@@ -35,6 +38,17 @@ namespace BikesSystem.BLL
                                   Phone = x.Customer.ContactPhone
                               };
                 return results.ToList();
+            }
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public void Job_Add(Job item)
+        {
+            using (var context = new EBikesContext())
+            {
+                item = context.Jobs.Add(item);
+                context.SaveChanges();
+                //I don't think I need a return unless I need to return jobid to forward the user to the services page?
             }
         }
     }
