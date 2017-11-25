@@ -32,5 +32,26 @@ namespace BikesSystem.BLL
                 return results.ToList();
             }
         }
+
+        [DataObjectMethod(DataObjectMethodType.Insert, false)]
+        public void JobDetail_Add(JobDetail item)
+        {
+            using (var context = new EBikesContext())
+            {
+                item = context.JobDetails.Add(item);
+                context.SaveChanges();
+            }
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Delete, false)]
+        public int JobDetail_Delete(int jobdetailid)
+        {
+            using (var context = new EBikesContext())
+            {
+                var existingItem = context.JobDetails.Find(jobdetailid);
+                context.JobDetails.Remove(existingItem);
+                return context.SaveChanges();
+            }
+        }
     }
 }
