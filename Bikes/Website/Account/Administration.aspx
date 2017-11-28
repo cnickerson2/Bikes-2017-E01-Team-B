@@ -5,7 +5,8 @@
     <div class="row">
         <div class="col-md-9">
             <div class="container">
-                <asp:ListView ID="MembersList" runat="server"></asp:ListView>
+                <asp:ListView ID="MembersList" runat="server"
+                    DataSourceID="MembersODS"></asp:ListView>
             </div>
         </div>
         <div class="col-md-3">
@@ -14,6 +15,17 @@
         </div>
     </div>
     <h1 class="text-center">Roles</h1>
-    <asp:ListView ID="RolesList" runat="server"></asp:ListView>
+    <asp:ListView ID="RolesList" runat="server"
+        DataSourceID="RolesODS"></asp:ListView>
+
+    <asp:ObjectDataSource ID="MembersODS" runat="server"
+        OldValuesParameterFormatString="original_{0}"
+        SelectMethod="ListAllUsers"
+        TypeName="BikesSystem.BLL.Security.UserManager"></asp:ObjectDataSource>
+    <asp:ObjectDataSource ID="RolesODS" runat="server"
+        OldValuesParameterFormatString="original_{0}"
+        SelectMethod="ListAllRoles"
+        TypeName="BikesSystem.BLL.Security.RoleManager"></asp:ObjectDataSource>
+    <asp:ObjectDataSource ID="ContextODS" runat="server"></asp:ObjectDataSource>
 </asp:Content>
 
