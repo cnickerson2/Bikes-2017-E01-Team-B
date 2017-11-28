@@ -39,7 +39,18 @@ namespace BikesSystem.BLL
                 return results.ToList();
             }
 
+            
+
         }
-        
+        [DataObjectMethod(DataObjectMethodType.Update, false)]
+        public int PurchaseOrders_UpdateOrder(PurchaseOrder item)
+        {
+            using (var context = new EBikesContext())
+            {
+                context.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                return context.SaveChanges();
+            }
+                
+        }
     }
 }

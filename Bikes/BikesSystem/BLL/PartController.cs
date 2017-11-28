@@ -12,5 +12,14 @@ namespace BikesSystem.BLL
     [DataObject]
     public class PartController
     {
+        [DataObjectMethod(DataObjectMethodType.Update, false)]
+        public int Part_Update(Part item)
+        {
+            using (var context = new EBikesContext())
+            {
+                context.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                return context.SaveChanges();
+            }
+        }
     }
 }

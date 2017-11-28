@@ -46,5 +46,14 @@ namespace BikesSystem.BLL
         {
             return UnorderedCartItems_Delete(item.CartID);
         }
+
+        public void UnorderedCartItems_EmptyCart()
+        {
+            List<UnorderedPurchaseItemCart> theCart = UnorderedCartItems_List();
+            foreach(UnorderedPurchaseItemCart item in theCart)
+            {
+                UnorderedCartItems_Delete(item);
+            }
+        }
     }
 }

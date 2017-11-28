@@ -12,5 +12,14 @@ namespace BikesSystem.BLL
     [DataObject]
     public class ReceiveOrderDetailController
     {
+        [DataObjectMethod(DataObjectMethodType.Insert, false)]
+        public int ReceiveOrderDetail_ReceiveNewOrderItem(ReceiveOrderDetail newReceiveOrderDetail)
+        {
+            using (var context = new EBikesContext())
+            {
+                newReceiveOrderDetail = context.ReceiveOrderDetails.Add(newReceiveOrderDetail);
+                return context.SaveChanges();
+            }
+        }
     }
 }
