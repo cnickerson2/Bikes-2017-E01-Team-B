@@ -11,4 +11,12 @@ public partial class Account_Administration : System.Web.UI.Page
     {
 
     }
+
+    protected void SelectRadio_CheckedChanged(object sender, EventArgs e)
+    {
+        RadioButton radio = sender as RadioButton;
+        MembersList.SelectItem(int.Parse((radio.Parent.FindControl("RowIndex")
+            as HiddenField).Value));
+        radio.Checked = false;
+    }
 }

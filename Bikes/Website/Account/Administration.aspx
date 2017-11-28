@@ -38,10 +38,15 @@
                     <ItemTemplate>
                         <tr>
                             <td>
+                                <asp:HiddenField ID="RowIndex" Value="<%# Container.DataItemIndex %>" runat="server" />
                                 <asp:LinkButton ID="RemoveButton" runat="server" CommandName="Delete">
                                     <img src="../Content/Images/trashcanIcon.svg" alt="remove" width="16" height="16" />
                                     Remove</asp:LinkButton>
-                                <label><input id="SelectRadio" name="SelectRadio" type="radio" runat="server" /> Select</label>
+                                <asp:RadioButton ID="SelectRadio" runat="server"
+                                    AutoPostBack="True"
+                                    OnCheckedChanged="SelectRadio_CheckedChanged" />
+                                <asp:LinkButton ID="SelectButton" runat="server"
+                                    CommandName="Select">Select</asp:LinkButton>
                             </td>
                             <td>
                                 <asp:Label Text='<%# Eval("UserName") %>' runat="server" ID="UserNameLabel" />
@@ -55,10 +60,15 @@
                     <AlternatingItemTemplate>
                         <tr>
                             <td>
+                                <asp:HiddenField ID="RowIndex" Value="<%# Container.DataItemIndex %>" runat="server" />
                                 <asp:LinkButton ID="RemoveButton" runat="server" CommandName="Delete">
                                     <img src="../Content/Images/trashcanIcon.svg" alt="remove" width="16" height="16" />
                                     Remove</asp:LinkButton>
-                                <label><input id="SelectRadio" name="SelectRadio" type="radio" runat="server" /> Select</label>
+                                <asp:RadioButton ID="SelectRadio" runat="server"
+                                    AutoPostBack="True"
+                                    OnCheckedChanged="SelectRadio_CheckedChanged" />
+                                <asp:LinkButton ID="SelectButton" runat="server"
+                                    CommandName="Select">Select</asp:LinkButton>
                             </td>
                             <td>
                                 <asp:Label Text='<%# Eval("UserName") %>' runat="server" ID="UserNameLabel" />
@@ -75,7 +85,10 @@
                                 <asp:LinkButton ID="RemoveButton" runat="server" CommandName="Delete">
                                     <img src="../Content/Images/trashcanIcon.svg" alt="remove" width="16" height="16" />
                                     Remove</asp:LinkButton>
-                                <label><input id="SelectRadio" name="SelectRadio" type="radio" runat="server" /> Select</label>
+                                <asp:RadioButton ID="SelectRadio" runat="server"
+                                    Enabled="false" Checked="true" />
+                                <asp:LinkButton ID="SelectButton" runat="server"
+                                    Enabled="false">Select</asp:LinkButton>
                             </td>
                             <td>
                                 <asp:Label Text='<%# Eval("UserName") %>' runat="server" ID="UserNameLabel" />
