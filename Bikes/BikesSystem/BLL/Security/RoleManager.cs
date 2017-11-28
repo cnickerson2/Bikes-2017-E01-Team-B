@@ -65,7 +65,7 @@ namespace BikesSystem.BLL.Security
         }
 
         [DataObjectMethod(DataObjectMethodType.Delete, false)]
-        public void DeleteRole(RoleProfile role)
+        public void RemoveRole(RoleProfile role)
         {
             var existing = this.FindById(role.RoleId);
             if (existing.Users.Count == 0)
@@ -76,6 +76,11 @@ namespace BikesSystem.BLL.Security
             {
                 throw new Exception("Deletion failed. " + role.RoleName + " still has existing users. Please reassign them first.");
             }
+        }
+
+        public void ForceRemoveRole(RoleProfile role)
+        {
+            // Removes all users from the role and deletes the role.
         }
 
         #endregion
