@@ -31,6 +31,7 @@ namespace BikesSystem.BLL
                               orderby x.PartID
                               select new OutstandingPurchaseOrderDetails
                               {
+                                  PurchaseOrderDetailID = x.PurchaseOrderDetailID,
                                   PurchaseOrderID = x.PurchaseOrderID,
                                   PurchaseOrderNumber = x.PurchaseOrder.PurchaseOrderNumber,
                                   VendorContactPhone = x.PurchaseOrder.Vendor.Phone,

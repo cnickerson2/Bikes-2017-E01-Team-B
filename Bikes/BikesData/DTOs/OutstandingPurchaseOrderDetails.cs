@@ -10,6 +10,7 @@ namespace BikesData.DTOs
 {
     public class OutstandingPurchaseOrderDetails
     {
+        public int PurchaseOrderDetailID { get; set; }
         public int? PurchaseOrderNumber { get; set; }
         public string VendorName { get; set; }
         public string VendorContactPhone { get; set; }
