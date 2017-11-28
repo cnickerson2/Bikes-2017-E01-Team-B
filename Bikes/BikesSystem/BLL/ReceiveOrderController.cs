@@ -17,8 +17,13 @@ namespace BikesSystem.BLL
         {
             using (var context = new EBikesContext())
             {
-                newReceiveOrder = context.ReceiveOrders.Add(newReceiveOrder);
-                return context.SaveChanges();
+                ReceiveOrder newOne = context.ReceiveOrders.Add(newReceiveOrder);
+
+                context.SaveChanges();
+
+                int id = newOne.ReceiveOrderID;
+                return id;
+                
             }
         }
     }

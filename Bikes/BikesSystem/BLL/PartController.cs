@@ -21,5 +21,14 @@ namespace BikesSystem.BLL
                 return context.SaveChanges();
             }
         }
+
+        [DataObjectMethod(DataObjectMethodType.Select,false)]
+        public Part Part_Get (int partID)
+        {
+            using (var context = new EBikesContext())
+            {
+                return context.Parts.Find(partID);
+            }
+        }
     }
 }

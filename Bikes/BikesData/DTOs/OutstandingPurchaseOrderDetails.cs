@@ -19,6 +19,11 @@ namespace BikesData.DTOs
         public string PartDescription { get; set; }
         public int QuantityOnOrder { get; set; }
         public int QuantityOutstanding { get; set; }
+        public string VendorPartNumber { get; set; }
+
+        public int ReceivingAmount { get; set; }
+        public int ReturningAmount { get; set; }
+        public string ReturningReason { get; set; }
 
 
     }

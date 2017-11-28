@@ -42,10 +42,15 @@ namespace BikesSystem.BLL
                                   //If there is some received already, remove that amount from the Ordered, else just show the ordered
                                   QuantityOutstanding = x.ReceiveOrderDetails.Count.Equals(0) ? x.Quantity : x.Quantity - (from y in x.ReceiveOrderDetails
                                                                                                                            where y.PurchaseOrderDetailID == x.PurchaseOrderDetailID
-                                                                                                                           select y.QuantityReceived).Sum()
+                                                                                                                           select y.QuantityReceived).Sum(),
+                                  ReceivingAmount = 0,
+                                  ReturningAmount = 0,
+                                  ReturningReason = ""
                               };
                 return results.ToList();
             }
         }
+
+     
     }
 }

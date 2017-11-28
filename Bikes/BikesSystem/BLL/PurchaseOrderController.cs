@@ -9,6 +9,7 @@ using System.ComponentModel;
 using BikesSystem.DAL;
 using BikesData.Entities;
 using BikesData.POCOs;
+using BikesData.DTOs;
 #endregion
 
 namespace BikesSystem.BLL
@@ -42,15 +43,19 @@ namespace BikesSystem.BLL
             
 
         }
-        [DataObjectMethod(DataObjectMethodType.Update, false)]
-        public int PurchaseOrders_UpdateOrder(PurchaseOrder item)
+
+        [DataObjectMethod(DataObjectMethodType.Update,false)]
+        public int PurchaseOrder_CloseOrder(int purchaseOrderID)
         {
             using (var context = new EBikesContext())
             {
-                context.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                PurchaseOrder closingPurchaseOrder = context.PurchaseOrders.Find(purchaseOrderID);
+
+                closingPurchaseOrder.Closed = true;
+
+                context.Entry(closingPurchaseOrder).State = System.Data.Entity.EntityState.Modified;
                 return context.SaveChanges();
             }
-                
         }
     }
 }
