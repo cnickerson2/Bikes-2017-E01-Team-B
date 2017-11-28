@@ -9,7 +9,6 @@ namespace BikesData.Entities.Security
 
     public class UserProfile
     {
-        public const string NAME_DELIMITER = ", ";
         public string UserId { get; set; }
         public string UserName { get; set; }
         public int? EmployeeId { get; set; }
@@ -25,7 +24,7 @@ namespace BikesData.Entities.Security
             get
             {
                 return string.IsNullOrEmpty(FirstName) || string.IsNullOrEmpty(LastName) ? null :
-                    string.Concat(LastName, NAME_DELIMITER, FirstName);
+                    string.Concat(LastName, ", ", FirstName);
             }
         }
     }
