@@ -63,8 +63,12 @@
     <Compile Include="BLL\JobController.cs" />
     <Compile Include="BLL\JobDetailPartController.cs" />
     <Compile Include="BLL\JobDetailsController.cs" />
+    <Compile Include="BLL\PartController.cs" />
     <Compile Include="BLL\PurchaseOrderController.cs" />
     <Compile Include="BLL\PurchaseOrderDetailsController.cs" />
+    <Compile Include="BLL\ReceiveOrderController.cs" />
+    <Compile Include="BLL\ReceiveOrderDetailController.cs" />
+    <Compile Include="BLL\ReturnOrderDetailController.cs" />
     <Compile Include="BLL\Security\RoleManager.cs" />
     <Compile Include="BLL\Security\UserManager.cs" />
     <Compile Include="BLL\StandardJobController.cs" />
