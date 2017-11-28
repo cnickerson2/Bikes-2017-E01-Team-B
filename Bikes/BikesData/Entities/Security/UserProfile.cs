@@ -19,6 +19,13 @@ namespace BikesData.Entities.Security
         public bool EmailConfirmation { get; set; }
         public string RequestedPassword { get; set; }
         public IEnumerable<string> RoleMemberships { get; set; }
+        public string FormalName
+        {
+            get
+            {
+                return string.Concat(LastName, ", ", FirstName);
+            }
+        }
     }
 
 }
