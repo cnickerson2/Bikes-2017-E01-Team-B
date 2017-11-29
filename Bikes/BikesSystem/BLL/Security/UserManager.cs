@@ -8,9 +8,12 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace BikesSystem.BLL.Security
 {
@@ -144,6 +147,21 @@ namespace BikesSystem.BLL.Security
                 }
             }
             return results.ToList();
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public Dictionary<string, string> GetMemberTypes()
+        {
+            Dictionary<string, string> types = new Dictionary<string, string>();
+            foreach (PropertyInfo info in typeof(ApplicationUser).GetProperties(
+                BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance))
+            {
+                if (info.Name.EndsWith("id", true, CultureInfo.InvariantCulture))
+                {
+                    types.Add(info.Name, info.GetCustomAttribute<DisplayAttribute>().Name);
+                }
+            }
+            return types;
         }
 
         [DataObjectMethod(DataObjectMethodType.Insert, false)]

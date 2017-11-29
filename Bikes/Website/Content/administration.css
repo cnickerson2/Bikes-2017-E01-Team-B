@@ -2,6 +2,10 @@
     margin-top: 63px;
 }
 
+table#MembersListTable .right-separator {
+    margin-right: 4em;
+}
+
 table#MembersListTable * td {
     padding: 3px;
 }

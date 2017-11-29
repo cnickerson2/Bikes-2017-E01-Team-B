@@ -54,7 +54,7 @@
                             <td>
                                 <asp:HiddenField ID="RowIndex" Value="<%# Container.DataItemIndex %>" runat="server" />
                                 <asp:LinkButton ID="RemoveButton" runat="server" CommandName="Delete"
-                                    CssClass="btn btn-primary">
+                                    CssClass="btn btn-primary right-separator">
                                     <img src="../Content/Images/trashcanIcon.svg" alt="remove" width="16" height="16" />
                                     Remove</asp:LinkButton>
                                 <asp:RadioButton ID="SelectRadio" runat="server"
@@ -77,7 +77,7 @@
                             <td>
                                 <asp:HiddenField ID="RowIndex" Value="<%# Container.DataItemIndex %>" runat="server" />
                                 <asp:LinkButton ID="RemoveButton" runat="server" CommandName="Delete"
-                                    CssClass="btn btn-primary">
+                                    CssClass="btn btn-primary right-separator">
                                     <img src="../Content/Images/trashcanIcon.svg" alt="remove" width="16" height="16" />
                                     Remove</asp:LinkButton>
                                 <asp:RadioButton ID="SelectRadio" runat="server"
@@ -99,7 +99,7 @@
                         <tr>
                             <td>
                                 <asp:LinkButton ID="RemoveButton" runat="server" CommandName="Delete"
-                                    CssClass="btn btn-primary">
+                                    CssClass="btn btn-primary right-separator">
                                     <img src="../Content/Images/trashcanIcon.svg" alt="remove" width="16" height="16" />
                                     Remove</asp:LinkButton>
                                 <asp:RadioButton ID="SelectRadio" runat="server"
@@ -120,7 +120,7 @@
                         <tr>
                             <td>
                                 <asp:LinkButton ID="InsertButton" runat="server" CommandName="Insert"
-                                    CssClass="btn btn-primary">
+                                    CssClass="btn btn-primary right-separator">
                                     <img src="../Content/Images/pageIcon.svg" alt="remove" width="16" height="16" />
                                     Insert</asp:LinkButton>
                                 <asp:LinkButton ID="CancelButton" runat="server" CommandName="Cancel"
@@ -156,7 +156,10 @@
                                 </div>
                                 <div class="col extending">
                                     <asp:DropDownList ID="MemberTypesDropDown" runat="server"
-                                        CssClass="bottom-padded"></asp:DropDownList><br />
+                                        DataSourceID="MemberTypesDropDownODS"
+                                        DataTextField="Value" DataValueField="Key"
+                                        CssClass="bottom-padded">
+                                    </asp:DropDownList><br />
                                     <asp:TextBox type="number"
                                         ID="TypeIdTextBox" runat="server"
                                         Placeholder="Employee ID"></asp:TextBox>
@@ -290,6 +293,10 @@
     <asp:ObjectDataSource ID="MembersODS" runat="server"
         OldValuesParameterFormatString="original_{0}"
         SelectMethod="ListAllUsers"
+        TypeName="BikesSystem.BLL.Security.UserManager"></asp:ObjectDataSource>
+    <asp:ObjectDataSource ID="MemberTypesDropDownODS" runat="server"
+        OldValuesParameterFormatString="original_{0}"
+        SelectMethod="GetMemberTypes"
         TypeName="BikesSystem.BLL.Security.UserManager"></asp:ObjectDataSource>
     <asp:ObjectDataSource ID="RolesODS" runat="server"
         OldValuesParameterFormatString="original_{0}"
