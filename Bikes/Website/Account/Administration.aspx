@@ -15,6 +15,7 @@
                 <asp:ListView ID="MembersList" runat="server"
                     DataSourceID="MembersODS"
                     OnSelectedIndexChanged="MembersList_SelectedIndexChanged"
+                    OnItemCanceling="MembersList_ItemCanceling"
                     InsertItemPosition="LastItem">
                     <LayoutTemplate>
                         <table runat="server"
@@ -356,7 +357,10 @@
     <asp:ObjectDataSource ID="MembersODS" runat="server"
         OldValuesParameterFormatString="original_{0}"
         SelectMethod="ListAllUsers"
-        TypeName="BikesSystem.BLL.Security.UserManager"></asp:ObjectDataSource>
+        TypeName="BikesSystem.BLL.Security.UserManager"
+        DataObjectTypeName="BikesData.Entities.Security.UserProfile"
+        DeleteMethod="ForceRemoveUser"
+        InsertMethod="AddUser"></asp:ObjectDataSource>
     <asp:ObjectDataSource ID="MemberTypesDropDownODS" runat="server"
         OldValuesParameterFormatString="original_{0}"
         SelectMethod="GetMemberTypes"

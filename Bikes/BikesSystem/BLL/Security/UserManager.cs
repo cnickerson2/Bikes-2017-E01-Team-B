@@ -239,11 +239,16 @@ namespace BikesSystem.BLL.Security
         {
             this.AddToRole(userAccount.Id, roleName);
         }
-
-        [DataObjectMethod(DataObjectMethodType.Delete, false)]
+        
         public void RemoveUser (UserProfile userInfo)
         {
             this.Delete(this.FindById(userInfo.UserId));
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Delete, false)]
+        public void ForceRemoveUser(UserProfile userInfo)
+        {
+            // TODO: Remove the user from all roles and delete the user.
         }
 
         #endregion
