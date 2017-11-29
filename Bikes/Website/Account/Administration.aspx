@@ -155,7 +155,10 @@
                                         Display="None"></asp:RegularExpressionValidator>
                                 </div>
                                 <div class="col extending">
+                                    <asp:Label ID="Label1" runat="server" Text="Member Type:"
+                                        AssociatedControlId="MemberTypesDropDown"></asp:Label><br />
                                     <asp:DropDownList ID="MemberTypesDropDown" runat="server"
+                                        AutoPostBack="True"
                                         DataSourceID="MemberTypesDropDownODS"
                                         DataTextField="Value" DataValueField="Key"
                                         CssClass="bottom-padded">
@@ -184,7 +187,46 @@
         </div>
         <div class="col-md-3">
             <h2>Context Selection</h2>
-            <%--<asp:ListView ID="ContextList" runat="server"></asp:ListView>--%>
+            <p class="alert alert-info">
+                When you select a member type
+                to insert, all registered
+                users of that type will appear
+                below. Selecting a user will
+                add their ID to the new member.
+            </p>
+            <asp:ListView ID="ContextList" runat="server"
+                DataSourceID="ContextListODS">
+                <LayoutTemplate>
+                    <div runat="server" id="itemPlaceholderContainer"><span runat="server" id="itemPlaceholder" /></div>
+                    <div>
+                        <asp:DataPager runat="server" ID="DataPager2">
+                            <Fields>
+                                <asp:NextPreviousPagerField ButtonType="Button" ShowFirstPageButton="True" ShowLastPageButton="True"></asp:NextPreviousPagerField>
+                            </Fields>
+                        </asp:DataPager>
+                    </div>
+                </LayoutTemplate>
+                <ItemTemplate>
+                    <asp:LinkButton Text='<%# Eval("Value") %>' runat="server" ID="ValueLabel"
+                        CommandName="Select" CommandArgument='<%# Eval("Key") %>'
+                        CausesValidation="False" /><br />
+                    <br />
+                </ItemTemplate>
+                <AlternatingItemTemplate>
+                    <asp:LinkButton Text='<%# Eval("Value") %>' runat="server" ID="ValueLabel"
+                        CommandName="Select" CommandArgument='<%# Eval("Key") %>'
+                        CausesValidation="False" /><br />
+                    <br />
+                </AlternatingItemTemplate>
+                <SelectedItemTemplate>
+                    <asp:LinkButton Text='<%# Eval("Value") %>' runat="server" ID="ValueLabel"
+                        CausesValidation="False" Enabled="false" /><br />
+                    <br />
+                </SelectedItemTemplate>
+                <EmptyDataTemplate>
+                    <span>There are no users of this type.</span>
+                </EmptyDataTemplate>
+            </asp:ListView>
         </div>
     </div>
 
@@ -298,10 +340,19 @@
         OldValuesParameterFormatString="original_{0}"
         SelectMethod="GetMemberTypes"
         TypeName="BikesSystem.BLL.Security.UserManager"></asp:ObjectDataSource>
+    <asp:ObjectDataSource ID="ContextListODS" runat="server"
+        OldValuesParameterFormatString="original_{0}"
+        SelectMethod="GetPeopleByType"
+        TypeName="BikesSystem.BLL.Security.UserManager">
+        <SelectParameters>
+            <asp:ControlParameter ControlID="ctl00$MainContent$MembersList$ctrl10$MemberTypesDropDown"
+                PropertyName="SelectedValue" DefaultValue=" "
+                Name="userType" Type="String"></asp:ControlParameter>
+        </SelectParameters>
+    </asp:ObjectDataSource>
     <asp:ObjectDataSource ID="RolesODS" runat="server"
         OldValuesParameterFormatString="original_{0}"
         SelectMethod="ListAllRoles"
         TypeName="BikesSystem.BLL.Security.RoleManager"></asp:ObjectDataSource>
-    <asp:ObjectDataSource ID="ContextODS" runat="server"></asp:ObjectDataSource>
 </asp:Content>
 

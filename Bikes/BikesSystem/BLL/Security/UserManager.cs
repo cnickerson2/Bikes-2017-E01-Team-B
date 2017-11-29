@@ -164,6 +164,38 @@ namespace BikesSystem.BLL.Security
             return types;
         }
 
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public Dictionary<int, string> GetPeopleByType(string userType)
+        {
+            Dictionary<int, string> people = null;
+            using (EBikesContext context = new EBikesContext())
+            {
+                switch (userType)
+                {
+                    case "EmployeeID":
+                        people = context.Employees.ToDictionary(
+                            (employee) => employee.EmployeeID,
+                            (employee) => employee.FormalName);
+                        break;
+                    case "CustomerID":
+                        people = context.Customers.ToDictionary(
+                            (customer) => customer.CustomerID,
+                            (customer) => customer.FormalName);
+                        break;
+                    case "OnlineCustomerID":
+                        people = context.OnlineCustomers.ToDictionary(
+                            (customer) => customer.OnlineCustomerID,
+                            (customer) => customer.UserName);
+                        break;
+                }
+            }
+            if (people == null)
+            {
+                people = new Dictionary<int, string>();
+            }
+            return people;
+        }
+
         [DataObjectMethod(DataObjectMethodType.Insert, false)]
         public void AddUser(UserProfile userInfo)
         {

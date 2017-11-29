@@ -48,5 +48,15 @@ namespace BikesData.Entities
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Job> Jobs { get; set; }
+
+        [NotMapped]
+        public string FormalName
+        {
+            get
+            {
+                return string.IsNullOrEmpty(FirstName) || string.IsNullOrEmpty(LastName) ? null :
+                    string.Concat(LastName, ", ", FirstName);
+            }
+        }
     }
 }
