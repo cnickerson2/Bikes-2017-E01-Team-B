@@ -14,6 +14,12 @@ table#MembersListTable .extending * {
     width: 100%;
 }
 
-table#MembersListTable .bottom-padded {
+table#MembersListTable .bottom-padded,
+div.contextList .bottom-padded {
     margin: 1.5px;
+}
+
+div.contextList .user-button {
+    width: 100%;
+    text-align: left;
 }

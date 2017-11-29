@@ -195,13 +195,17 @@
                 add their ID to the new member.
             </p>
             <asp:ListView ID="ContextList" runat="server"
-                DataSourceID="ContextListODS">
+                DataSourceID="ContextListODS"
+                OnItemCommand="ContextList_ItemCommand">
                 <LayoutTemplate>
-                    <div runat="server" id="itemPlaceholderContainer"><span runat="server" id="itemPlaceholder" /></div>
+                    <div runat="server" id="itemPlaceholderContainer" class="contextList"><span runat="server" id="itemPlaceholder" /></div>
                     <div>
                         <asp:DataPager runat="server" ID="DataPager2">
                             <Fields>
-                                <asp:NextPreviousPagerField ButtonType="Button" ShowFirstPageButton="True" ShowLastPageButton="True"></asp:NextPreviousPagerField>
+                                <asp:NextPreviousPagerField ButtonType="Button"
+                                    ShowFirstPageButton="True"
+                                    ShowLastPageButton="True"
+                                    ButtonCssClass="btn"></asp:NextPreviousPagerField>
                             </Fields>
                         </asp:DataPager>
                     </div>
@@ -209,18 +213,21 @@
                 <ItemTemplate>
                     <asp:LinkButton Text='<%# Eval("Value") %>' runat="server" ID="ValueLabel"
                         CommandName="Select" CommandArgument='<%# Eval("Key") %>'
-                        CausesValidation="False" /><br />
+                        CausesValidation="False"
+                        CssClass="btn btn-primary bottom-padded user-button" />
                     <br />
                 </ItemTemplate>
                 <AlternatingItemTemplate>
                     <asp:LinkButton Text='<%# Eval("Value") %>' runat="server" ID="ValueLabel"
                         CommandName="Select" CommandArgument='<%# Eval("Key") %>'
-                        CausesValidation="False" /><br />
+                        CausesValidation="False"
+                        CssClass="btn btn-primary bottom-padded user-button" />
                     <br />
                 </AlternatingItemTemplate>
                 <SelectedItemTemplate>
                     <asp:LinkButton Text='<%# Eval("Value") %>' runat="server" ID="ValueLabel"
-                        CausesValidation="False" Enabled="false" /><br />
+                        CausesValidation="False" Enabled="false"
+                        CssClass="btn btn-outline-primary bottom-padded user-button" />
                     <br />
                 </SelectedItemTemplate>
                 <EmptyDataTemplate>

@@ -19,4 +19,12 @@ public partial class Account_Administration : System.Web.UI.Page
             as HiddenField).Value));
         radio.Checked = false;
     }
+
+    protected void ContextList_ItemCommand(object sender, ListViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Select")
+        {
+            (MembersList.InsertItem.FindControl("TypeIdTextBox") as TextBox).Text = e.CommandArgument.ToString();
+        }
+    }
 }
