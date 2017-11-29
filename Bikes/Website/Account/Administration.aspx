@@ -130,18 +130,37 @@
                             <td>
                                 <asp:TextBox Text='<%# Bind("UserName") %>' runat="server" ID="UserNameBox"
                                     Placeholder="preferred username" />
+                                <asp:RequiredFieldValidator ID="UserNameRequiredValidator" runat="server"
+                                    ErrorMessage="A username is required"
+                                    ControlToValidate="UserNameBox"
+                                    Display="None"></asp:RequiredFieldValidator>
+                                <asp:RegularExpressionValidator ID="UserNameRegularExpressionValidator" runat="server"
+                                    ErrorMessage="The username must contain 2-20 alphabetic or numeric characters (letters and numbers)."
+                                    ControlToValidate="UserNameBox"
+                                    ValidationExpression="^[a-zA-Z0-9]{2,20}$"
+                                    Display="None"></asp:RegularExpressionValidator>
                             </td>
                             <td>
                                 <asp:TextBox Text='<%# Bind("Email") %>' type="email"
                                     runat="server" ID="EmailTextBox"
                                     Placeholder="valid email address"
                                     AutoCompleteType="Email" />
+                                <asp:RegularExpressionValidator ID="RegularExpressionEmailValidator" runat="server"
+                                    ErrorMessage="The email address must be valid."
+                                    ControlToValidate="EmailTextBox"
+                                    ValidationExpression="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"
+                                    Display="None"></asp:RegularExpressionValidator>
                                 <div>
                                     <asp:DropDownList ID="MemberTypesDropDown" runat="server"
                                         style="width: 100%;"></asp:DropDownList><br />
                                     <asp:TextBox type="number"
                                         ID="TypeIdTextBox" runat="server"
                                         Placeholder="Employee ID"></asp:TextBox>
+                                    <asp:CompareValidator ID="NumberTypeIdValidator" runat="server"
+                                        ErrorMessage="The ID must be a whole number."
+                                        ControlToValidate="TypeIdTextBox"
+                                        Operator="DataTypeCheck" Type="Integer"
+                                        Display="None"></asp:CompareValidator>
                                 </div>
                             </td>
                         </tr>
