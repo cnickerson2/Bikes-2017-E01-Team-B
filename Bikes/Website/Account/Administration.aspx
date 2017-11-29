@@ -180,9 +180,108 @@
             <%--<asp:ListView ID="ContextList" runat="server"></asp:ListView>--%>
         </div>
     </div>
+
+
     <h1 class="text-center">Roles</h1>
-    <%--<asp:ListView ID="RolesList" runat="server"
-        DataSourceID="RolesODS"></asp:ListView>--%>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="container">
+                <asp:ListView ID="RolesList" runat="server" DataSourceID="RolesODS" InsertItemPosition="LastItem">
+                    <LayoutTemplate>
+                        <table runat="server" id="itemPlaceholderContainer" border="0">
+                            <tr runat="server">
+                                <th runat="server">Actions</th>
+                                <th runat="server">Role</th>
+                            </tr>
+                            <tr runat="server" id="itemPlaceholder"></tr>
+                            <tr runat="server">
+                                <td runat="server">
+                                    <asp:DataPager runat="server" ID="RoleDataPager">
+                                        <Fields>
+                                            <asp:NextPreviousPagerField ButtonType="Button"
+                                                ButtonCssClass="btn"
+                                                ShowFirstPageButton="True" ShowNextPageButton="False"
+                                                ShowPreviousPageButton="False"></asp:NextPreviousPagerField>
+                                            <asp:NumericPagerField></asp:NumericPagerField>
+                                            <asp:NextPreviousPagerField ButtonType="Button"
+                                                ButtonCssClass="btn"
+                                                ShowLastPageButton="True" ShowNextPageButton="False"
+                                                ShowPreviousPageButton="False"></asp:NextPreviousPagerField>
+                                        </Fields>
+                                    </asp:DataPager>
+                                </td>
+                            </tr>
+                        </table>
+                    </LayoutTemplate>
+                    <ItemTemplate>
+                        <tr>
+                            <td>
+                                <asp:HiddenField ID="RoleRowIndex" Value="<%# Container.DataItemIndex %>" runat="server" />
+                                <asp:LinkButton ID="RoleRemoveButton" runat="server" CommandName="Delete"
+                                    CssClass="btn btn-primary">
+                                <img src="../Content/Images/trashcanIcon.svg" alt="remove" width="16" height="16" />
+                                Remove</asp:LinkButton>
+                                <asp:RadioButton ID="RoleSelectRadio" runat="server"
+                                    AutoPostBack="True"
+                                    OnCheckedChanged="SelectRadio_CheckedChanged" />
+                                <asp:LinkButton ID="RoleSelectButton" runat="server"
+                                    CommandName="Select">Select</asp:LinkButton>
+                            </td>
+                            <td>
+                                <asp:Label Text='<%# Eval("RoleName") %>' runat="server" ID="RoleLabel" />
+                            </td>
+                        </tr>
+                    </ItemTemplate>
+                    <SelectedItemTemplate>
+                        <tr>
+                            <td>
+                                <asp:HiddenField ID="RoleRowIndex" Value="<%# Container.DataItemIndex %>" runat="server" />
+                                <asp:LinkButton ID="RoleRemoveButton" runat="server" CommandName="Delete"
+                                    CssClass="btn btn-primary">
+                                <img src="../Content/Images/trashcanIcon.svg" alt="remove" width="16" height="16" />
+                                Remove</asp:LinkButton>
+                                <asp:RadioButton ID="RoleSelectRadio" runat="server"
+                                    AutoPostBack="True"
+                                    OnCheckedChanged="SelectRadio_CheckedChanged"
+                                    Enabled="false" />
+                                <asp:LinkButton ID="RoleSelectButton" runat="server"
+                                    CommandName="Select"
+                                    Enabled="false">Select</asp:LinkButton>
+                            </td>
+                            <td>
+                                <asp:Label Text='<%# Eval("RoleName") %>' runat="server" ID="RoleLabel" />
+                            </td>
+                        </tr>
+                    </SelectedItemTemplate>
+                    <InsertItemTemplate>
+                        <tr>
+                            <td>
+                                <asp:LinkButton ID="InsertButton" runat="server" CommandName="Insert"
+                                    CssClass="btn btn-primary">
+                                    <img src="../Content/Images/pageIcon.svg" alt="remove" width="16" height="16" />
+                                    Insert</asp:LinkButton>
+                                <asp:LinkButton ID="CancelButton" runat="server" CommandName="Cancel"
+                                    CssClass="btn btn-primary">
+                                    <img src="../Content/Images/xIcon.svg" alt="cancel" width="16" height="16" />
+                                    Cancel</asp:LinkButton>
+                            </td>
+                            <td>
+                                <asp:TextBox Text='<%# Bind("RoleName") %>' runat="server" ID="RoleNameTxtBox"
+                                    Placeholder="Role Name" />
+                            </td>
+                        </tr>
+                    </InsertItemTemplate>
+                    <EmptyDataTemplate>
+                        <table runat="server">
+                            <tr>
+                                <td>No member's could be found.</td>
+                            </tr>
+                        </table>
+                    </EmptyDataTemplate>
+                </asp:ListView>
+            </div>
+        </div>
+    </div>
 
     <asp:ObjectDataSource ID="MembersODS" runat="server"
         OldValuesParameterFormatString="original_{0}"
