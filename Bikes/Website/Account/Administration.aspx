@@ -243,8 +243,8 @@
         </div>
     </div>
 
-
     <h1 class="text-center">Roles</h1>
+    <asp:ValidationSummary ID="ValidationSummaryRoles" runat="server" ValidationGroup="Role" CssClass="alert alert-danger" />
     <div class="row">
         <div class="col-md-6">
             <div class="container">
@@ -283,9 +283,8 @@
                                     CssClass="btn btn-primary">
                                 <img src="../Content/Images/trashcanIcon.svg" alt="remove" width="16" height="16" />
                                 Remove</asp:LinkButton>
-                                <asp:RadioButton ID="RoleSelectRadio" runat="server"
-                                    AutoPostBack="True"
-                                    OnCheckedChanged="SelectRadio_CheckedChanged" />
+                                <asp:CheckBox ID="RoleSelectCheckbox" runat="server"
+                                    AutoPostBack="True" />
                                 <asp:LinkButton ID="RoleSelectButton" runat="server"
                                     CommandName="Select">Select</asp:LinkButton>
                             </td>
@@ -302,9 +301,8 @@
                                     CssClass="btn btn-primary">
                                 <img src="../Content/Images/trashcanIcon.svg" alt="remove" width="16" height="16" />
                                 Remove</asp:LinkButton>
-                                <asp:RadioButton ID="RoleSelectRadio" runat="server"
+                                <asp:CheckBox ID="RoleSelectCheckbox" runat="server"
                                     AutoPostBack="True"
-                                    OnCheckedChanged="SelectRadio_CheckedChanged"
                                     Enabled="false" />
                                 <asp:LinkButton ID="RoleSelectButton" runat="server"
                                     CommandName="Select"
@@ -318,8 +316,9 @@
                     <InsertItemTemplate>
                         <tr>
                             <td>
-                                <asp:LinkButton ID="InsertButton" runat="server" CommandName="Insert"
-                                    CssClass="btn btn-primary">
+                                <asp:LinkButton ID="RoleInsertButton" runat="server" CommandName="Insert"
+                                    CssClass="btn btn-primary"
+                                    ValidationGroup="Role">
                                     <img src="../Content/Images/pageIcon.svg" alt="remove" width="16" height="16" />
                                     Insert</asp:LinkButton>
                                 <asp:LinkButton ID="CancelButton" runat="server" CommandName="Cancel"
@@ -330,6 +329,11 @@
                             <td>
                                 <asp:TextBox Text='<%# Bind("RoleName") %>' runat="server" ID="RoleNameTxtBox"
                                     Placeholder="Role Name" />
+                                <asp:RequiredFieldValidator ID="RoleNameRequiredValidator" runat="server"
+                                    ErrorMessage="A role name is required."
+                                    ControlToValidate="RoleNameTxtBox"
+                                    Display="None"
+                                    ValidationGroup="Role"></asp:RequiredFieldValidator>
                             </td>
                         </tr>
                     </InsertItemTemplate>
@@ -366,6 +370,6 @@
     <asp:ObjectDataSource ID="RolesODS" runat="server"
         OldValuesParameterFormatString="original_{0}"
         SelectMethod="ListAllRoles"
-        TypeName="BikesSystem.BLL.Security.RoleManager"></asp:ObjectDataSource>
+        TypeName="BikesSystem.BLL.Security.RoleManager" DataObjectTypeName="BikesData.Entities.Security.RoleProfile" InsertMethod="AddRole"></asp:ObjectDataSource>
 </asp:Content>
 
