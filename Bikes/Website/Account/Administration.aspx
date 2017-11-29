@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Administration.aspx.cs" Inherits="Account_Administration" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
+    <link href="../Content/administration.css" rel="stylesheet" />
+
     <h1 class="text-center">Security</h1>
     <div class="row">
         <div class="col-md-9">
@@ -26,9 +28,15 @@
                                 <td runat="server">
                                     <asp:DataPager runat="server" ID="DataPager1">
                                         <Fields>
-                                            <asp:NextPreviousPagerField ButtonType="Button" ShowFirstPageButton="True" ShowNextPageButton="False" ShowPreviousPageButton="False"></asp:NextPreviousPagerField>
+                                            <asp:NextPreviousPagerField ButtonType="Button"
+                                                ButtonCssClass="btn"
+                                                ShowFirstPageButton="True" ShowNextPageButton="False"
+                                                ShowPreviousPageButton="False"></asp:NextPreviousPagerField>
                                             <asp:NumericPagerField></asp:NumericPagerField>
-                                            <asp:NextPreviousPagerField ButtonType="Button" ShowLastPageButton="True" ShowNextPageButton="False" ShowPreviousPageButton="False"></asp:NextPreviousPagerField>
+                                            <asp:NextPreviousPagerField ButtonType="Button"
+                                                ButtonCssClass="btn"
+                                                ShowLastPageButton="True" ShowNextPageButton="False"
+                                                ShowPreviousPageButton="False"></asp:NextPreviousPagerField>
                                         </Fields>
                                     </asp:DataPager>
                                 </td>
@@ -39,7 +47,8 @@
                         <tr>
                             <td>
                                 <asp:HiddenField ID="RowIndex" Value="<%# Container.DataItemIndex %>" runat="server" />
-                                <asp:LinkButton ID="RemoveButton" runat="server" CommandName="Delete">
+                                <asp:LinkButton ID="RemoveButton" runat="server" CommandName="Delete"
+                                    CssClass="btn btn-primary">
                                     <img src="../Content/Images/trashcanIcon.svg" alt="remove" width="16" height="16" />
                                     Remove</asp:LinkButton>
                                 <asp:RadioButton ID="SelectRadio" runat="server"
@@ -61,7 +70,8 @@
                         <tr>
                             <td>
                                 <asp:HiddenField ID="RowIndex" Value="<%# Container.DataItemIndex %>" runat="server" />
-                                <asp:LinkButton ID="RemoveButton" runat="server" CommandName="Delete">
+                                <asp:LinkButton ID="RemoveButton" runat="server" CommandName="Delete"
+                                    CssClass="btn btn-primary">
                                     <img src="../Content/Images/trashcanIcon.svg" alt="remove" width="16" height="16" />
                                     Remove</asp:LinkButton>
                                 <asp:RadioButton ID="SelectRadio" runat="server"
@@ -82,7 +92,8 @@
                     <SelectedItemTemplate>
                         <tr>
                             <td>
-                                <asp:LinkButton ID="RemoveButton" runat="server" CommandName="Delete">
+                                <asp:LinkButton ID="RemoveButton" runat="server" CommandName="Delete"
+                                    CssClass="btn btn-primary">
                                     <img src="../Content/Images/trashcanIcon.svg" alt="remove" width="16" height="16" />
                                     Remove</asp:LinkButton>
                                 <asp:RadioButton ID="SelectRadio" runat="server"
@@ -102,22 +113,30 @@
                     <InsertItemTemplate>
                         <tr>
                             <td>
-                                <asp:LinkButton ID="InsertButton" runat="server" CommandName="Insert">
+                                <asp:LinkButton ID="InsertButton" runat="server" CommandName="Insert"
+                                    CssClass="btn btn-primary">
                                     <img src="../Content/Images/pageIcon.svg" alt="remove" width="16" height="16" />
                                     Insert</asp:LinkButton>
-                                <asp:LinkButton ID="CancelButton" runat="server" CommandName="Cancel">
+                                <asp:LinkButton ID="CancelButton" runat="server" CommandName="Cancel"
+                                    CssClass="btn btn-primary">
                                     <img src="../Content/Images/xIcon.svg" alt="cancel" width="16" height="16" />
                                     Cancel</asp:LinkButton>
                             </td>
                             <td>
-                                <asp:TextBox Text='<%# Bind("LastName") %>' runat="server" ID="LastNameTextBox" />, 
-                                <asp:TextBox Text='<%# Bind("FirstName") %>' runat="server" ID="FirstNameTextBox" />
+                                <asp:TextBox Text='<%# Bind("UserName") %>' runat="server" ID="UserNameBox"
+                                    Placeholder="preferred username" />
                             </td>
                             <td>
-                                <asp:TextBox Text='<%# Bind("Email") %>' runat="server" ID="EmailTextBox" />
+                                <asp:TextBox Text='<%# Bind("Email") %>' type="email"
+                                    runat="server" ID="EmailTextBox"
+                                    Placeholder="valid email address"
+                                    AutoCompleteType="Email" />
                                 <div>
-                                    <asp:DropDownList ID="MemberTypesDropDown" runat="server"></asp:DropDownList><br />
-                                    <asp:TextBox ID="TypeIdTextBox" runat="server"></asp:TextBox>
+                                    <asp:DropDownList ID="MemberTypesDropDown" runat="server"
+                                        style="width: 100%;"></asp:DropDownList><br />
+                                    <asp:TextBox type="number"
+                                        ID="TypeIdTextBox" runat="server"
+                                        Placeholder="Employee ID"></asp:TextBox>
                                 </div>
                             </td>
                         </tr>
