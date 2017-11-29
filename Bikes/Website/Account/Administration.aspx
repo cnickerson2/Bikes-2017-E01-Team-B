@@ -1,9 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Administration.aspx.cs" Inherits="Account_Administration" %>
 
+<%@ Register Src="~/UserControls/MessageUserControl.ascx" TagPrefix="uc1" TagName="MessageUserControl" %>
+
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
     <link href="../Content/administration.css" rel="stylesheet" />
 
     <h1 class="text-center">Security</h1>
+    <uc1:MessageUserControl runat="server" ID="MessageUserControl" />
+    <asp:ValidationSummary ID="ValidationSummary" runat="server" />
     <div class="row">
         <div class="col-md-9">
             <div class="container">
