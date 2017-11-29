@@ -260,6 +260,7 @@
                             <tr runat="server">
                                 <th runat="server" style="padding: 6px;">Actions</th>
                                 <th runat="server" style="padding: 6px;">Role</th>
+                                <th runat="server" style="padding: 6px;">User Has Role?</th>
                             </tr>
                             <tr runat="server" id="itemPlaceholder"></tr>
                             <tr runat="server">
@@ -290,13 +291,13 @@
                                     CssClass="btn btn-primary">
                                 <img src="../Content/Images/trashcanIcon.svg" alt="remove" width="16" height="16" />
                                 Remove</asp:LinkButton>
-                                <asp:CheckBox ID="RoleSelectCheckbox" runat="server"
-                                    AutoPostBack="True" />
-                                <asp:LinkButton ID="RoleSelectButton" runat="server"
-                                    CommandName="Select">Select</asp:LinkButton>
                             </td>
                             <td style="padding: 6px;">
                                 <asp:Label Text='<%# Eval("RoleName") %>' runat="server" ID="RoleLabel" />
+                            </td>
+                            <td style="padding: 6px;">
+                                <asp:CheckBox ID="RoleSelectCheckbox" runat="server" OnCheckedChanged="RoleSelectCheckbox_CheckedChanged"
+                                    AutoPostBack="true"/>
                             </td>
                         </tr>
                     </ItemTemplate>
@@ -317,6 +318,9 @@
                                     ControlToValidate="RoleNameTxtBox"
                                     Display="None"
                                     ValidationGroup="Role"></asp:RequiredFieldValidator>
+                            </td>
+                            <td>
+                               
                             </td>
                         </tr>
                     </InsertItemTemplate>

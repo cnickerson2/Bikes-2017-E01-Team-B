@@ -84,4 +84,16 @@ public partial class Account_Administration : System.Web.UI.Page
     {
         MessageUserControl.HandleDataBoundException(e);
     }
+
+    protected void RoleSelectCheckbox_CheckedChanged(object sender, EventArgs e)
+    {
+        if (MembersList.SelectedIndex == -1)
+        {
+            // nothing
+        } else
+        {
+            // (MembersList.Items[0].FindControl("UserId") as HiddenField).Value
+            //((sender as CheckBox).Parent.FindControl("RoleID") as HiddenField).Value;
+        }
+    }
 }
