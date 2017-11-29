@@ -15,6 +15,7 @@
                 <asp:ListView ID="MembersList" runat="server"
                     DataSourceID="MembersODS"
                     OnSelectedIndexChanged="MembersList_SelectedIndexChanged"
+                    OnItemCommand="MembersList_ItemCommand"
                     OnItemCanceling="MembersList_ItemCanceling"
                     InsertItemPosition="LastItem">
                     <LayoutTemplate>
@@ -129,7 +130,7 @@
                     <InsertItemTemplate>
                         <tr>
                             <td>
-                                <asp:LinkButton ID="InsertButton" runat="server" CommandName="Insert"
+                                <asp:LinkButton ID="InsertButton" runat="server" CommandName="Add"
                                     CssClass="btn btn-primary right-separator">
                                     <img src="../Content/Images/pageIcon.svg" alt="remove" width="16" height="16" />
                                     Insert</asp:LinkButton>
@@ -339,7 +340,6 @@
         DeleteMethod="ForceRemoveUser"
         InsertMethod="AddUser"
         OnDeleted="CheckForException"
-        OnInserted="CheckForException"
         OnSelected="CheckForException"></asp:ObjectDataSource>
     <asp:ObjectDataSource ID="MemberTypesDropDownODS" runat="server"
         OldValuesParameterFormatString="original_{0}"

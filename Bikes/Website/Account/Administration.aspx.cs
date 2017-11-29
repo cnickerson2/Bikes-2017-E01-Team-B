@@ -14,6 +14,30 @@ public partial class Account_Administration : System.Web.UI.Page
 
     }
 
+    protected void MembersList_ItemCommand(object sender, ListViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Add")
+        {
+            if (IsValid)
+            {
+                MessageUserControl.TryRun(() =>
+                {
+                    UserManager controller = new UserManager();
+                    UserProfile user = new UserProfile();
+                    ListViewItem insert = MembersList.InsertItem;
+                    user.UserName = (insert.FindControl("UserNameBox") as TextBox).Text;
+                    user.Email = (insert.FindControl("EmailTextBox") as TextBox).Text;
+                    typeof(UserProfile).GetProperty((insert.FindControl("MemberTypesDropDown")
+                        as DropDownList).SelectedValue).SetValue(user,
+                            int.Parse((insert.FindControl("TypeIdTextBox")
+                                as TextBox).Text));
+                    controller.AddUser(user);
+                });
+            }
+            
+        }
+    }
+
     protected void MembersList_SelectedIndexChanged(object sender, EventArgs e)
     {
         RoleManager controller = new RoleManager();
