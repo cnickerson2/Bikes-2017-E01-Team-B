@@ -27,14 +27,19 @@ public partial class Account_Administration : System.Web.UI.Page
                     ListViewItem insert = MembersList.InsertItem;
                     user.UserName = (insert.FindControl("UserNameBox") as TextBox).Text;
                     user.Email = (insert.FindControl("EmailTextBox") as TextBox).Text;
-                    typeof(UserProfile).GetProperty((insert.FindControl("MemberTypesDropDown")
-                        as DropDownList).SelectedValue).SetValue(user,
-                            int.Parse((insert.FindControl("TypeIdTextBox")
-                                as TextBox).Text));
+                    string type = (insert.FindControl("MemberTypesDropDown")
+                        as DropDownList).SelectedValue;
+                    int value = int.Parse((insert.FindControl("TypeIdTextBox")
+                                as TextBox).Text);
+                    typeof(UserProfile).GetProperty(type).SetValue(user,
+                            value);
+                    user.RoleMemberships = RolesList.Items.Where((item) =>
+                        (item.FindControl("RoleSelectCheckbox") as CheckBox).Checked).Select((item) =>
+                            (item.FindControl("RoleLabel") as Label).Text);
                     controller.AddUser(user);
+                    MembersList.DataBind();
                 });
             }
-            
         }
     }
 
