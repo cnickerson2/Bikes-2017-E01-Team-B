@@ -40,18 +40,20 @@ public partial class Account_Administration : System.Web.UI.Page
 
     protected void MembersList_SelectedIndexChanged(object sender, EventArgs e)
     {
-        RoleManager controller = new RoleManager();
-        List<RoleProfile> inRoles = controller.GetUserRoles((
-            MembersList.Items[MembersList.SelectedIndex].FindControl("UserId")
-                as HiddenField).Value);
-        foreach (ListViewDataItem item in RolesList.Items)
+        MessageUserControl.TryRun(() =>
         {
-            // TODO: Find a field in the item to identify the role (and set Checked).
-            (item.FindControl("RoleSelectCheckbox") as CheckBox).Checked =
-                inRoles.Any((role) =>
-                    role.RoleId == (item.FindControl("RoleID")
-                        as HiddenField).Value);
-        }
+            RoleManager controller = new RoleManager();
+            List<RoleProfile> inRoles = controller.GetUserRoles((
+                MembersList.Items[MembersList.SelectedIndex].FindControl("UserId")
+                    as HiddenField).Value);
+            foreach (ListViewDataItem item in RolesList.Items)
+            {
+                (item.FindControl("RoleSelectCheckbox") as CheckBox).Checked =
+                    inRoles.Any((role) =>
+                        role.RoleId == (item.FindControl("RoleID")
+                            as HiddenField).Value);
+            }
+        });
     }
 
     protected void MembersList_ItemCanceling(object sender, ListViewCancelEventArgs e)
