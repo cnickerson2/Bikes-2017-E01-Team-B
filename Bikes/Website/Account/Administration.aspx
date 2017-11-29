@@ -146,30 +146,6 @@
                             </td>
                         </tr>
                     </InsertItemTemplate>
-                    <EditItemTemplate>
-                        <tr>
-                            <td>
-                                <asp:LinkButton ID="InsertButton" runat="server" CommandName="Insert">
-                                    <img src="../Content/Images/pageIcon.svg" alt="remove" width="16" height="16" />
-                                    Insert</asp:LinkButton>
-                                <asp:LinkButton ID="CancelButton" runat="server" CommandName="Cancel">
-                                    <img src="../Content/Images/xIcon.svg" alt="cancel" width="16" height="16" />
-                                    Cancel</asp:LinkButton>
-                            </td>
-                            <td>
-                                <asp:TextBox Text='<%# Bind("LastName") %>' runat="server" ID="LastNameTextBox" />
-                                <asp:Label ID="NameDelimiter" runat="server" Text='<%# Eval("NAME_DELIMITER") %>'></asp:Label>
-                                <asp:TextBox Text='<%# Bind("FirstName") %>' runat="server" ID="FirstNameTextBox" />
-                            </td>
-                            <td>
-                                <asp:TextBox Text='<%# Bind("Email") %>' runat="server" ID="EmailTextBox" />
-                                <div>
-                                    <asp:DropDownList ID="MemberTypesDropDown" runat="server"></asp:DropDownList><br />
-                                    <asp:TextBox ID="TypeIdTextBox" runat="server"></asp:TextBox>
-                                </div>
-                            </td>
-                        </tr>
-                    </EditItemTemplate>
                     <EmptyDataTemplate>
                         <table runat="server">
                             <tr>
