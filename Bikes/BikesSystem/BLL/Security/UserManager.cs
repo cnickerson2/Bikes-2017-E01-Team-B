@@ -232,7 +232,22 @@ namespace BikesSystem.BLL.Security
         {
             this.AddToRole(userAccount.Id, roleName);
         }
-        
+
+        public void RemoveUserFromRole(ApplicationUser userAccount, string roleName)
+        {
+            this.RemoveFromRole(userAccount.Id, roleName);
+        }
+
+        public void AddUserToRole(string userID, string roleName)
+        {
+            this.AddToRole(userID, roleName);
+        }
+
+        public void RemoveUserFromRole(string userID, string roleName)
+        {
+            this.RemoveFromRole(userID, roleName);
+        }
+
         public void RemoveUser (UserProfile userInfo)
         {
             this.Delete(this.FindById(userInfo.UserId));
@@ -242,6 +257,11 @@ namespace BikesSystem.BLL.Security
         public void ForceRemoveUser(UserProfile userInfo)
         {
             // TODO: Remove the user from all roles and delete the user.
+        }
+
+        public List<string> GetUserRoles(string userId)
+        {
+            return this.GetRoles(userId).ToList();
         }
 
         #endregion

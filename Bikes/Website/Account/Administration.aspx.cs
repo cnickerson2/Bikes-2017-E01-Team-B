@@ -47,16 +47,16 @@ public partial class Account_Administration : System.Web.UI.Page
     {
         MessageUserControl.TryRun(() =>
         {
-            RoleManager controller = new RoleManager();
-            List<RoleProfile> inRoles = controller.GetUserRoles((
+            UserManager controller = new UserManager();
+            List<string> inRoles = controller.GetUserRoles((
                 MembersList.Items[MembersList.SelectedIndex].FindControl("UserId")
                     as HiddenField).Value);
             foreach (ListViewDataItem item in RolesList.Items)
             {
                 (item.FindControl("RoleSelectCheckbox") as CheckBox).Checked =
                     inRoles.Any((role) =>
-                        role.RoleId == (item.FindControl("RoleID")
-                            as HiddenField).Value);
+                        role == (item.FindControl("RoleLabel")
+                            as Label).Text);
             }
         });
     }
@@ -97,8 +97,17 @@ public partial class Account_Administration : System.Web.UI.Page
             // nothing
         } else
         {
-            // (MembersList.Items[0].FindControl("UserId") as HiddenField).Value
-            //((sender as CheckBox).Parent.FindControl("RoleID") as HiddenField).Value;
+            CheckBox cb = sender as CheckBox;
+            string userID = (MembersList.Items[MembersList.SelectedIndex].FindControl("UserId") as HiddenField).Value;
+            string roleName = (cb.Parent.FindControl("RoleLabel") as Label).Text;
+            if (cb.Checked)
+            {
+                (new UserManager()).AddUserToRole(userID, roleName);
+            } else
+            {
+                (new UserManager()).RemoveUserFromRole(userID, roleName);
+            }
+            
         }
     }
 }
