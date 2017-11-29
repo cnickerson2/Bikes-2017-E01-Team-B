@@ -1,1 +1,15 @@
-﻿
+﻿table#MembersListTable {
+    margin-top: 63px;
+}
+
+table#MembersListTable * td {
+    padding: 3px;
+}
+
+table#MembersListTable .extending * {
+    width: 100%;
+}
+
+table#MembersListTable .bottom-padded {
+    margin: 1.5px;
+}

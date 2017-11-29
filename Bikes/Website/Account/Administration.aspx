@@ -16,7 +16,8 @@
                     DataSourceID="MembersODS"
                     InsertItemPosition="LastItem">
                     <LayoutTemplate>
-                        <table runat="server">
+                        <table runat="server"
+                            ClientIDMode="Static" ID="MembersListTable">
                             <tr runat="server">
                                 <td runat="server">
                                     <table runat="server" id="itemPlaceholderContainer" border="0">
@@ -140,19 +141,22 @@
                                     ValidationExpression="^[a-zA-Z0-9]{2,20}$"
                                     Display="None"></asp:RegularExpressionValidator>
                             </td>
-                            <td>
-                                <asp:TextBox Text='<%# Bind("Email") %>' type="email"
-                                    runat="server" ID="EmailTextBox"
-                                    Placeholder="valid email address"
-                                    AutoCompleteType="Email" />
-                                <asp:RegularExpressionValidator ID="RegularExpressionEmailValidator" runat="server"
-                                    ErrorMessage="The email address must be valid."
-                                    ControlToValidate="EmailTextBox"
-                                    ValidationExpression="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"
-                                    Display="None"></asp:RegularExpressionValidator>
-                                <div>
+                            <td class="row">
+                                <div class="col extending">
+                                    <asp:TextBox Text='<%# Bind("Email") %>' type="email"
+                                        runat="server" ID="EmailTextBox"
+                                        Placeholder="valid email address"
+                                        AutoCompleteType="Email"
+                                        CssClass="bottom-padded" />
+                                    <asp:RegularExpressionValidator ID="RegularExpressionEmailValidator" runat="server"
+                                        ErrorMessage="The email address must be valid."
+                                        ControlToValidate="EmailTextBox"
+                                        ValidationExpression="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"
+                                        Display="None"></asp:RegularExpressionValidator>
+                                </div>
+                                <div class="col extending">
                                     <asp:DropDownList ID="MemberTypesDropDown" runat="server"
-                                        style="width: 100%;"></asp:DropDownList><br />
+                                        CssClass="bottom-padded"></asp:DropDownList><br />
                                     <asp:TextBox type="number"
                                         ID="TypeIdTextBox" runat="server"
                                         Placeholder="Employee ID"></asp:TextBox>
