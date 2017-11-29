@@ -14,6 +14,7 @@
             <div class="container">
                 <asp:ListView ID="MembersList" runat="server"
                     DataSourceID="MembersODS"
+                    OnSelectedIndexChanged="MembersList_SelectedIndexChanged"
                     InsertItemPosition="LastItem">
                     <LayoutTemplate>
                         <table runat="server"
@@ -52,6 +53,7 @@
                     <ItemTemplate>
                         <tr>
                             <td>
+                                <asp:HiddenField ID="UserId" Value='<%# Eval("UserId") %>' runat="server" />
                                 <asp:HiddenField ID="RowIndex" Value="<%# Container.DataItemIndex %>" runat="server" />
                                 <asp:LinkButton ID="RemoveButton" runat="server" CommandName="Delete"
                                     CssClass="btn btn-primary right-separator">
@@ -77,6 +79,7 @@
                     <AlternatingItemTemplate>
                         <tr>
                             <td>
+                                <asp:HiddenField ID="UserId" Value='<%# Eval("UserId") %>' runat="server" />
                                 <asp:HiddenField ID="RowIndex" Value="<%# Container.DataItemIndex %>" runat="server" />
                                 <asp:LinkButton ID="RemoveButton" runat="server" CommandName="Delete"
                                     CssClass="btn btn-primary right-separator">
@@ -102,6 +105,7 @@
                     <SelectedItemTemplate>
                         <tr>
                             <td>
+                                <asp:HiddenField ID="UserId" Value='<%# Eval("UserId") %>' runat="server" />
                                 <asp:LinkButton ID="RemoveButton" runat="server" CommandName="Delete"
                                     CssClass="btn btn-primary right-separator">
                                     <img src="../Content/Images/trashcanIcon.svg" alt="remove" width="16" height="16" />

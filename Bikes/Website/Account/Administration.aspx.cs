@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BikesData.Entities.Security;
+using BikesSystem.BLL.Security;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +12,19 @@ public partial class Account_Administration : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
 
+    }
+
+    protected void MembersList_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        RoleManager controller = new RoleManager();
+        List<RoleProfile> inRoles = controller.GetUserRoles((
+            MembersList.Items[MembersList.SelectedIndex].FindControl("UserId")
+                as HiddenField).Value);
+        foreach (ListViewDataItem item in RolesList.Items)
+        {
+            // TODO: Find a field in the item to identify the role (and set Checked).
+            (item.FindControl("RoleSelectCheckbox") as CheckBox).Checked = false;
+        }
     }
 
     protected void SelectRadio_CheckedChanged(object sender, EventArgs e)

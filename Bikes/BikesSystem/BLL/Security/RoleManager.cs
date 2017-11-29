@@ -51,6 +51,11 @@ namespace BikesSystem.BLL.Security
             return results.ToList();
         }
 
+        public List<RoleProfile> GetUserRoles(string userId)
+        {
+            return null;
+        }
+
         [DataObjectMethod(DataObjectMethodType.Insert, false)]
         public void AddRole(RoleProfile role)
         {
