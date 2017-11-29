@@ -61,6 +61,7 @@
                                     AutoPostBack="True"
                                     OnCheckedChanged="SelectRadio_CheckedChanged" />
                                 <asp:LinkButton ID="SelectButton" runat="server"
+                                    CausesValidation="false"
                                     CommandName="Select">Select</asp:LinkButton>
                             </td>
                             <td>
@@ -85,6 +86,7 @@
                                     AutoPostBack="True"
                                     OnCheckedChanged="SelectRadio_CheckedChanged" />
                                 <asp:LinkButton ID="SelectButton" runat="server"
+                                    CausesValidation="false"
                                     CommandName="Select">Select</asp:LinkButton>
                             </td>
                             <td>
@@ -127,6 +129,7 @@
                                     <img src="../Content/Images/pageIcon.svg" alt="remove" width="16" height="16" />
                                     Insert</asp:LinkButton>
                                 <asp:LinkButton ID="CancelButton" runat="server" CommandName="Cancel"
+                                    CausesValidation="false"
                                     CssClass="btn btn-primary">
                                     <img src="../Content/Images/xIcon.svg" alt="cancel" width="16" height="16" />
                                     Cancel</asp:LinkButton>
