@@ -23,6 +23,17 @@ public partial class Account_Administration : System.Web.UI.Page
         foreach (ListViewDataItem item in RolesList.Items)
         {
             // TODO: Find a field in the item to identify the role (and set Checked).
+            (item.FindControl("RoleSelectCheckbox") as CheckBox).Checked =
+                inRoles.Any((role) =>
+                    role.RoleId == (item.FindControl("role id field")
+                        as HiddenField).Value);
+        }
+    }
+
+    protected void MembersList_ItemCanceling(object sender, ListViewCancelEventArgs e)
+    {
+        foreach (ListViewDataItem item in RolesList.Items)
+        {
             (item.FindControl("RoleSelectCheckbox") as CheckBox).Checked = false;
         }
     }
@@ -42,4 +53,6 @@ public partial class Account_Administration : System.Web.UI.Page
             (MembersList.InsertItem.FindControl("TypeIdTextBox") as TextBox).Text = e.CommandArgument.ToString();
         }
     }
+
+    
 }
