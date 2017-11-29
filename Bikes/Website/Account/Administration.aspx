@@ -67,7 +67,8 @@
                                 <asp:Label Text='<%# Eval("UserName") %>' runat="server" ID="UserNameLabel" />
                             </td>
                             <td>
-                                <asp:Label Text='<%# Eval("Email") %>' runat="server" ID="EmailLabel" />
+                                <asp:Label Text='<%# Eval("Email") %>' runat="server" ID="EmailLabel"
+                                    CssClass="right-separator" />
                                 <asp:Label Text='<%# Eval("FormalName") ?? "" %>' runat="server" ID="FirstNameLabel" />
                             </td>
                         </tr>
@@ -90,7 +91,8 @@
                                 <asp:Label Text='<%# Eval("UserName") %>' runat="server" ID="UserNameLabel" />
                             </td>
                             <td>
-                                <asp:Label Text='<%# Eval("Email") %>' runat="server" ID="EmailLabel" />
+                                <asp:Label Text='<%# Eval("Email") %>' runat="server" ID="EmailLabel"
+                                    CssClass="right-separator" />
                                 <asp:Label Text='<%# Eval("FormalName") ?? "" %>' runat="server" ID="FirstNameLabel" />
                             </td>
                         </tr>
@@ -111,7 +113,8 @@
                                 <asp:Label Text='<%# Eval("UserName") %>' runat="server" ID="UserNameLabel" />
                             </td>
                             <td>
-                                <asp:Label Text='<%# Eval("Email") %>' runat="server" ID="EmailLabel" />
+                                <asp:Label Text='<%# Eval("Email") %>' runat="server" ID="EmailLabel"
+                                    CssClass="right-separator" />
                                 <asp:Label Text='<%# Eval("FormalName") ?? "" %>' runat="server" ID="FirstNameLabel" />
                             </td>
                         </tr>
