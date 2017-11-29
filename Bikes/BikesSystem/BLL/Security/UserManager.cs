@@ -59,11 +59,11 @@ namespace BikesSystem.BLL.Security
                                            LastName = x.LastName
                                        };
                 var userEmployees = from x in Users.ToList()
-                                    where x.EmployeeID.HasValue
+                                    where x.EmployeeId.HasValue
                                     select new RegisteredEmployeePOCO
                                     {
                                         UserName = x.UserName,
-                                        EmployeeId = int.Parse(x.EmployeeID.ToString())
+                                        EmployeeId = int.Parse(x.EmployeeId.ToString())
                                     };
 
                 foreach (var employee in currentEmployees)
@@ -78,7 +78,7 @@ namespace BikesSystem.BLL.Security
                             Email = string.Format(STR_EMAIL_FORMAT, newUserName),
                             EmailConfirmed = true
                         };
-                        userAccount.EmployeeID = employee.EmployeeId;
+                        userAccount.EmployeeId = employee.EmployeeId;
 
                         IdentityResult result = this.Create(userAccount, STR_DEFAULT_PASSWORD);
                         if(!result.Succeeded)
@@ -123,8 +123,8 @@ namespace BikesSystem.BLL.Security
                                   UserName = x.UserName,
                                   Email = x.Email,
                                   EmailConfirmation = x.EmailConfirmed,
-                                  EmployeeId = x.EmployeeID,
-                                  CustomerId = x.CustomerID,
+                                  EmployeeId = x.EmployeeId,
+                                  CustomerId = x.CustomerId,
                                   RoleMemberships = x.Roles.Select(r => rm.FindById(r.RoleId).Name)
 
                               };
@@ -172,17 +172,17 @@ namespace BikesSystem.BLL.Security
             {
                 switch (userType)
                 {
-                    case "EmployeeID":
+                    case "EmployeeId":
                         people = context.Employees.ToDictionary(
                             (employee) => employee.EmployeeID,
                             (employee) => employee.FormalName);
                         break;
-                    case "CustomerID":
+                    case "CustomerId":
                         people = context.Customers.ToDictionary(
                             (customer) => customer.CustomerID,
                             (customer) => customer.FormalName);
                         break;
-                    case "OnlineCustomerID":
+                    case "OnlineCustomerId":
                         people = context.OnlineCustomers.ToDictionary(
                             (customer) => customer.OnlineCustomerID,
                             (customer) => customer.UserName);
@@ -199,39 +199,32 @@ namespace BikesSystem.BLL.Security
         [DataObjectMethod(DataObjectMethodType.Insert, false)]
         public void AddUser(UserProfile userInfo)
         {
-            if (string.IsNullOrEmpty(userInfo.EmployeeId.ToString()))
-            {
-                throw new Exception("Employee ID is missing. Remember, employees must be on file to get an account");
-            }
-            else
+            if (!string.IsNullOrEmpty(userInfo.EmployeeId.ToString()))
             {
                 EmployeeController sysmgr = new EmployeeController();
                 Employee existing = sysmgr.Employee_Get(int.Parse(userInfo.EmployeeId.ToString()));
                 if(existing == null)
                 {
                     throw new Exception("Employee must be on file to get an account.");
-
                 }
-                else
-                {
-                    var userAccount = new ApplicationUser()
-                    {
-                        EmployeeID = userInfo.EmployeeId,
-                        CustomerID = userInfo.CustomerId,
-                        UserName = userInfo.UserName,
-                        Email = userInfo.Email
-                    };
-                    IdentityResult result = this.Create(userAccount, string.IsNullOrEmpty(userInfo.RequestedPassword) ? STR_DEFAULT_PASSWORD : userInfo.RequestedPassword);
-                    if (!result.Succeeded)
-                    {
-                        userAccount.UserName = VerifyNewUserName(userInfo.UserName);
-                        this.Create(userAccount, STR_DEFAULT_PASSWORD);
-                    }
-                    foreach (var roleName in userInfo.RoleMemberships)
-                    {
-                        AddUserToRole(userAccount, roleName);
-                    }
-                }
+            }
+            var userAccount = new ApplicationUser()
+            {
+                EmployeeId = userInfo.EmployeeId,
+                CustomerId = userInfo.CustomerId,
+                OnlineCustomerId = userInfo.OnlineCustomerId,
+                UserName = userInfo.UserName,
+                Email = userInfo.Email
+            };
+            IdentityResult result = this.Create(userAccount, string.IsNullOrEmpty(userInfo.RequestedPassword) ? STR_DEFAULT_PASSWORD : userInfo.RequestedPassword);
+            if (!result.Succeeded)
+            {
+                userAccount.UserName = VerifyNewUserName(userInfo.UserName);
+                this.Create(userAccount, STR_DEFAULT_PASSWORD);
+            }
+            foreach (var roleName in userInfo.RoleMemberships)
+            {
+                AddUserToRole(userAccount, roleName);
             }
         }
 

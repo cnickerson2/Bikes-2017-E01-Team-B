@@ -11,10 +11,10 @@ namespace BikesData.Entities.Security
     public class ApplicationUser : IdentityUser
     {
         [Display(Name = "Employee")]
-        public int? EmployeeID { get; set; }
+        public int? EmployeeId { get; set; }
         [Display(Name = "Customer")]
-        public int? CustomerID { get; set; }
+        public int? CustomerId { get; set; }
         [Display(Name = "Online Customer")]
-        public int? OnlineCustomerID { get; set; }
+        public int? OnlineCustomerId { get; set; }
     }
 }
