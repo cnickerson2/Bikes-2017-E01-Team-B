@@ -360,15 +360,20 @@
         TypeName="BikesSystem.BLL.Security.UserManager"
         DataObjectTypeName="BikesData.Entities.Security.UserProfile"
         DeleteMethod="ForceRemoveUser"
-        InsertMethod="AddUser"></asp:ObjectDataSource>
+        InsertMethod="AddUser"
+        OnDeleted="CheckForException"
+        OnInserted="CheckForException"
+        OnSelected="CheckForException"></asp:ObjectDataSource>
     <asp:ObjectDataSource ID="MemberTypesDropDownODS" runat="server"
         OldValuesParameterFormatString="original_{0}"
         SelectMethod="GetMemberTypes"
-        TypeName="BikesSystem.BLL.Security.UserManager"></asp:ObjectDataSource>
+        TypeName="BikesSystem.BLL.Security.UserManager"
+        OnSelected="CheckForException"></asp:ObjectDataSource>
     <asp:ObjectDataSource ID="ContextListODS" runat="server"
         OldValuesParameterFormatString="original_{0}"
         SelectMethod="GetPeopleByType"
-        TypeName="BikesSystem.BLL.Security.UserManager">
+        TypeName="BikesSystem.BLL.Security.UserManager"
+        OnSelected="CheckForException">
         <SelectParameters>
             <asp:ControlParameter ControlID="ctl00$MainContent$MembersList$ctrl10$MemberTypesDropDown"
                 PropertyName="SelectedValue" DefaultValue=" "

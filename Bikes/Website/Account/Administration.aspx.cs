@@ -54,5 +54,8 @@ public partial class Account_Administration : System.Web.UI.Page
         }
     }
 
-    
+    protected void CheckForException(object sender, ObjectDataSourceStatusEventArgs e)
+    {
+        MessageUserControl.HandleDataBoundException(e);
+    }
 }
