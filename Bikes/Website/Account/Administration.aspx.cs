@@ -25,7 +25,7 @@ public partial class Account_Administration : System.Web.UI.Page
             // TODO: Find a field in the item to identify the role (and set Checked).
             (item.FindControl("RoleSelectCheckbox") as CheckBox).Checked =
                 inRoles.Any((role) =>
-                    role.RoleId == (item.FindControl("role id field")
+                    role.RoleId == (item.FindControl("RoleID")
                         as HiddenField).Value);
         }
     }

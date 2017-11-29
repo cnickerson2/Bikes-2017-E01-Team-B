@@ -257,8 +257,8 @@
                     <LayoutTemplate>
                         <table runat="server" id="itemPlaceholderContainer" border="0">
                             <tr runat="server">
-                                <th runat="server">Actions</th>
-                                <th runat="server">Role</th>
+                                <th runat="server" style="padding: 6px;">Actions</th>
+                                <th runat="server" style="padding: 6px;">Role</th>
                             </tr>
                             <tr runat="server" id="itemPlaceholder"></tr>
                             <tr runat="server">
@@ -282,8 +282,9 @@
                     </LayoutTemplate>
                     <ItemTemplate>
                         <tr>
-                            <td>
+                            <td style="padding: 6px;">
                                 <asp:HiddenField ID="RoleRowIndex" Value="<%# Container.DataItemIndex %>" runat="server" />
+                                <asp:HiddenField ID="RoleID" Value='<%# Eval("RoleId") %>' runat="server" />
                                 <asp:LinkButton ID="RoleRemoveButton" runat="server" CommandName="Delete"
                                     CssClass="btn btn-primary">
                                 <img src="../Content/Images/trashcanIcon.svg" alt="remove" width="16" height="16" />
@@ -293,45 +294,21 @@
                                 <asp:LinkButton ID="RoleSelectButton" runat="server"
                                     CommandName="Select">Select</asp:LinkButton>
                             </td>
-                            <td>
+                            <td style="padding: 6px;">
                                 <asp:Label Text='<%# Eval("RoleName") %>' runat="server" ID="RoleLabel" />
                             </td>
                         </tr>
                     </ItemTemplate>
-                    <SelectedItemTemplate>
-                        <tr>
-                            <td>
-                                <asp:HiddenField ID="RoleRowIndex" Value="<%# Container.DataItemIndex %>" runat="server" />
-                                <asp:LinkButton ID="RoleRemoveButton" runat="server" CommandName="Delete"
-                                    CssClass="btn btn-primary">
-                                <img src="../Content/Images/trashcanIcon.svg" alt="remove" width="16" height="16" />
-                                Remove</asp:LinkButton>
-                                <asp:CheckBox ID="RoleSelectCheckbox" runat="server"
-                                    AutoPostBack="True"
-                                    Enabled="false" />
-                                <asp:LinkButton ID="RoleSelectButton" runat="server"
-                                    CommandName="Select"
-                                    Enabled="false">Select</asp:LinkButton>
-                            </td>
-                            <td>
-                                <asp:Label Text='<%# Eval("RoleName") %>' runat="server" ID="RoleLabel" />
-                            </td>
-                        </tr>
-                    </SelectedItemTemplate>
                     <InsertItemTemplate>
                         <tr>
-                            <td>
+                            <td style="padding: 6px;">
                                 <asp:LinkButton ID="RoleInsertButton" runat="server" CommandName="Insert"
                                     CssClass="btn btn-primary"
                                     ValidationGroup="Role">
                                     <img src="../Content/Images/pageIcon.svg" alt="remove" width="16" height="16" />
                                     Insert</asp:LinkButton>
-                                <asp:LinkButton ID="CancelButton" runat="server" CommandName="Cancel"
-                                    CssClass="btn btn-primary">
-                                    <img src="../Content/Images/xIcon.svg" alt="cancel" width="16" height="16" />
-                                    Cancel</asp:LinkButton>
                             </td>
-                            <td>
+                            <td style="padding: 6px;">
                                 <asp:TextBox Text='<%# Bind("RoleName") %>' runat="server" ID="RoleNameTxtBox"
                                     Placeholder="Role Name" />
                                 <asp:RequiredFieldValidator ID="RoleNameRequiredValidator" runat="server"
