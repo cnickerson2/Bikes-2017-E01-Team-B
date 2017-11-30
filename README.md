@@ -7,4 +7,9 @@
 - Chris https://github.com/cnickerson2
 - TJ https://github.com/tblakely2
 
+Colton / Sales
+Craig / Purchasing
+Chris / Receiving
+TJ / Receiving
+
 http://dmit-2018.github.io/docs/project/eBike/jan2017/index.html
