@@ -13,7 +13,10 @@ public partial class Receiving_Receiving : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if(!IsPostBack)
+
+        if (!User.IsInRole("WebsiteAdmins") && !User.IsInRole("Receiving")) Response.Redirect("../Account/Login.aspx");
+
+        if (!IsPostBack)
         {
             OutstandingDetailsGridView.Enabled = true;
             OutstandingDetailsGridView.Visible = true;

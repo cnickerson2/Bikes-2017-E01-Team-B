@@ -9,6 +9,6 @@ public partial class Sales_Sales : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (!User.IsInRole("WebsiteAdmins") && !User.IsInRole("Sales")) Response.Redirect("../Account/Login.aspx");
     }
 }

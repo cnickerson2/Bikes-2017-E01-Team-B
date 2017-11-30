@@ -11,7 +11,7 @@ public partial class Account_Administration : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (!User.IsInRole("WebsiteAdmins")) Response.Redirect("../Account/Login.aspx");
     }
 
     protected void MembersList_ItemCommand(object sender, ListViewCommandEventArgs e)
