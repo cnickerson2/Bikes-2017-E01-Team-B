@@ -22,11 +22,13 @@ namespace BikesSystem.BLL
                                    where GetPartsCount(category) > 0
                                    select new OnlineCategory
                                    {
+                                       CategoryId = category.CategoryID,
                                        Description = category.Description,
                                        Parts = GetPartsCount(category)
                                    }).ToList();
                 results.Insert(0, new OnlineCategory
                 {
+                    CategoryId = 0,
                     Description = "All",
                     Parts = results.Sum((oCategory) => oCategory.Parts)
                 });

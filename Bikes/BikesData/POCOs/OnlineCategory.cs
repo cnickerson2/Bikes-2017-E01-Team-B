@@ -8,6 +8,7 @@ namespace BikesData.POCOs
 {
     public class OnlineCategory
     {
+        public int CategoryId { get; set; }
         public string Description { get; set; }
         public int Parts { get; set; }
     }

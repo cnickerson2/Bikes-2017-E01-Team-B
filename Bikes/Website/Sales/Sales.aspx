@@ -64,6 +64,8 @@
                     </asp:LinkButton><br />
                 </ItemTemplate>
                 <SelectedItemTemplate>
+                    <asp:HiddenField ID="CategoryIdValue" runat="server"
+                        Value='<%# Eval("CategoryId") %>' />
                     <asp:LinkButton ID="CategoryButton" runat="server"
                         CssClass="btn btn-link category categorySelected" Enabled="false">
                         <asp:Label ID="Description" runat="server" Text='<%# Eval("Description") %>'
