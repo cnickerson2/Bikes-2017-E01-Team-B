@@ -43,8 +43,7 @@
     </style>
 
     <h1>Part Catalog
-        <!-- Placeholder image: Need Sales logo. -->
-        <img src="../Content/Images/logo.png" />
+        <img src="../Content/Images/catalogLogo.svg" style="width: 2em;" />
         Available online and in-stores</h1>
 
     <uc1:MessageUserControl runat="server" ID="MessageUserControl" />
