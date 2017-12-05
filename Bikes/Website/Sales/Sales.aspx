@@ -1,5 +1,8 @@
 ﻿<%@ Page Title="Sales" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Sales.aspx.cs" Inherits="Sales_Sales" %>
 
+<%@ Register Src="~/UserControls/MessageUserControl.ascx" TagPrefix="uc1" TagName="MessageUserControl" %>
+
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
     <style type="text/css">
         .category {
@@ -43,6 +46,8 @@
         <!-- Placeholder image: Need Sales logo. -->
         <img src="../Content/Images/logo.png" />
         Available online and in-stores</h1>
+
+    <uc1:MessageUserControl runat="server" ID="MessageUserControl" />
 
     <div class="row">
         <h2 class="col-md-3">Categories</h2>
