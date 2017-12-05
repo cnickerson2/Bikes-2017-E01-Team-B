@@ -5,6 +5,8 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <h2><%: Title %>.</h2>
 
+    <asp:Label ID="Message" runat="server"></asp:Label>
+
     <div class="row">
         <div class="col-md-8">
             <section id="loginForm">
