@@ -7,11 +7,13 @@ using System.Web.UI.WebControls;
 
 public partial class Sales_Sales : System.Web.UI.Page
 {
+    private const string EMPLOYEE_ERROR = "You are unable to use your employee account to shop online.";
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (User.IsInRole("Employee"))
         {
-            // Warn the user, use the EMPLOYEE_ERROR in Checkout.
+            MessageUserControl.ShowInfo("Unable to Purchase", EMPLOYEE_ERROR);
         }
 
         if (!IsPostBack)
