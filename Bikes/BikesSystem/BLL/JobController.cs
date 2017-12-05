@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace BikesSystem.BLL
 {
+    [DataObject]
     public class JobController
     {
         [DataObjectMethod(DataObjectMethodType.Select,false)]
@@ -22,7 +23,7 @@ namespace BikesSystem.BLL
         }
 
         [DataObjectMethod(DataObjectMethodType.Select, false)]
-        public List<CurrentJob> CurrentJob_List()
+        public List<CurrentJob> List_CurrentJobs()
         {
             using (var context = new EBikesContext())
             {
