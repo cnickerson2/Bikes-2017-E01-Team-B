@@ -18,20 +18,19 @@ namespace BikesSystem.BLL
         {
             using (EBikesContext context = new EBikesContext())
             {
-                IEnumerable<OnlineCategory> results = from category in context.Categories.ToList()
+                List<OnlineCategory> results = (from category in context.Categories.ToList()
                                    where GetPartsCount(category) > 0
                                    select new OnlineCategory
                                    {
                                        Description = category.Description,
                                        Parts = GetPartsCount(category)
-                                   };
-                // TODO: Find Prepend reference. Need it to Add the All category.
-                //results.Prepend(new OnlineCategory
-                //{
-                //    Description = "All",
-                //    Parts = results.Sum((oCategory) => oCategory.Parts)
-                //});
-                return results.ToList();
+                                   }).ToList();
+                results.Insert(0, new OnlineCategory
+                {
+                    Description = "All",
+                    Parts = results.Sum((oCategory) => oCategory.Parts)
+                });
+                return results;
             }  
         }
 
