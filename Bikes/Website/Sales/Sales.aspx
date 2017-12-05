@@ -12,11 +12,41 @@
     </div>
     <div class="row">
         <div class="col-md-3">
-            <p>Categories</p>
+            <asp:ListView ID="CategoriesList" runat="server" DataSourceID="CategoriesListODS">
+                <LayoutTemplate>
+                    <div runat="server" id="itemPlaceholderContainer" style=""><span runat="server" id="itemPlaceholder" /></div>
+                </LayoutTemplate>
+                <ItemTemplate>
+                    <span>Description:
+                        <asp:Label Text='<%# Eval("Description") %>' runat="server" ID="DescriptionLabel" /><br />
+                        Parts:
+                        <asp:Label Text='<%# Eval("Parts") %>' runat="server" ID="PartsLabel" /><br />
+                        <br />
+                    </span>
+                </ItemTemplate>
+                <SelectedItemTemplate>
+                    <span><asp:Label Text='<%# Eval("Description") %>' runat="server" ID="DescriptionLabel"
+                        CssClass="btn btn-default" />
+                        <asp:Label Text='<%# Eval("Parts") %>' runat="server" ID="PartsLabel" Enabled="false"
+                            CssClass="btn" /><br />
+                        <br />
+                    </span>
+                </SelectedItemTemplate>
+                <EmptyDataTemplate>
+                    <span>No data was returned.</span>
+                </EmptyDataTemplate>
+            </asp:ListView>
+            <br /><br />
+            <asp:HyperLink ID="CheckoutLink" runat="server"
+                NavigateUrl="~/Sales/Checkout.aspx">Checkout</asp:HyperLink>
         </div>
         <div class="col-md-9">
-            <p>Parts</p>
+            <asp:ListView ID="PartsList" runat="server"></asp:ListView>
         </div>
     </div>
-</asp:Content>
 
+    <asp:ObjectDataSource ID="CategoriesListODS" runat="server"
+        OldValuesParameterFormatString="original_{0}"
+        SelectMethod="GetCategories"
+        TypeName="BikesSystem.BLL.CategoryController"></asp:ObjectDataSource>
+</asp:Content>
