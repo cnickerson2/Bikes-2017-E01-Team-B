@@ -17,7 +17,7 @@ public partial class Sales_Checkout : System.Web.UI.Page
             Response.Redirect("../Account/Login.aspx?message=" +
                 HttpUtility.UrlEncode(CHECKOUT_AUTH_ERROR));
         }
-        else if (User.IsInRole("Employee"))
+        else if (User.IsInRole("Staff"))
         {
             Response.Redirect("../Account/Login.aspx?message=" +
                 HttpUtility.UrlEncode(EMPLOYEE_ERROR));
