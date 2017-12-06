@@ -108,6 +108,35 @@ namespace BikesSystem.BLL.Security
             }
             return verifiedUserName;
         }
+        
+        public IdentityResult CreatePublic(ApplicationUser user, string password)
+        {
+            IdentityResult result;
+            try
+            {
+                using (EBikesContext context = new EBikesContext())
+                {
+                    OnlineCustomer customer = new OnlineCustomer
+                    {
+                        UserName = user.UserName,
+                        TrackingCookie = Guid.NewGuid(),
+                        CreatedOn = DateTime.Now
+                    };
+                    context.OnlineCustomers.Add(customer);
+                    context.SaveChanges();
+                    user.OnlineCustomerId = customer.OnlineCustomerID;
+                    result = this.Create(user, password);
+                }
+            }
+            catch (Exception exc)
+            {
+                while (exc.InnerException != null)
+                    exc = exc.InnerException;
+                result = new IdentityResult(exc.Message);
+            }
+
+            return result;
+        }
 
         #region UserRole Administration
 
