@@ -37,6 +37,7 @@ public partial class Receiving_Receiving : System.Web.UI.Page
 
     protected void ReceiveBtn_Command(object sender, CommandEventArgs e)
     {
+        
         try
         {
             List<OutstandingPurchaseOrderDetails> outDetails = new List<OutstandingPurchaseOrderDetails>();
@@ -62,16 +63,9 @@ public partial class Receiving_Receiving : System.Web.UI.Page
 
             DataBind();
         }
-        catch (DbEntityValidationException ex)
+        catch (Exception ex)
         {
-            foreach (var eve in ex.EntityValidationErrors)
-            {
-                foreach (var ve in eve.ValidationErrors)
-                {
-                    Message.Text += string.Format("Error: \"{0}\" <br />",
-                        ve.ErrorMessage);
-                }
-            }
+            Message.Text = ex.Message;
         }
     }
 
@@ -80,5 +74,10 @@ public partial class Receiving_Receiving : System.Web.UI.Page
     protected void ReturningAmount_TextChanged(object sender, EventArgs e)
     {
         UnorderedCartListView.Visible = true;
+    }
+
+    protected void CheckForException(object sender, ObjectDataSourceStatusEventArgs e)
+    {
+        MessageUserControl.HandleDataBoundException(e);
     }
 }

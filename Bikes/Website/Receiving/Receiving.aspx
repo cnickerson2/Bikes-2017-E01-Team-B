@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="Receiving" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Receiving.aspx.cs" Inherits="Receiving_Receiving" %>
 
-
+<%@ Register Src="~/UserControls/MessageUserControl.ascx" TagPrefix="uc1" TagName="MessageUserControl" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
     <style>
@@ -11,6 +11,7 @@
         }
     </style>
     <h1>Receiving</h1>
+    <uc1:MessageUserControl runat="server" ID="MessageUserControl" />
     <asp:Label ID="Message" runat="server" Text="" Font-Size="Large" ForeColor="#CC0000"></asp:Label>
     <div class="row">
         <div class="col-md-12">
@@ -235,13 +236,13 @@
         </div>
     </div>
     
-    <asp:ObjectDataSource ID="OutstandingOrderODS" runat="server" OldValuesParameterFormatString="original_{0}" SelectMethod="PurchaseOrders_ListOutstandingOrders" TypeName="BikesSystem.BLL.PurchaseOrderController"></asp:ObjectDataSource>
-    <asp:ObjectDataSource ID="SelectedOrderODS" runat="server" OldValuesParameterFormatString="original_{0}" SelectMethod="PurchaseOrderDetails_GetOutstandingOrdersByPurchaseOrder" TypeName="BikesSystem.BLL.PurchaseOrderDetailsController">
+    <asp:ObjectDataSource ID="OutstandingOrderODS" runat="server" OldValuesParameterFormatString="original_{0}" SelectMethod="PurchaseOrders_ListOutstandingOrders" TypeName="BikesSystem.BLL.PurchaseOrderController" OnDeleted="CheckForException" OnInserted="CheckForException" OnSelected="CheckForException" OnUpdated="CheckForException"></asp:ObjectDataSource>
+    <asp:ObjectDataSource ID="SelectedOrderODS" runat="server" OldValuesParameterFormatString="original_{0}" SelectMethod="PurchaseOrderDetails_GetOutstandingOrdersByPurchaseOrder" TypeName="BikesSystem.BLL.PurchaseOrderDetailsController" OnDeleted="CheckForException" OnInserted="CheckForException" OnSelected="CheckForException" OnUpdated="CheckForException">
         <SelectParameters>
             <asp:ControlParameter ControlID="OutstandingOrderGridView" PropertyName="SelectedValue" Name="purchaseOrderID" Type="Int32"></asp:ControlParameter>
         </SelectParameters>
     </asp:ObjectDataSource>
-    <asp:ObjectDataSource ID="UnorderedCartODS" runat="server" DataObjectTypeName="BikesData.Entities.UnorderedPurchaseItemCart" DeleteMethod="UnorderedCartItems_Delete" InsertMethod="UnorderedCartItems_Add" OldValuesParameterFormatString="original_{0}" SelectMethod="UnorderedCartItems_List" TypeName="BikesSystem.BLL.UnorderedPurchaseItemCartController">
+    <asp:ObjectDataSource ID="UnorderedCartODS" runat="server" DataObjectTypeName="BikesData.Entities.UnorderedPurchaseItemCart" DeleteMethod="UnorderedCartItems_Delete" InsertMethod="UnorderedCartItems_Add" OldValuesParameterFormatString="original_{0}" SelectMethod="UnorderedCartItems_List" TypeName="BikesSystem.BLL.UnorderedPurchaseItemCartController" OnDeleted="CheckForException" OnInserted="CheckForException" OnSelected="CheckForException" OnUpdated="CheckForException">
         <DeleteParameters>
             <asp:Parameter Name="CartID" Type="Int32"></asp:Parameter>
         </DeleteParameters>
