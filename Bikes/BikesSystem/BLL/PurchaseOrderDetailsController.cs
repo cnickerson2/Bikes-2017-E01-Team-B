@@ -38,6 +38,7 @@ namespace BikesSystem.BLL
                                   VendorName = x.PurchaseOrder.Vendor.VendorName,
                                   PartID = x.PartID,
                                   PartDescription = x.Part.Description,
+                                  VendorPartNumber = x.VendorPartNumber,
                                   QuantityOnOrder = x.Quantity,
                                   //If there is some received already, remove that amount from the Ordered, else just show the ordered
                                   QuantityOutstanding = x.ReceiveOrderDetails.Count.Equals(0) ? x.Quantity : x.Quantity - (from y in x.ReceiveOrderDetails
