@@ -53,7 +53,8 @@
         <img src="../Content/Images/catalogLogo.svg" class="logo" />
         Available online and in-stores</h1>
 
-    <uc1:MessageUserControl runat="server" ID="MessageUserControl" />
+    <uc1:MessageUserControl runat="server" ID="MessageUserControl"
+        OnPreRender="MessageUserControl_PreRender" />
 
     <div class="row">
         <h2 class="col-md-3">Categories</h2>

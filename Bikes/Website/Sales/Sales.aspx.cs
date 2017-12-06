@@ -18,6 +18,11 @@ public partial class Sales_Sales : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        
+    }
+
+    protected void MessageUserControl_PreRender(object sender, EventArgs e)
+    {
         if (User.IsInRole("Staff"))
         {
             MessageUserControl.ShowInfo("Unable to Purchase", EMPLOYEE_ERROR);
