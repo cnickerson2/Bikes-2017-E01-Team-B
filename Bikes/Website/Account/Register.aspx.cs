@@ -12,7 +12,7 @@ public partial class Account_Register : Page
     {
         var manager = new UserManager();
         var user = new ApplicationUser() { UserName = UserName.Text };
-        IdentityResult result = manager.Create(user, Password.Text);
+        IdentityResult result = manager.CreatePublic(user, Password.Text);
         if (result.Succeeded)
         {
             IdentityHelper.SignIn(manager, user, isPersistent: false);
