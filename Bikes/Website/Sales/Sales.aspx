@@ -61,14 +61,17 @@
     </div>
     <div class="row">
         <div class="col-md-2">
+            <asp:HiddenField ID="CategoryIdValue" runat="server"
+                Value="0" />
             <asp:ListView ID="CategoriesList" runat="server" DataSourceID="CategoriesListODS"
-                SelectedIndex="0" OnDataBound="CategoriesList_DataBound">
+                SelectedIndex="0" OnItemCommand="CategoriesList_ItemCommand">
                 <LayoutTemplate>
                     <div runat="server" id="itemPlaceholderContainer" style=""><span runat="server" id="itemPlaceholder" /></div>
                 </LayoutTemplate>
                 <ItemTemplate>
                     <asp:LinkButton ID="CategoryButton" runat="server"
-                        CssClass="btn btn-link category" CommandName="Select">
+                        CssClass="btn btn-link category"
+                        CommandName="Select" CommandArgument='<%# Eval("CategoryId") %>'>
                         <asp:Label ID="Description" runat="server" Text='<%# Eval("Description") %>'
                             CssClass="categoryDescription" />
                         <asp:Label ID="Parts" runat="server" Text='<%# Eval("Parts") %>'
@@ -76,8 +79,6 @@
                     </asp:LinkButton><br />
                 </ItemTemplate>
                 <SelectedItemTemplate>
-                    <asp:HiddenField ID="CategoryIdValue" runat="server"
-                        Value='<%# Eval("CategoryId") %>' />
                     <asp:LinkButton ID="CategoryButton" runat="server"
                         CssClass="btn btn-link category categorySelected" Enabled="false">
                         <asp:Label ID="Description" runat="server" Text='<%# Eval("Description") %>'
@@ -93,15 +94,13 @@
         </div>
         <div class="col-md-1"></div>
         <div class="col-md-9">
-            <asp:ListView ID="PartsList" runat="server">
+            <asp:ListView ID="PartsList" runat="server" OnPreRender="PartsList_PreRender">
                 <LayoutTemplate>
                     <div runat="server" id="itemPlaceholderContainer"><span runat="server" id="itemPlaceholder" /></div>
                     <div>
-                        <asp:DataPager runat="server" ID="DataPager1">
+                        <asp:DataPager runat="server" ID="DataPager">
                             <Fields>
-                                <asp:NextPreviousPagerField ButtonType="Button" ShowFirstPageButton="True" ShowNextPageButton="False" ShowPreviousPageButton="False"></asp:NextPreviousPagerField>
-                                <asp:NumericPagerField></asp:NumericPagerField>
-                                <asp:NextPreviousPagerField ButtonType="Button" ShowLastPageButton="True" ShowNextPageButton="False" ShowPreviousPageButton="False"></asp:NextPreviousPagerField>
+                                <asp:NumericPagerField ButtonType="Button" NumericButtonCssClass="btn"></asp:NumericPagerField>
                             </Fields>
                         </asp:DataPager>
                     </div>
@@ -119,9 +118,10 @@
                             </RoleGroups>
                             <LoggedInTemplate>
                                 <asp:LinkButton ID="AddButton" runat="server"
-                                    CssClass="btn btn-primary">
-                                    <%# GetAddContents(int.Parse(Eval("Added").ToString())) %>
-                                </asp:LinkButton>
+                                    CssClass="btn btn-primary"
+                                    Text='<%# int.Parse(Eval("Added").ToString()) > 0 ?
+                                        string.Format(ADD_EXTRA, Eval("Added")) :
+                                        "Add" %>'></asp:LinkButton>
                                 <asp:TextBox ID="AddAmount" runat="server" Text="1"
                                     CssClass="numberBox"></asp:TextBox>
                             </LoggedInTemplate>
