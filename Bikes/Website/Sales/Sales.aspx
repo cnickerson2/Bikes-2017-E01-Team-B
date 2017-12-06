@@ -89,8 +89,18 @@
                 </SelectedItemTemplate>
             </asp:ListView>
             <br /><br />
-            <asp:HyperLink ID="CheckoutLink" runat="server"
-                NavigateUrl="~/Sales/Checkout.aspx">Checkout</asp:HyperLink>
+            <asp:LoginView ID="LoginView" runat="server">
+                <RoleGroups>
+                    <asp:RoleGroup Roles="Staff">
+                        <ContentTemplate>
+                        </ContentTemplate>
+                    </asp:RoleGroup>
+                </RoleGroups>
+                <LoggedInTemplate>
+                    <asp:HyperLink ID="CheckoutLink" runat="server"
+                        NavigateUrl="~/Sales/Checkout.aspx">Checkout</asp:HyperLink>
+                </LoggedInTemplate>
+            </asp:LoginView>
         </div>
         <div class="col-md-1"></div>
         <div class="col-md-9">
