@@ -44,16 +44,93 @@ namespace BikesSystem.BLL
 
         }
 
-        [DataObjectMethod(DataObjectMethodType.Update,false)]
-        public int PurchaseOrder_CloseOrder(int purchaseOrderID)
+        [DataObjectMethod(DataObjectMethodType.Update, false)]
+        public int PurchaseOrder_ReceiveOrder(List<OutstandingPurchaseOrderDetails> outstandingDetailsList)
         {
             using (var context = new EBikesContext())
             {
-                PurchaseOrder closingPurchaseOrder = context.PurchaseOrders.Find(purchaseOrderID);
+                ReceiveOrder newReceiveOrder = new ReceiveOrder
+                {
+                    //All the ones coming in will have the same POID
+                    PurchaseOrderID = outstandingDetailsList[0].PurchaseOrderID,
+                    ReceiveDate = DateTime.UtcNow
+                };
+                //Stage a new Receive Order
+                newReceiveOrder = context.ReceiveOrders.Add(newReceiveOrder);
+                //context.SaveChanges();
 
-                closingPurchaseOrder.Closed = true;
+                //To check if we can close off the order
+                bool isOrderCompleted = true;
 
-                context.Entry(closingPurchaseOrder).State = System.Data.Entity.EntityState.Modified;
+                foreach (OutstandingPurchaseOrderDetails outDetail in outstandingDetailsList)
+                {
+
+                    if (outDetail.ReceivingAmount > 0)
+                    {
+                        //New ReceiveOrderDetail made for each part received
+                        ReceiveOrderDetail newReceiveOrderDetail = new ReceiveOrderDetail
+                        {
+                            ReceiveOrderID = newReceiveOrder.ReceiveOrderID,
+                            PurchaseOrderDetailID = outDetail.PurchaseOrderDetailID,
+                            QuantityReceived = outDetail.ReceivingAmount
+                        };
+                        newReceiveOrderDetail = context.ReceiveOrderDetails.Add(newReceiveOrderDetail);
+
+                        //Increase QuantityOnHand of Part
+                        Part receivedPart = context.Parts.Find(outDetail.PartID);
+                        receivedPart.QuantityOnHand += outDetail.ReceivingAmount;
+                        //Reduce QuantityOnOrder of Part
+                        receivedPart.QuantityOnOrder -= outDetail.ReceivingAmount;
+                        //Update the Part
+                        context.Entry(receivedPart).State = System.Data.Entity.EntityState.Modified;
+                        //context.SaveChanges();
+                    }
+                    if (outDetail.ReturningAmount > 0)
+                    {
+                        Part receivedPart = context.Parts.Find(outDetail.PartID);
+
+                        //ReturnOrderDetail made for each returning item
+
+                        ReturnedOrderDetail newReturnOrderDetail = new ReturnedOrderDetail
+                        {
+                            ReceiveOrderID = newReceiveOrder.ReceiveOrderID,
+                            PurchaseOrderDetailID = outDetail.PurchaseOrderDetailID,
+                            ItemDescription = outDetail.PartDescription,
+                            Quantity = outDetail.ReturningAmount,
+                            Reason = outDetail.ReturningReason,
+                            VendorPartNumber = outDetail.VendorPartNumber
+                        };
+
+                        newReturnOrderDetail = context.ReturnedOrderDetails.Add(newReturnOrderDetail);
+
+                        //Add this to the Cart
+                        UnorderedPurchaseItemCart newCartItem = new UnorderedPurchaseItemCart
+                        {
+                            PurchaseOrderNumber = outDetail.PurchaseOrderNumber == null ? 0 : (int)outDetail.PurchaseOrderNumber,
+                            Description = outDetail.PartDescription,
+                            VendorPartNumber = string.IsNullOrWhiteSpace(outDetail.VendorPartNumber) ? "N/A" : outDetail.VendorPartNumber,
+                            Quantity = outDetail.ReturningAmount
+                        };
+                        newCartItem = context.UnorderedPurchaseItemCarts.Add(newCartItem);
+                        //context.SaveChanges();
+                    }
+                    if (outDetail.QuantityOutstanding - outDetail.ReceivingAmount > 0)
+                    {
+                        //Order is not complete if there are receiving amounts still
+                        isOrderCompleted = false;
+                    }
+                }
+
+                //Complete the order
+                if (isOrderCompleted)
+                {
+                    PurchaseOrder closingPurchaseOrder = context.PurchaseOrders.Find(outstandingDetailsList[0].PurchaseOrderID);
+
+                    closingPurchaseOrder.Closed = true;
+
+                    context.Entry(closingPurchaseOrder).State = System.Data.Entity.EntityState.Modified;
+                    
+                }
                 return context.SaveChanges();
             }
         }
