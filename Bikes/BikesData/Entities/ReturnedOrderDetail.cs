@@ -20,8 +20,8 @@ namespace BikesData.Entities
 
         public int Quantity { get; set; }
 
-        [Required(ErrorMessage = "The return order's reason can not be longer than 50 characters.")]
-        [StringLength(50)]
+        [Required(ErrorMessage = "The return order's reason is required.")]
+        [StringLength(50, ErrorMessage = "The return order's reason can not be longer than 50 characters.")]
         public string Reason { get; set; }
 
         [StringLength(50, ErrorMessage = "The return order's vendor part number can not be longer than 50 characters.")]
