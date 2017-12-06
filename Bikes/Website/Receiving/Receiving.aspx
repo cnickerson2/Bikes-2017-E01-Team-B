@@ -11,6 +11,7 @@
         }
     </style>
     <h1>Receiving</h1>
+    <asp:Label ID="Message" runat="server" Text="" Font-Size="Large" ForeColor="#CC0000"></asp:Label>
     <div class="row">
         <div class="col-md-12">
             
@@ -130,7 +131,7 @@
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Returning" HeaderStyle-CssClass="text-center" ItemStyle-HorizontalAlign="Center" ItemStyle-Width="75px" ItemStyle-CssClass="paddingCell">
                             <ItemTemplate>
-                                <asp:TextBox ID="ReturningAmount" runat="server" Height="16px" TextMode="Number" ToolTip="Return #" Width="50px" min="0" max="9999" CssClass="text-right" Text='<%# Bind("ReturningAmount") %>'></asp:TextBox>
+                                <asp:TextBox ID="ReturningAmount" runat="server" Height="16px" TextMode="Number" ToolTip="Return #" Width="50px" min="0" max="9999" CssClass="text-right" Text='<%# Bind("ReturningAmount") %>' OnTextChanged="ReturningAmount_TextChanged"></asp:TextBox>
                             </ItemTemplate>
 
                             <HeaderStyle CssClass="text-center"></HeaderStyle>
@@ -165,6 +166,71 @@
                 <br />
                 <asp:Button ID="ReceiveBtn" runat="server" Text="Receive" OnCommand="ReceiveBtn_Command" /> &nbsp; &nbsp; &nbsp;
                 <asp:Button ID="ForceCloseBtn" runat="server" Text="Force Closure" />
+                <br />
+                <asp:ListView ID="UnorderedCartListView" runat="server" DataSourceID="UnorderedCartODS" InsertItemPosition="LastItem" Visible ="false">
+                    
+                    <EmptyDataTemplate>
+                        <table runat="server" style="background-color: #FFFFFF; border-collapse: collapse; border-color: #999999; border-style: none; border-width: 1px;">
+                            <tr>
+                                <td>No data was returned.</td>
+                            </tr>
+                        </table>
+                    </EmptyDataTemplate>
+                    <InsertItemTemplate>
+                        <tr style="">
+                            <td>
+                                <asp:LinkButton runat="server" CommandName="Insert" Text="Insert" ID="InsertButton" />
+                            </td>
+                            <td>
+                                <asp:TextBox Text='<%# Bind("VendorPartNumber") %>' runat="server" ID="VendorPartNumberTextBox" /></td>
+                            <td>
+                                <asp:TextBox Text='<%# Bind("Description") %>' runat="server" ID="DescriptionTextBox" /></td>
+                            <td>
+                                <asp:TextBox Text='<%# Bind("Quantity") %>' runat="server" ID="QuantityTextBox" TextMode="Number" Min="0" CssClass="text-right" Width ="50px" /></td>
+                        </tr>
+                    </InsertItemTemplate>
+                    <ItemTemplate>
+                        <tr style="background-color: #DCDCDC; color: #000000;">
+                            <td>
+                                <asp:LinkButton runat="server" CommandName="Delete" Text="Remove" ID="DeleteButton" />
+                            </td>
+                            <td>
+                                <asp:Label Text='<%# Eval("VendorPartNumber") %>' runat="server" ID="VendorPartNumberLabel" /></td>
+                            <td>
+                                <asp:Label Text='<%# Eval("Description") %>' runat="server" ID="DescriptionLabel" /></td>
+                            <td>
+                                <asp:Label Text='<%# Eval("Quantity") %>' runat="server" ID="QuantityLabel" Width ="50px" CssClass="text-right" /></td>
+                        </tr>
+                    </ItemTemplate>
+                    <LayoutTemplate>
+                        <table runat="server">
+                            <tr runat="server">
+                                <td runat="server">
+                                    <table runat="server" id="itemPlaceholderContainer" style="background-color: #FFFFFF; border-collapse: collapse; border-color: #999999; border-style: none; border-width: 1px; font-family: Verdana, Arial, Helvetica, sans-serif;" border="1">
+                                        <tr runat="server" style="background-color: #DCDCDC; color: #000000;">
+                                            <th runat="server"></th>
+                                            <th runat="server">Vendor Part #</th>
+                                            <th runat="server">Description</th>
+                                            <th runat="server">Qty</th>
+                                        </tr>
+                                        <tr runat="server" id="itemPlaceholder"></tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr runat="server">
+                                <td runat="server" style="text-align: center; background-color: #CCCCCC; font-family: Verdana, Arial, Helvetica, sans-serif; color: #000000;">
+                                    <asp:DataPager runat="server" ID="DataPager1">
+                                        <Fields>
+                                            <asp:NextPreviousPagerField ButtonType="Button" ShowFirstPageButton="True" ShowNextPageButton="False" ShowPreviousPageButton="False"></asp:NextPreviousPagerField>
+                                            <asp:NumericPagerField></asp:NumericPagerField>
+                                            <asp:NextPreviousPagerField ButtonType="Button" ShowLastPageButton="True" ShowNextPageButton="False" ShowPreviousPageButton="False"></asp:NextPreviousPagerField>
+                                        </Fields>
+                                    </asp:DataPager>
+                                </td>
+                            </tr>
+                        </table>
+                    </LayoutTemplate>
+                </asp:ListView>
             </div>
         </div>
     </div>
@@ -175,5 +241,18 @@
             <asp:ControlParameter ControlID="OutstandingOrderGridView" PropertyName="SelectedValue" Name="purchaseOrderID" Type="Int32"></asp:ControlParameter>
         </SelectParameters>
     </asp:ObjectDataSource>
+    <asp:ObjectDataSource ID="UnorderedCartODS" runat="server" DataObjectTypeName="BikesData.Entities.UnorderedPurchaseItemCart" DeleteMethod="UnorderedCartItems_Delete" InsertMethod="UnorderedCartItems_Add" OldValuesParameterFormatString="original_{0}" SelectMethod="UnorderedCartItems_List" TypeName="BikesSystem.BLL.UnorderedPurchaseItemCartController">
+        <DeleteParameters>
+            <asp:Parameter Name="CartID" Type="Int32"></asp:Parameter>
+        </DeleteParameters>
+    </asp:ObjectDataSource>
     
+    <script>
+        function showListView(elem)
+        {
+            if (elem.Text != "")
+                document.getElementById('UnorderedCartListView').Visible = true;
+        }
+    </script>
+
 </asp:Content>
