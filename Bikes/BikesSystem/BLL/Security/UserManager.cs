@@ -14,6 +14,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Principal;
 
 namespace BikesSystem.BLL.Security
 {
@@ -116,13 +117,8 @@ namespace BikesSystem.BLL.Security
             {
                 using (EBikesContext context = new EBikesContext())
                 {
-                    OnlineCustomer customer = new OnlineCustomer
-                    {
-                        UserName = user.UserName,
-                        TrackingCookie = Guid.NewGuid(),
-                        CreatedOn = DateTime.Now
-                    };
-                    context.OnlineCustomers.Add(customer);
+                    OnlineCustomer customer = new OnlineCustomerController()
+                        .CreateOnlineCustomer(user.UserName, context);
                     context.SaveChanges();
                     user.OnlineCustomerId = customer.OnlineCustomerID;
                     result = this.Create(user, password);

@@ -40,19 +40,7 @@ namespace BikesSystem.BLL
         {
             using (var context = new EBikesContext())
             {
-                // TODO: Migrate getting the user's cart to the ShoppingCart controller.
-                UserManager users = new UserManager();
-                ShoppingCart cart = null;
-                ApplicationUser appUser = users.FindByNameAsync(user.Identity.Name).Result;
-
-                if (appUser != null)
-                {
-                    OnlineCustomer customerUser = context.OnlineCustomers.Where((customer) =>
-                        customer.OnlineCustomerID == appUser.OnlineCustomerId).FirstOrDefault();
-
-                    if (customerUser != null)
-                        cart = customerUser.ShoppingCarts.FirstOrDefault();
-                }
+                ShoppingCart cart = new ShoppingCartController().GetShoppingCart(user, context);
                 
                 return (from part in context.Parts.ToList()
                         where categoryId == 0 || part.CategoryID == categoryId

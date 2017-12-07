@@ -4,6 +4,8 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+using System.Linq;
+
 namespace BikesData.Entities
 {
     [Table("OnlineCustomer")]
@@ -26,5 +28,13 @@ namespace BikesData.Entities
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ShoppingCart> ShoppingCarts { get; set; }
+
+        public ShoppingCart ShoppingCart
+        {
+            get
+            {
+                return ShoppingCarts.FirstOrDefault();
+            }
+        }
     }
 }
