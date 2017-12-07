@@ -4,50 +4,7 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
-    <style type="text/css">
-        .logo {
-            width: 2em;
-        }
-
-        .category {
-            width: 100%;
-            text-decoration: none;
-            text-align: left;
-            color: #000;
-        }
-
-        .category:hover {
-            color: #000;
-        }
-
-        .categoryDescription {
-            padding-left: 1em;
-        }
-
-        .numberBox {
-            border: solid 1px #9e9e9e;
-            text-align: center;
-            width: 2em;
-            border-radius: 4px;
-        }
-
-        .categoryPart {
-            float: right;
-        }
-
-        .categorySelected {
-            background-color: #eaeaea;
-            border-radius: 4px;
-        }
-
-        .categorySelected:hover {
-            background-color: #dedede;
-        }
-
-        .categoryDescriptionSelected {
-            padding-left: 0px;
-        }
-    </style>
+    <link href="../Content/sales.css" rel="stylesheet" />
 
     <h1>Part Catalog
         <img src="../Content/Images/catalogLogo.svg" class="logo" />
