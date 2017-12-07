@@ -21,6 +21,7 @@ public partial class Receiving_Receiving : System.Web.UI.Page
         {
             OutstandingDetailsGridView.Enabled = true;
             OutstandingDetailsGridView.Visible = true;
+            
         }
     }
 
@@ -37,29 +38,95 @@ public partial class Receiving_Receiving : System.Web.UI.Page
 
     protected void ReceiveBtn_Command(object sender, CommandEventArgs e)
     {
-        
-        try
+       try
         {
+            Message.Text = "";
+            bool noErrors = true;
             List<OutstandingPurchaseOrderDetails> outDetails = new List<OutstandingPurchaseOrderDetails>();
             foreach (GridViewRow row in OutstandingDetailsGridView.Rows)
             {
+                int purchaseOrderDetailID = 0;
+                int purchaseOrderID = 0;
+                int partID = 0;
+                int quantityOnOrder = 0;
+                int quantityOutstanding = 0;
+                int receivingAmount = 0;
+                int returningAmount = 0;
+                string partDescription = (row.FindControl("PartDescription") as Label).Text;
+                string returningReason = (row.FindControl("ReturningReason") as TextBox).Text;
+                string vendorPartNumber = (row.FindControl("VendorPartNumber") as Label).Text;
+
+
+                if (!int.TryParse((row.FindControl("PurchaseOrderDetailID") as Label).Text,out purchaseOrderDetailID))
+                {
+                    Message.Text += partDescription+"'s Purchase Order Detail ID must be an integer. <br />";
+                    noErrors = false;
+                }
+                if (!int.TryParse((row.FindControl("PurchaseOrderID") as Label).Text, out purchaseOrderID))
+                {
+                    Message.Text += partDescription + "'s Purchase Order ID must be an integer. <br />";
+                    noErrors = false;
+                }
+                if (!int.TryParse((row.FindControl("PartID") as Label).Text, out partID))
+                {
+                    Message.Text += partDescription + "'s Part ID must be an integer. <br />";
+                    noErrors = false;
+                }
+                if (!int.TryParse((row.FindControl("QuantityOnOrder") as Label).Text, out quantityOnOrder))
+                {
+                    Message.Text += partDescription + "'s Quantity On Order must be an integer. <br />";
+                    noErrors = false;
+                }
+                if (!int.TryParse((row.FindControl("QuantityOutstanding") as Label).Text, out quantityOutstanding))
+                {
+                    Message.Text += partDescription + "'s Quantity Outstanding must be an integer. <br />";
+                    noErrors = false;
+                }
+                if (!int.TryParse((row.FindControl("ReceivingAmount") as TextBox).Text, out receivingAmount))
+                {
+                    Message.Text += partDescription + "'s Receiving Amount must be an integer. <br />";
+                    noErrors = false;
+                }
+                if (!int.TryParse((row.FindControl("ReturningAmount") as TextBox).Text, out returningAmount))
+                {
+                    Message.Text += partDescription + "'s Returning Amount must be an integer. <br />";
+                    noErrors = false;
+                }
+                if (string.IsNullOrWhiteSpace(partDescription))
+                {
+                    Message.Text += "Part Description cannot be blank <br />";
+                    noErrors = false;
+                }
+                if (returningAmount > 0 && string.IsNullOrWhiteSpace(returningReason))
+                {
+                    Message.Text += partDescription + "'s returning reason cannot be blank when returning items <br />";
+                    noErrors = false;
+                }
                 OutstandingPurchaseOrderDetails outDetail = new OutstandingPurchaseOrderDetails
                 {
-                    PurchaseOrderDetailID = int.Parse((row.FindControl("PurchaseOrderDetailID") as Label).Text),
-                    PurchaseOrderID = int.Parse((row.FindControl("PurchaseOrderID") as Label).Text),
-                    PartID = int.Parse((row.FindControl("PartID") as Label).Text),
-                    PartDescription = (row.FindControl("PurchaseOrderDetailID") as Label).Text,
-                    QuantityOnOrder = int.Parse((row.FindControl("QuantityOnOrder") as Label).Text),
-                    QuantityOutstanding = int.Parse((row.FindControl("QuantityOutstanding") as Label).Text),
-                    ReceivingAmount = int.Parse((row.FindControl("ReceivingAmount") as TextBox).Text),
-                    ReturningAmount = int.Parse((row.FindControl("ReturningAmount") as TextBox).Text),
-                    ReturningReason = (row.FindControl("ReturningReason") as TextBox).Text,
-                    VendorPartNumber = (row.FindControl("VendorPartNumber") as Label).Text
+                    PurchaseOrderDetailID = purchaseOrderDetailID,
+                    PurchaseOrderID = purchaseOrderID,
+                    PartID = partID,
+                    PartDescription = partDescription,
+                    QuantityOnOrder = quantityOnOrder,
+                    QuantityOutstanding = quantityOutstanding,
+                    ReceivingAmount = receivingAmount,
+                    ReturningAmount = returningAmount,
+                    ReturningReason = returningReason,
+                    VendorPartNumber = string.IsNullOrWhiteSpace(vendorPartNumber) ? "N/A" : vendorPartNumber,
+                    PurchaseOrderNumber = string.IsNullOrWhiteSpace((row.FindControl("PurchaseOrderNumber") as Label).Text) ? 0 : int.Parse((row.FindControl("PurchaseOrderNumber") as Label).Text)
                 };
                 outDetails.Add(outDetail);
             }
-            PurchaseOrderController sysmgr = new PurchaseOrderController();
-            sysmgr.PurchaseOrder_ReceiveOrder(outDetails);
+            if (noErrors)
+            {
+                PurchaseOrderController sysmgr = new PurchaseOrderController();
+                sysmgr.PurchaseOrder_ReceiveOrder(outDetails);
+            }
+            else
+            {
+                Message.Text += "No change was made.";
+            }
 
             DataBind();
         }
