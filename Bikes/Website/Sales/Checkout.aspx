@@ -21,6 +21,7 @@
             margin: 20px;
             vertical-align: middle;
             font-size: 60px;
+            font-weight: 700;
             color: #777;
         }
 
@@ -46,6 +47,21 @@
             text-decoration: underline;
             font-size: 1.15em;
             font-weight: 500;
+        }
+
+        .shoppingLink {
+            float: right;
+            margin: 10px;
+            text-align: center;
+            font-size: .5em;
+        }
+
+        .shoppingLink img {
+            display: inline-block;
+        }
+
+        .tabHr {
+            clear: right;
         }
     </style>
 
@@ -77,9 +93,14 @@
         </div>
     </div>
     <a href="Sales.aspx" class="continueLink">Or continue shopping.</a>
-    <div class="tab-content">
+    <div class="tab-content container">
         <div class="tab-pane fade in active" id="view">
-            <p>View cart</p>
+            <h2>Your Shopping Cart
+                <a href="Sales.aspx" class="shoppingLink">
+                    <img src="../Content/Images/catalogLogo.svg" width="16" /><br />
+                    shopping
+                </a></h2>
+            <hr class="tabHr" />
         </div>
         <div class="tab-pane fade" id="info">
             <p>Purchase info</p>
