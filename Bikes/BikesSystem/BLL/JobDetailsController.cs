@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 
 namespace BikesSystem.BLL
 {
+    [DataObject]
     public class JobDetailsController
     {
         [DataObjectMethod(DataObjectMethodType.Select, false)]
-        public List<JobDetail> JobDetails_Get(int jobid)
+        public List<JobDetail> List_CurrentServices(int jobid)
         {
             using (var context = new EBikesContext())
             {
@@ -34,23 +35,33 @@ namespace BikesSystem.BLL
         }
 
         [DataObjectMethod(DataObjectMethodType.Insert, false)]
-        public void JobDetail_Add(JobDetail item)
+        public void Add_Service(JobDetail service)
         {
             using (var context = new EBikesContext())
             {
-                item = context.JobDetails.Add(item);
+                service = context.JobDetails.Add(service);
                 context.SaveChanges();
             }
         }
 
         [DataObjectMethod(DataObjectMethodType.Delete, false)]
-        public int JobDetail_Delete(int jobdetailid)
+        public int Remove_Service(JobDetail service)
         {
             using (var context = new EBikesContext())
             {
-                var existingItem = context.JobDetails.Find(jobdetailid);
+                var existingItem = context.JobDetails.Find(service);
                 context.JobDetails.Remove(existingItem);
                 return context.SaveChanges();
+            }
+        }
+
+        public void StartService(JobDetail service)
+        {
+            using (var context = new EBikesContext())
+            {
+                var existingItem = context.JobDetails.Find(service);
+                existingItem.Completed = false;
+                context.SaveChanges();
             }
         }
     }

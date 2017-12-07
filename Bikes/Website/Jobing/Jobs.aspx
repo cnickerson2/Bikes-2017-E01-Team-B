@@ -69,5 +69,16 @@
 
     <asp:ObjectDataSource ID="JobListODS" runat="server" OldValuesParameterFormatString="original_{0}" SelectMethod="List_CurrentJobs" TypeName="BikesSystem.BLL.JobController"></asp:ObjectDataSource>
 
+    <!--
+        USE THIS CODE FOR THE VIEW, REMOVE, DELETE, ETC LINKS
+                    <td>
+                        <asp:LinkButton ID="AddtoPlaylist" runat="server"
+                             CssClass="btn" CommandArgument='<%# Eval("TrackID") %>'>
+                            <span aria-hidden="true" class="glyphicon glyphicon-plus"></span>
+                        </asp:LinkButton>
+                        </td>
+                    <td>    
+    -->
+
 </asp:Content>
 

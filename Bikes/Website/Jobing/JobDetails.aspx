@@ -27,5 +27,19 @@
     <!--ListView Controls-->
     <asp:ListView ID="CurrentServicesListView" runat="server"></asp:ListView>
 
+    <asp:ObjectDataSource ID="CurrentServicesODS" runat="server" DataObjectTypeName="BikesData.Entities.JobDetail" DeleteMethod="Remove_Service" OldValuesParameterFormatString="original_{0}" SelectMethod="List_CurrentServices" TypeName="BikesSystem.BLL.JobDetailsController">
+
+    </asp:ObjectDataSource>
+
+    <!--
+        USE THIS CODE FOR THE VIEW, REMOVE, DELETE, ETC LINKS
+                    <td>
+                        <asp:LinkButton ID="AddtoPlaylist" runat="server"
+                             CssClass="btn" CommandArgument='<%# Eval("TrackID") %>'>
+                            <span aria-hidden="true" class="glyphicon glyphicon-plus"></span>
+                        </asp:LinkButton>
+                        </td>
+                    <td>    
+    -->
 </asp:Content>
 
