@@ -150,7 +150,12 @@
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="VendorPartNumber" Visible="False">
                             <ItemTemplate>
-                                <asp:Label ID="VendorPartNumber" runat="server" Text='<%# Bind("VendorPartNumber") %>'></asp:Label>
+                                <asp:Label ID="VendorPartNumber" runat="server" Text='<%# Eval("VendorPartNumber") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="PurchaseOrderNumber" Visible="False">
+                            <ItemTemplate>
+                                <asp:Label ID="PurchaseOrderNumber" runat="server" Text='<%# Eval("PurchaseOrderNumber") %>'></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
