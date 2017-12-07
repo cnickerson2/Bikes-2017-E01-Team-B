@@ -25,5 +25,6 @@
     <!--Sixth Level Controls-->
     <asp:ListView ID="JobDetailPartsListView" runat="server"></asp:ListView>
 
+    <asp:ObjectDataSource ID="ObjectDataSource1" runat="server"></asp:ObjectDataSource>
 </asp:Content>
 
