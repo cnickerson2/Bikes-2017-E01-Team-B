@@ -57,7 +57,7 @@ namespace BikesSystem.BLL
                 };
                 //Stage a new Receive Order
                 newReceiveOrder = context.ReceiveOrders.Add(newReceiveOrder);
-                //context.SaveChanges();
+                
 
                 //To check if we can close off the order
                 bool isOrderCompleted = true;
@@ -83,7 +83,7 @@ namespace BikesSystem.BLL
                         receivedPart.QuantityOnOrder -= outDetail.ReceivingAmount;
                         //Update the Part
                         context.Entry(receivedPart).State = System.Data.Entity.EntityState.Modified;
-                        //context.SaveChanges();
+                        
                     }
                     if (outDetail.ReturningAmount > 0)
                     {
@@ -112,7 +112,7 @@ namespace BikesSystem.BLL
                             Quantity = outDetail.ReturningAmount
                         };
                         newCartItem = context.UnorderedPurchaseItemCarts.Add(newCartItem);
-                        //context.SaveChanges();
+                        
                     }
                     if (outDetail.QuantityOutstanding - outDetail.ReceivingAmount > 0)
                     {
