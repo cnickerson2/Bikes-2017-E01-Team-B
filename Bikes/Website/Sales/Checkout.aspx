@@ -58,6 +58,8 @@
 
         .shoppingLink img {
             display: inline-block;
+            width: 1.5em;
+            height: 1.5em;
         }
 
         .tabHr {
@@ -97,8 +99,8 @@
         <div class="tab-pane fade in active" id="view">
             <h2>Your Shopping Cart
                 <a href="Sales.aspx" class="shoppingLink">
-                    <img src="../Content/Images/catalogLogo.svg" width="16" /><br />
-                    shopping
+                    <img src="../Content/Images/shoppingCart.svg" /><br />
+                    shop
                 </a></h2>
             <hr class="tabHr" />
         </div>
