@@ -254,7 +254,8 @@
     <div class="row">
         <div class="col-md-6">
             <div class="container">
-                <asp:ListView ID="RolesList" runat="server" DataSourceID="RolesODS" InsertItemPosition="LastItem">
+                <asp:ListView ID="RolesList" runat="server" DataSourceID="RolesODS"
+                    InsertItemPosition="LastItem" DataKeyNames="RoleId">
                     <LayoutTemplate>
                         <table runat="server" id="itemPlaceholderContainer" border="0">
                             <tr runat="server">
@@ -288,7 +289,7 @@
                                 <asp:HiddenField ID="RoleRowIndex" Value="<%# Container.DataItemIndex %>" runat="server" />
                                 <asp:HiddenField ID="RoleID" Value='<%# Eval("RoleId") %>' runat="server" />
                                 <asp:LinkButton ID="RoleRemoveButton" runat="server" CommandName="Delete"
-                                    CssClass="btn btn-primary">
+                                    CssClass="btn btn-primary" CausesValidation="false">
                                 <img src="../Content/Images/trashcanIcon.svg" alt="remove" width="16" height="16" />
                                 Remove</asp:LinkButton>
                             </td>
@@ -364,6 +365,9 @@
     <asp:ObjectDataSource ID="RolesODS" runat="server"
         OldValuesParameterFormatString="original_{0}"
         SelectMethod="ListAllRoles"
-        TypeName="BikesSystem.BLL.Security.RoleManager" DataObjectTypeName="BikesData.Entities.Security.RoleProfile" InsertMethod="AddRole"></asp:ObjectDataSource>
+        TypeName="BikesSystem.BLL.Security.RoleManager"
+        DataObjectTypeName="BikesData.Entities.Security.RoleProfile"
+        InsertMethod="AddRole"
+        DeleteMethod="RemoveRole"></asp:ObjectDataSource>
 </asp:Content>
 
