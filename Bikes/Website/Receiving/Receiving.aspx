@@ -171,14 +171,7 @@
                     <SortedDescendingHeaderStyle BackColor="#275353" />
                 </asp:GridView>
                 <br />
-                
-                <asp:Button ID="ReceiveBtn" runat="server" Text="Receive" OnCommand="ReceiveBtn_Command" Visible="false" /> &nbsp; &nbsp; &nbsp;
-                <asp:Button ID="ForceCloseBtn" runat="server" Text="Force Closure" Visible="false" OnClick="ForceCloseBtn_Click" />&nbsp; &nbsp; &nbsp;
-                <asp:TextBox ID="ForceCloseTextBox" runat="server" Height="20px" Width="275px" placeholder="Enter Force Closure Reason" Visible="False"></asp:TextBox>
-                <div class="modal">
-                </div>
-                <br />
-                <br />
+                <h3>Extra Items</h3>
                 <asp:ListView ID="UnorderedCartListView" runat="server" DataSourceID="UnorderedCartODS" InsertItemPosition="FirstItem" Visible ="false" DataKeyNames="CartID">
                     
                     <EmptyDataTemplate>
@@ -243,6 +236,14 @@
                         </table>
                     </LayoutTemplate>
                 </asp:ListView>
+                <br />
+                
+                <asp:Button ID="ReceiveBtn" runat="server" Text="Receive" OnCommand="ReceiveBtn_Command" Visible="false" /> &nbsp; &nbsp; &nbsp;
+                <asp:Button ID="ForceCloseBtn" runat="server" Text="Force Closure" Visible="false" OnClick="ForceCloseBtn_Click" />&nbsp; &nbsp; &nbsp;
+                <asp:TextBox ID="ForceCloseTextBox" runat="server" Height="20px" Width="275px" placeholder="Enter Force Closure Reason" Visible="False"></asp:TextBox>
+                <div class="modal">
+                </div>
+                
             </div>
         </div>
     </div>
