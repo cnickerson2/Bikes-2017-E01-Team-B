@@ -143,23 +143,30 @@ public partial class Receiving_Receiving : System.Web.UI.Page
 
     protected void ForceCloseBtn_Click(object sender, EventArgs e)
     {
-        Message.Text = "";
-        int purchaseOrderID = 0;
-        if(!int.TryParse((SelectedOrderFormView.FindControl("PurchaseOrderID_FormView") as Label).Text,out purchaseOrderID))
+        try
         {
-            Message.Text = "Please enter a valid purchase order id";
-        }
-        else if(string.IsNullOrWhiteSpace(ForceCloseTextBox.Text))
-        {
-            Message.Text = "Please enter a reason for closing the Purchase Order";
-        }
-        else
-        {
-            PurchaseOrderController sysmgr = new PurchaseOrderController();
-            sysmgr.PurchaseOrder_ForceClose(purchaseOrderID, ForceCloseTextBox.Text);
+            Message.Text = "";
+            int purchaseOrderID = 0;
+            if (!int.TryParse((SelectedOrderFormView.FindControl("PurchaseOrderID_FormView") as Label).Text, out purchaseOrderID))
+            {
+                Message.Text = "Please enter a valid purchase order id";
+            }
+            else if (string.IsNullOrWhiteSpace(ForceCloseTextBox.Text))
+            {
+                Message.Text = "Please enter a reason for closing the Purchase Order";
+            }
+            else
+            {
+                PurchaseOrderController sysmgr = new PurchaseOrderController();
+                sysmgr.PurchaseOrder_ForceClose(purchaseOrderID, ForceCloseTextBox.Text);
 
-            DataBind();
+                DataBind();
+            }
         }
+        catch(Exception ex)
+        {
+            Message.Text = ex.Message;
+        }     
         
     }
 }

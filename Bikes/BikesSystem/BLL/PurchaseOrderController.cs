@@ -139,7 +139,15 @@ namespace BikesSystem.BLL
         {
             using (var context = new EBikesContext())
             {
+                
                 PurchaseOrder closingPurchaseOrder = context.PurchaseOrders.Find(purchaseOrderID);
+
+                foreach(PurchaseOrderDetail orderDetail in closingPurchaseOrder.PurchaseOrderDetails)
+                {
+                    orderDetail.Part.QuantityOnOrder -= orderDetail.Quantity;
+                    orderDetail.Quantity = 0;
+                    context.Entry(orderDetail).State = System.Data.Entity.EntityState.Modified;
+                }
 
                 closingPurchaseOrder.Notes = closureNotes;
                 closingPurchaseOrder.Closed = true;
