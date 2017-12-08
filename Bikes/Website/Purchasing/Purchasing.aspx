@@ -1,8 +1,13 @@
 ﻿<%@ Page Title="Purchasing" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Purchasing.aspx.cs" Inherits="Purchasing_Purchasing" %>
 
+<%@ Register Src="~/UserControls/MessageUserControl.ascx" TagPrefix="uc1" TagName="MessageUserControl" %>
+
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
     <h1>Purchasing</h1>
     <br>
+
+    <uc1:MessageUserControl runat="server" ID="MessageUserControl" />
 
     <asp:Label ID="LoggedInUserDisplay" runat="server" Text="Label"></asp:Label>
     <br>
@@ -44,30 +49,10 @@
                     <asp:Label Text='<%# Eval("Quantity") %>' runat="server" ID="QuantityLabel" /></td>
                 <td>
                     <asp:Label Text='<%# Eval("PurchasePrice") %>' runat="server" ID="PurchasePriceLabel" /></td>
+                <td>
+                    <asp:LinkButton ID="RemoveItem" runat="server" OnClick="RemoveItem_Click">Remove</asp:LinkButton></td>
             </tr>
         </AlternatingItemTemplate>
-        <EditItemTemplate>
-            <tr style="background-color: #999999;">
-                <td>
-                    <asp:Button runat="server" CommandName="Update" Text="Update" ID="UpdateButton" />
-                    <asp:Button runat="server" CommandName="Cancel" Text="Cancel" ID="CancelButton" />
-                </td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("PartID") %>' runat="server" ID="PartIDTextBox" /></td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("Description") %>' runat="server" ID="DescriptionTextBox" /></td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("QuantityOnHand") %>' runat="server" ID="QuantityOnHandTextBox" /></td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("QuantityOnOrder") %>' runat="server" ID="QuantityOnOrderTextBox" /></td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("ReorderLevel") %>' runat="server" ID="ReorderLevelTextBox" /></td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("Quantity") %>' runat="server" ID="QuantityTextBox" /></td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("PurchasePrice") %>' runat="server" ID="PurchasePriceTextBox" /></td>
-            </tr>
-        </EditItemTemplate>
         <EmptyDataTemplate>
             <table runat="server" style="background-color: #FFFFFF; border-collapse: collapse; border-color: #999999; border-style: none; border-width: 1px;">
                 <tr>
@@ -75,28 +60,6 @@
                 </tr>
             </table>
         </EmptyDataTemplate>
-        <InsertItemTemplate>
-            <tr style="">
-                <td>
-                    <asp:Button runat="server" CommandName="Insert" Text="Insert" ID="InsertButton" />
-                    <asp:Button runat="server" CommandName="Cancel" Text="Clear" ID="CancelButton" />
-                </td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("PartID") %>' runat="server" ID="PartIDTextBox" /></td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("Description") %>' runat="server" ID="DescriptionTextBox" /></td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("QuantityOnHand") %>' runat="server" ID="QuantityOnHandTextBox" /></td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("QuantityOnOrder") %>' runat="server" ID="QuantityOnOrderTextBox" /></td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("ReorderLevel") %>' runat="server" ID="ReorderLevelTextBox" /></td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("Quantity") %>' runat="server" ID="QuantityTextBox" /></td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("PurchasePrice") %>' runat="server" ID="PurchasePriceTextBox" /></td>
-            </tr>
-        </InsertItemTemplate>
         <ItemTemplate>
             <tr style="background-color: #E0FFFF; color: #333333;">
                 <td>
@@ -113,6 +76,8 @@
                     <asp:Label Text='<%# Eval("Quantity") %>' runat="server" ID="QuantityLabel" /></td>
                 <td>
                     <asp:Label Text='<%# Eval("PurchasePrice") %>' runat="server" ID="PurchasePriceLabel" /></td>
+                <td>
+                    <asp:LinkButton ID="RemoveItem" runat="server" OnClick="RemoveItem_Click">Remove</asp:LinkButton></td>
             </tr>
         </ItemTemplate>
         <LayoutTemplate>
@@ -138,24 +103,6 @@
                 </tr>
             </table>
         </LayoutTemplate>
-        <SelectedItemTemplate>
-            <tr style="background-color: #E2DED6; font-weight: bold; color: #333333;">
-                <td>
-                    <asp:Label Text='<%# Eval("PartID") %>' runat="server" ID="PartIDLabel" /></td>
-                <td>
-                    <asp:Label Text='<%# Eval("Description") %>' runat="server" ID="DescriptionLabel" /></td>
-                <td>
-                    <asp:Label Text='<%# Eval("QuantityOnHand") %>' runat="server" ID="QuantityOnHandLabel" /></td>
-                <td>
-                    <asp:Label Text='<%# Eval("QuantityOnOrder") %>' runat="server" ID="QuantityOnOrderLabel" /></td>
-                <td>
-                    <asp:Label Text='<%# Eval("ReorderLevel") %>' runat="server" ID="ReorderLevelLabel" /></td>
-                <td>
-                    <asp:Label Text='<%# Eval("Quantity") %>' runat="server" ID="QuantityLabel" /></td>
-                <td>
-                    <asp:Label Text='<%# Eval("PurchasePrice") %>' runat="server" ID="PurchasePriceLabel" /></td>
-            </tr>
-        </SelectedItemTemplate>
     </asp:ListView>
     <br>
 
@@ -195,28 +142,6 @@
                     <asp:Label Text='<%# Eval("Buffer") %>' runat="server" ID="BufferLabel" /></td>
             </tr>
         </AlternatingItemTemplate>
-        <EditItemTemplate>
-            <tr style="background-color: #008A8C; color: #FFFFFF;">
-                <td>
-                    <asp:Button runat="server" CommandName="Update" Text="Update" ID="UpdateButton" />
-                    <asp:Button runat="server" CommandName="Cancel" Text="Cancel" ID="CancelButton" />
-                </td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("PartID") %>' runat="server" ID="PartIDTextBox" /></td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("Description") %>' runat="server" ID="DescriptionTextBox" /></td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("QuantityOnHand") %>' runat="server" ID="QuantityOnHandTextBox" /></td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("QuantityOnorder") %>' runat="server" ID="QuantityOnorderTextBox" /></td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("ReorderLevel") %>' runat="server" ID="ReorderLevelTextBox" /></td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("SellingPrice") %>' runat="server" ID="SellingPriceTextBox" /></td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("Buffer") %>' runat="server" ID="BufferTextBox" /></td>
-            </tr>
-        </EditItemTemplate>
         <EmptyDataTemplate>
             <table runat="server" style="background-color: #FFFFFF; border-collapse: collapse; border-color: #999999; border-style: none; border-width: 1px;">
                 <tr>
@@ -224,28 +149,6 @@
                 </tr>
             </table>
         </EmptyDataTemplate>
-        <InsertItemTemplate>
-            <tr style="">
-                <td>
-                    <asp:Button runat="server" CommandName="Insert" Text="Insert" ID="InsertButton" />
-                    <asp:Button runat="server" CommandName="Cancel" Text="Clear" ID="CancelButton" />
-                </td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("PartID") %>' runat="server" ID="PartIDTextBox" /></td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("Description") %>' runat="server" ID="DescriptionTextBox" /></td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("QuantityOnHand") %>' runat="server" ID="QuantityOnHandTextBox" /></td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("QuantityOnorder") %>' runat="server" ID="QuantityOnorderTextBox" /></td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("ReorderLevel") %>' runat="server" ID="ReorderLevelTextBox" /></td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("SellingPrice") %>' runat="server" ID="SellingPriceTextBox" /></td>
-                <td>
-                    <asp:TextBox Text='<%# Bind("Buffer") %>' runat="server" ID="BufferTextBox" /></td>
-            </tr>
-        </InsertItemTemplate>
         <ItemTemplate>
             <tr style="background-color: #DCDCDC; color: #000000;">
                 <td>
@@ -287,24 +190,6 @@
                 </tr>
             </table>
         </LayoutTemplate>
-        <SelectedItemTemplate>
-            <tr style="background-color: #008A8C; font-weight: bold; color: #FFFFFF;">
-                <td>
-                    <asp:Label Text='<%# Eval("PartID") %>' runat="server" ID="PartIDLabel" /></td>
-                <td>
-                    <asp:Label Text='<%# Eval("Description") %>' runat="server" ID="DescriptionLabel" /></td>
-                <td>
-                    <asp:Label Text='<%# Eval("QuantityOnHand") %>' runat="server" ID="QuantityOnHandLabel" /></td>
-                <td>
-                    <asp:Label Text='<%# Eval("QuantityOnorder") %>' runat="server" ID="QuantityOnorderLabel" /></td>
-                <td>
-                    <asp:Label Text='<%# Eval("ReorderLevel") %>' runat="server" ID="ReorderLevelLabel" /></td>
-                <td>
-                    <asp:Label Text='<%# Eval("SellingPrice") %>' runat="server" ID="SellingPriceLabel" /></td>
-                <td>
-                    <asp:Label Text='<%# Eval("Buffer") %>' runat="server" ID="BufferLabel" /></td>
-            </tr>
-        </SelectedItemTemplate>
     </asp:ListView>
 
     <asp:ObjectDataSource ID="VendorDDL_ODS" runat="server" OldValuesParameterFormatString="original_{0}"

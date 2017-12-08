@@ -41,12 +41,17 @@ public partial class Purchasing_Purchasing : System.Web.UI.Page
             VendorDDL.SelectedValue = "0";
         } else
         {
-            //error message
+            MessageUserControl.ShowInfo("YOU NEED TO HAVE A VENDOR SELECTED TO DELETE THEIR PURCHASE ORDER");
         }
     }
 
     protected void Clear_Button_Click(object sender, EventArgs e)
     {
         VendorDDL.SelectedValue = "0";
+    }
+
+    protected void RemoveItem_Click(object sender, EventArgs e)
+    {
+
     }
 }
