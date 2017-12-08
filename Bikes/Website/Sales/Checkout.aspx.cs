@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BikesSystem.BLL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -22,5 +23,15 @@ public partial class Sales_Checkout : System.Web.UI.Page
             Response.Redirect("../Account/Login.aspx?message=" +
                 HttpUtility.UrlEncode(EMPLOYEE_ERROR));
         }
+    }
+
+    protected void View_PreRender(object sender, EventArgs e)
+    {
+        MessageUserControl.TryRun(() =>
+        {
+            ShoppingCartController controller = new ShoppingCartController();
+            View.DataSource = controller.GetOnlineShoppingCart(User);
+            View.DataBind();
+        });
     }
 }

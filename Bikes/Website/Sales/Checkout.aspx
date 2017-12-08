@@ -1,5 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Checkout.aspx.cs" Inherits="Sales_Checkout" %>
 
+<%@ Register Src="~/UserControls/MessageUserControl.ascx" TagPrefix="uc1" TagName="MessageUserControl" %>
+
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
     <style type="text/css">
         .steps {
@@ -95,21 +98,62 @@
         </div>
     </div>
     <a href="Sales.aspx" class="continueLink">Or continue shopping.</a>
-    <div class="tab-content container">
-        <div class="tab-pane fade in active" id="view">
-            <h2>Your Shopping Cart
-                <a href="Sales.aspx" class="shoppingLink">
-                    <img src="../Content/Images/shoppingCart.svg" /><br />
-                    shop
-                </a></h2>
-            <hr class="tabHr" />
-        </div>
-        <div class="tab-pane fade" id="info">
-            <p>Purchase info</p>
-        </div>
-        <div class="tab-pane fade" id="order">
-            <p>Place order</p>
-        </div>
-    </div>
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+        <ContentTemplate>
+            <uc1:MessageUserControl runat="server" ID="MessageUserControl" />
+            <asp:ValidationSummary ID="ValidationSummary" runat="server" />
+
+            <div class="tab-content container">
+                <div class="tab-pane fade in active" id="view">
+                    <h2>Your Shopping Cart
+                        <a href="Sales.aspx" class="shoppingLink">
+                            <img src="../Content/Images/shoppingCart.svg" /><br />
+                            shop
+                        </a></h2>
+                    <hr class="tabHr" />
+
+                    <asp:ListView ID="View" runat="server"
+                        OnPreRender="View_PreRender">
+                        <LayoutTemplate>
+                            <div runat="server" id="itemPlaceholderContainer" style=""><span runat="server" id="itemPlaceholder" /></div>
+                        </LayoutTemplate>
+                        <ItemTemplate>
+                            <%--<asp:ListView ID="PartsList" runat="server" DataSource='<%# Eval("Parts") %>'></asp:ListView>--%>
+                            <br /><br />
+                            <span>Total: <asp:Label Text='<%# Eval("Total", "{0:C}") %>' runat="server" ID="TotalLabel" /><br />
+                                <asp:Label ID="OverviewLabel" runat="server" Text='<%# string.Format(
+                                    "There are {0} items in your shopping cart (last updated on {1}).",
+                                    ((IList)Eval("Parts")).Count,
+                                    ((DateTime)Eval("LastUpdated")).Date) %>'></asp:Label></span>
+                        </ItemTemplate>
+                        <EmptyDataTemplate>
+                            <span>There are no items in your cart.
+                                Add some items to your cart before checking out.</span>
+                        </EmptyDataTemplate>
+                    </asp:ListView>
+                </div>
+                <div class="tab-pane fade" id="info">
+                    <h2>Your Purchase Info
+                        <a href="Sales.aspx" class="shoppingLink">
+                            <img src="../Content/Images/shoppingCart.svg" /><br />
+                            shop
+                        </a></h2>
+                    <hr class="tabHr" />
+
+
+                </div>
+                <div class="tab-pane fade" id="order">
+                    <h2>Your Shopping Cart
+                        <a href="Sales.aspx" class="shoppingLink">
+                            <img src="../Content/Images/shoppingCart.svg" /><br />
+                            shop
+                        </a></h2>
+                    <hr class="tabHr" />
+
+                    
+                </div>
+            </div>
+        </ContentTemplate>
+    </asp:UpdatePanel>
 </asp:Content>
 

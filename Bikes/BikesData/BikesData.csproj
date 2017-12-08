@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\OnlineShoppingCart.cs" />
     <Compile Include="DTOs\OutstandingPurchaseOrderDetails.cs" />
     <Compile Include="Entities\Security\ApplicationUser.cs" />
     <Compile Include="Entities\Security\RoleProfile.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="POCOs\EmployeeListPOCO.cs" />
     <Compile Include="POCOs\OnlineCategory.cs" />
     <Compile Include="POCOs\OnlinePart.cs" />
+    <Compile Include="POCOs\OnlineShoppingCartItem.cs" />
     <Compile Include="POCOs\OutstandingPurchaseOrders.cs" />
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Coupon.cs" />
