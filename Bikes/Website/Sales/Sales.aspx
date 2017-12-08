@@ -62,7 +62,8 @@
         </div>
         <div class="col-md-1"></div>
         <div class="col-md-9">
-            <asp:ListView ID="PartsList" runat="server" OnPreRender="PartsList_PreRender">
+            <asp:ListView ID="PartsList" runat="server" OnPreRender="PartsList_PreRender"
+                OnItemCommand="PartsList_ItemCommand">
                 <LayoutTemplate>
                     <div runat="server" id="itemPlaceholderContainer"><span runat="server" id="itemPlaceholder" /></div>
                     <div>
@@ -89,9 +90,11 @@
                                     CssClass="btn btn-primary"
                                     Text='<%# int.Parse(Eval("Added").ToString()) > 0 ?
                                         string.Format(ADD_EXTRA, Eval("Added")) :
-                                        "Add" %>'></asp:LinkButton>
+                                        "Add" %>'
+                                    CommandName="Add" CommandArgument='<%# Eval("PartId") %>'></asp:LinkButton>
                                 <asp:TextBox ID="AddAmount" runat="server" Text="1"
-                                    CssClass="numberBox"></asp:TextBox>
+                                    CssClass="numberBox"
+                                    MaxLength="3" TextMode="Number"></asp:TextBox>
                             </LoggedInTemplate>
                         </asp:LoginView>
                         <asp:Label Text='<%# Eval("Price", "{0:C}") %>' runat="server" ID="PriceLabel" />
@@ -107,5 +110,6 @@
     <asp:ObjectDataSource ID="CategoriesListODS" runat="server"
         OldValuesParameterFormatString="original_{0}"
         SelectMethod="GetCategories"
-        TypeName="BikesSystem.BLL.CategoryController"></asp:ObjectDataSource>
+        TypeName="BikesSystem.BLL.CategoryController"
+        OnSelected="CheckForException"></asp:ObjectDataSource>
 </asp:Content>

@@ -44,4 +44,43 @@ public partial class Sales_Sales : System.Web.UI.Page
             PartsList.DataBind();
         });
     }
+
+    protected void PartsList_ItemCommand(object sender, ListViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Add")
+        {
+            MessageUserControl.TryRun(() =>
+            {
+                int partId = (int)e.CommandArgument;
+                new SalesController().AddToCart(User, partId, GetQuantity(partId));
+                PartsList_PreRender(sender, e);
+            }, "Added to shopping cart", "The part has been added to your shopping cart.");
+        }
+    }
+
+    private int GetQuantity(int partId)
+    {
+        string partIdStr = partId.ToString();
+        foreach (ListViewDataItem item in PartsList.Items)
+        {
+            if ((item.FindControl("PartIdLabel") as HiddenField).Value == partIdStr)
+            {
+                int quantity;
+                if (int.TryParse((item.FindControl("AddAmount") as TextBox).Text, out quantity))
+                {
+                    return quantity;
+                }
+                else
+                {
+                    throw new Exception("The amount is not a valid whole number.");
+                }
+            }
+        }
+        throw new Exception("Unable to locate the part.");
+    }
+
+    protected void CheckForException(object sender, ObjectDataSourceStatusEventArgs e)
+    {
+        MessageUserControl.HandleDataBoundException(e);
+    }
 }
