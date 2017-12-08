@@ -123,7 +123,8 @@
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Receiving" HeaderStyle-CssClass="text-center" ItemStyle-Width="75px" ItemStyle-HorizontalAlign="Center" ItemStyle-CssClass="paddingCell">
                             <ItemTemplate>
-                                <asp:TextBox ID="ReceivingAmount" runat="server" Height="16px" TextMode="Number" ToolTip="Receiving #" Width="50px" min="0" max="9999" CssClass="text-right" Text='<%# Bind("ReceivingAmount") %>'></asp:TextBox>
+                                <asp:TextBox ID="ReceivingAmount" runat="server" Height="16px" TextMode="Number" ToolTip="Receiving #" Width="50px" min="0" max='<%# Eval("QuantityOutstanding") %>' CssClass="text-right" Text='<%# Bind("ReceivingAmount") %>'></asp:TextBox>
+                                
                             </ItemTemplate>
 
                             <HeaderStyle CssClass="text-center"></HeaderStyle>
@@ -132,7 +133,7 @@
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Returning" HeaderStyle-CssClass="text-center" ItemStyle-HorizontalAlign="Center" ItemStyle-Width="75px" ItemStyle-CssClass="paddingCell">
                             <ItemTemplate>
-                                <asp:TextBox ID="ReturningAmount" runat="server" Height="16px" TextMode="Number" ToolTip="Return #" Width="50px" min="0" max="9999" CssClass="text-right" Text='<%# Bind("ReturningAmount") %>' OnTextChanged="ReturningAmount_TextChanged"></asp:TextBox>
+                                <asp:TextBox ID="ReturningAmount" runat="server" Height="16px" TextMode="Number" ToolTip="Return #" Width="50px" min="0" max="9999" CssClass="text-right" Text='<%# Bind("ReturningAmount") %>'></asp:TextBox>
                             </ItemTemplate>
 
                             <HeaderStyle CssClass="text-center"></HeaderStyle>
@@ -170,10 +171,15 @@
                     <SortedDescendingHeaderStyle BackColor="#275353" />
                 </asp:GridView>
                 <br />
-                <asp:Button ID="ReceiveBtn" runat="server" Text="Receive" OnCommand="ReceiveBtn_Command" /> &nbsp; &nbsp; &nbsp;
-                <asp:Button ID="ForceCloseBtn" runat="server" Text="Force Closure" />
+                
+                <asp:Button ID="ReceiveBtn" runat="server" Text="Receive" OnCommand="ReceiveBtn_Command" Visible="false" /> &nbsp; &nbsp; &nbsp;
+                <asp:Button ID="ForceCloseBtn" runat="server" Text="Force Closure" Visible="false" OnClick="ForceCloseBtn_Click" />&nbsp; &nbsp; &nbsp;
+                <asp:TextBox ID="ForceCloseTextBox" runat="server" Height="20px" Width="275px" placeholder="Enter Force Closure Reason" Visible="False"></asp:TextBox>
+                <div class="modal">
+                </div>
                 <br />
-                <asp:ListView ID="UnorderedCartListView" runat="server" DataSourceID="UnorderedCartODS" InsertItemPosition="LastItem" Visible ="false">
+                <br />
+                <asp:ListView ID="UnorderedCartListView" runat="server" DataSourceID="UnorderedCartODS" InsertItemPosition="FirstItem" Visible ="false" DataKeyNames="CartID">
                     
                     <EmptyDataTemplate>
                         <table runat="server" style="background-color: #FFFFFF; border-collapse: collapse; border-color: #999999; border-style: none; border-width: 1px;">

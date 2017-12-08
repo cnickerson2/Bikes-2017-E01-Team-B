@@ -16,13 +16,7 @@ public partial class Receiving_Receiving : System.Web.UI.Page
     {
 
         if (!User.IsInRole("WebsiteAdmins") && !User.IsInRole("Receiving")) Response.Redirect("../Account/Login.aspx");
-
-        if (!IsPostBack)
-        {
-            OutstandingDetailsGridView.Enabled = true;
-            OutstandingDetailsGridView.Visible = true;
-            
-        }
+        
     }
 
 
@@ -34,6 +28,10 @@ public partial class Receiving_Receiving : System.Web.UI.Page
         SelectedOrderFormView.Visible = true;
         OutstandingDetailsGridView.Enabled = true;
         OutstandingDetailsGridView.Visible = true;
+        ReceiveBtn.Visible = true;
+        ForceCloseBtn.Visible = true;
+        ForceCloseTextBox.Visible = true;
+        UnorderedCartListView.Visible = true;
     }
 
     protected void ReceiveBtn_Command(object sender, CommandEventArgs e)
@@ -116,6 +114,7 @@ public partial class Receiving_Receiving : System.Web.UI.Page
                     VendorPartNumber = string.IsNullOrWhiteSpace(vendorPartNumber) ? "N/A" : vendorPartNumber,
                     PurchaseOrderNumber = string.IsNullOrWhiteSpace((row.FindControl("PurchaseOrderNumber") as Label).Text) ? 0 : int.Parse((row.FindControl("PurchaseOrderNumber") as Label).Text)
                 };
+
                 outDetails.Add(outDetail);
             }
             if (noErrors)
@@ -137,14 +136,30 @@ public partial class Receiving_Receiving : System.Web.UI.Page
     }
 
 
-
-    protected void ReturningAmount_TextChanged(object sender, EventArgs e)
-    {
-        UnorderedCartListView.Visible = true;
-    }
-
     protected void CheckForException(object sender, ObjectDataSourceStatusEventArgs e)
     {
         MessageUserControl.HandleDataBoundException(e);
+    }
+
+    protected void ForceCloseBtn_Click(object sender, EventArgs e)
+    {
+        Message.Text = "";
+        int purchaseOrderID = 0;
+        if(!int.TryParse((SelectedOrderFormView.FindControl("PurchaseOrderID_FormView") as Label).Text,out purchaseOrderID))
+        {
+            Message.Text = "Please enter a valid purchase order id";
+        }
+        else if(string.IsNullOrWhiteSpace(ForceCloseTextBox.Text))
+        {
+            Message.Text = "Please enter a reason for closing the Purchase Order";
+        }
+        else
+        {
+            PurchaseOrderController sysmgr = new PurchaseOrderController();
+            sysmgr.PurchaseOrder_ForceClose(purchaseOrderID, ForceCloseTextBox.Text);
+
+            DataBind();
+        }
+        
     }
 }
