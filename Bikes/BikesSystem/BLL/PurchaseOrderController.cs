@@ -134,5 +134,20 @@ namespace BikesSystem.BLL
                 return context.SaveChanges();
             }
         }
+        
+        public int PurchaseOrder_ForceClose(int purchaseOrderID, string closureNotes)
+        {
+            using (var context = new EBikesContext())
+            {
+                PurchaseOrder closingPurchaseOrder = context.PurchaseOrders.Find(purchaseOrderID);
+
+                closingPurchaseOrder.Notes = closureNotes;
+                closingPurchaseOrder.Closed = true;
+
+                context.Entry(closingPurchaseOrder).State = System.Data.Entity.EntityState.Modified;
+
+                return context.SaveChanges();
+            }
+        }
     }
 }
