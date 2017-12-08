@@ -16,5 +16,6 @@ namespace BikesData.Entities.Security
         public int? CustomerId { get; set; }
         [Display(Name = "Online Customer")]
         public int? OnlineCustomerId { get; set; }
+        public DateTime? LastLogin { get; set; }
     }
 }

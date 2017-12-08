@@ -255,13 +255,15 @@
         <div class="col-md-6">
             <div class="container">
                 <asp:ListView ID="RolesList" runat="server" DataSourceID="RolesODS"
-                    InsertItemPosition="LastItem" DataKeyNames="RoleId">
+                    InsertItemPosition="LastItem" DataKeyNames="RoleId"
+                    OnDataBound="MembersList_SelectedIndexChanged">
                     <LayoutTemplate>
                         <table runat="server" id="itemPlaceholderContainer" border="0">
                             <tr runat="server">
                                 <th runat="server" style="padding: 6px;">Actions</th>
                                 <th runat="server" style="padding: 6px;">Role</th>
                                 <th runat="server" style="padding: 6px;">User Has Role?</th>
+                                <th runat="server" style="padding: 6px;">Members</th>
                             </tr>
                             <tr runat="server" id="itemPlaceholder"></tr>
                             <tr runat="server">
@@ -300,6 +302,9 @@
                                 <asp:CheckBox ID="RoleSelectCheckbox" runat="server" OnCheckedChanged="RoleSelectCheckbox_CheckedChanged"
                                     AutoPostBack="true"/>
                             </td>
+                            <td>
+                                <asp:Label ID="MembersLabel" runat="server" Text='<%# Eval("Members") %>'></asp:Label>
+                            </td>
                         </tr>
                     </ItemTemplate>
                     <InsertItemTemplate>
@@ -323,12 +328,15 @@
                             <td>
                                
                             </td>
+                            <td>
+
+                            </td>
                         </tr>
                     </InsertItemTemplate>
                     <EmptyDataTemplate>
                         <table runat="server">
                             <tr>
-                                <td>No member's could be found.</td>
+                                <td>No roles could be found.</td>
                             </tr>
                         </table>
                     </EmptyDataTemplate>
@@ -368,6 +376,9 @@
         TypeName="BikesSystem.BLL.Security.RoleManager"
         DataObjectTypeName="BikesData.Entities.Security.RoleProfile"
         InsertMethod="AddRole"
-        DeleteMethod="RemoveRole"></asp:ObjectDataSource>
+        DeleteMethod="RemoveRole"
+        OnSelected="CheckForException"
+        OnInserted="CheckForException"
+        OnDeleted="CheckForException"></asp:ObjectDataSource>
 </asp:Content>
 

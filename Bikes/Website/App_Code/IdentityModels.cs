@@ -30,6 +30,8 @@ namespace Website
             authenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
             var identity = manager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
             authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, identity);
+            user.LastLogin = DateTime.Now;
+            manager.Update(user);
         }
 
         public const string ProviderNameKey = "providerName";

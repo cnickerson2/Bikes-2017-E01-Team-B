@@ -45,20 +45,23 @@ public partial class Account_Administration : System.Web.UI.Page
 
     protected void MembersList_SelectedIndexChanged(object sender, EventArgs e)
     {
-        MessageUserControl.TryRun(() =>
+        if (MembersList.SelectedIndex > -1)
         {
-            UserManager controller = new UserManager();
-            List<string> inRoles = controller.GetUserRoles((
-                MembersList.Items[MembersList.SelectedIndex].FindControl("UserId")
-                    as HiddenField).Value);
-            foreach (ListViewDataItem item in RolesList.Items)
+            MessageUserControl.TryRun(() =>
             {
-                (item.FindControl("RoleSelectCheckbox") as CheckBox).Checked =
-                    inRoles.Any((role) =>
-                        role == (item.FindControl("RoleLabel")
-                            as Label).Text);
-            }
-        });
+                UserManager controller = new UserManager();
+                List<string> inRoles = controller.GetUserRoles((
+                    MembersList.Items[MembersList.SelectedIndex].FindControl("UserId")
+                        as HiddenField).Value);
+                foreach (ListViewDataItem item in RolesList.Items)
+                {
+                    (item.FindControl("RoleSelectCheckbox") as CheckBox).Checked =
+                        inRoles.Any((role) =>
+                            role == (item.FindControl("RoleLabel")
+                                as Label).Text);
+                }
+            });
+        }
     }
 
     protected void MembersList_ItemCanceling(object sender, ListViewCancelEventArgs e)
@@ -92,22 +95,28 @@ public partial class Account_Administration : System.Web.UI.Page
 
     protected void RoleSelectCheckbox_CheckedChanged(object sender, EventArgs e)
     {
-        if (MembersList.SelectedIndex == -1)
-        {
-            // nothing
-        } else
+        MessageUserControl.TryRun(() =>
         {
             CheckBox cb = sender as CheckBox;
-            string userID = (MembersList.Items[MembersList.SelectedIndex].FindControl("UserId") as HiddenField).Value;
-            string roleName = (cb.Parent.FindControl("RoleLabel") as Label).Text;
-            if (cb.Checked)
+            if (MembersList.SelectedIndex > -1)
             {
-                (new UserManager()).AddUserToRole(userID, roleName);
-            } else
-            {
-                (new UserManager()).RemoveUserFromRole(userID, roleName);
+                string userID = (MembersList.Items[MembersList.SelectedIndex].FindControl("UserId") as HiddenField).Value;
+                string roleName = (cb.Parent.FindControl("RoleLabel") as Label).Text;
+                if (cb.Checked)
+                {
+                    new UserManager().AddUserToRole(userID, roleName);
+                }
+                else
+                {
+                    new UserManager().RemoveUserFromRole(userID, roleName);
+                }
+                RolesList.DataBind();
             }
-            
-        }
+            else
+            {
+                cb.Checked = false;
+                throw new Exception("Select a member first to assign them to a role.");
+            }
+        });
     }
 }

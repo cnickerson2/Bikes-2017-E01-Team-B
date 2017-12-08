@@ -10,6 +10,6 @@ namespace BikesData.Entities.Security
     {
         public string RoleId { get; set; }
         public string RoleName { get; set; }
-        public IEnumerable<string> UserNames { get; set; }
+        public string Members { get; set; }
     }
 }

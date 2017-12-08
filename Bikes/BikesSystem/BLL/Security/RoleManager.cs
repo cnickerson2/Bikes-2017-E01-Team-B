@@ -14,6 +14,10 @@ namespace BikesSystem.BLL.Security
     [DataObject]
     public class RoleManager : RoleManager<IdentityRole>
     {
+        private const string MEMBERS_SEPARATOR = ", ";
+        private const string MEMBERS_TRUNCATION = "...";
+        private const int MAX_MEMBERS_LIST = 10;
+
         public RoleManager() : base(new RoleStore<IdentityRole>(new ApplicationDbContext()))
         {
 
@@ -46,9 +50,23 @@ namespace BikesSystem.BLL.Security
                           {
                               RoleId = role.Id,
                               RoleName = role.Name,
-                              UserNames = role.Users.Select(r => um.FindById(r.UserId).UserName)
+                              Members = GetMembersList(role.Users.OrderByDescending((r =>
+                                um.FindById(r.UserId).LastLogin)).Select(r =>
+                                    um.FindById(r.UserId).UserName))
                           };
             return results.ToList();
+        }
+
+        private string GetMembersList(IEnumerable<string> users)
+        {
+            if (users.Count() > MAX_MEMBERS_LIST)
+            {
+                return string.Join(MEMBERS_SEPARATOR, users.Take(MAX_MEMBERS_LIST)) + MEMBERS_TRUNCATION;
+            }
+            else
+            {
+                return string.Join(MEMBERS_SEPARATOR, users);
+            }
         }
 
         [DataObjectMethod(DataObjectMethodType.Insert, false)]
