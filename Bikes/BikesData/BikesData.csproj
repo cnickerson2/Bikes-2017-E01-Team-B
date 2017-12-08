@@ -89,8 +89,13 @@
     <Compile Include="Entities\StandardJobPart.cs" />
     <Compile Include="Entities\UnorderedPurchaseItemCart.cs" />
     <Compile Include="Entities\Vendor.cs" />
+    <Compile Include="POCOs\PartInfoPOCO.cs" />
+    <Compile Include="POCOs\PurchaseOrderDetailPOCO.cs" />
+    <Compile Include="POCOs\PurchaseOrderTotalPOCO.cs" />
     <Compile Include="POCOs\RegisteredEmployeePOCO.cs" />
     <Compile Include="POCOs\ReturnedOrderDetailsForOutstandingOrders.cs" />
+    <Compile Include="POCOs\VendorIdentification.cs" />
+    <Compile Include="POCOs\VendorInfoPOCO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

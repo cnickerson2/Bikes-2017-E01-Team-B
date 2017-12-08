@@ -17,7 +17,132 @@ namespace BikesSystem.BLL
     [DataObject]
     public class PurchaseOrderController
     {
-        
+
+        public void DeleteCurrentPurchaseOrder(int vendorID)
+        {
+            using (var context = new EBikesContext())
+            {
+                var results = from x in context.PurchaseOrderDetails
+                              where x.PurchaseOrder.VendorID == vendorID && x.PurchaseOrder.OrderDate == null && x.PurchaseOrder.PurchaseOrderNumber == null
+                              select x;
+
+                context.PurchaseOrderDetails.RemoveRange(results);
+
+                var result = from x in context.PurchaseOrders
+                             where x.VendorID == vendorID && x.OrderDate == null && x.PurchaseOrderNumber == null
+                             select x;
+
+                context.PurchaseOrders.RemoveRange(result);
+
+                context.SaveChanges();
+            }
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Insert, false)]
+        public void CreateNewPurchaseOrder(int vendorID, int employeeID)
+        {
+            using (var context = new EBikesContext())
+            {
+                var order = new PurchaseOrder();
+
+                order.Closed = false;
+                order.VendorID = vendorID;
+                order.EmployeeID = employeeID;
+
+                decimal subtotal = 0;
+
+                var newOrder = context.PurchaseOrders.Add(order);
+
+                var results = (from x in context.Parts
+                              where x.VendorID == vendorID
+                              select new
+                              {
+                                  ReorderLevel = x.ReorderLevel,
+                                  QuantityOnHand = x.QuantityOnHand,
+                                  QuantityOnOrder = x.QuantityOnOrder,
+                                  PartID = x.PartID,
+                                  PurchasePrice = x.PurchasePrice
+                              }).ToList();
+
+                for (int i = 0; i < results.Count; i++)
+                {
+                    var part = results[i];
+
+                    if (part.ReorderLevel - (part.QuantityOnHand + part.QuantityOnOrder) > 0)
+                    {
+                        PurchaseOrderDetail detail = new PurchaseOrderDetail();
+
+                        detail.PurchaseOrderID = newOrder.PurchaseOrderID;
+                        detail.PartID = part.PartID;
+                        detail.Quantity = part.ReorderLevel - (part.QuantityOnHand + part.QuantityOnOrder);
+                        detail.PurchasePrice = part.PurchasePrice;
+
+                        context.PurchaseOrderDetails.Add(detail);
+
+                        subtotal += detail.Quantity * detail.PurchasePrice;
+                    }
+                }
+
+                newOrder.SubTotal = subtotal;
+                newOrder.TaxAmount = subtotal * 0.05m;
+
+                context.SaveChanges();
+            }
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public int GetCurrentPurchaseOrderID(int vendorID)
+        {
+            using (var context = new EBikesContext())
+            {
+                var results = from x in context.PurchaseOrders
+                              where x.VendorID == vendorID && x.OrderDate == null && x.PurchaseOrderNumber == null
+                              select x.PurchaseOrderID;
+
+                return results.FirstOrDefault();
+            }
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public PurchaseOrderTotalPOCO GetPurchaseOrderTotals(int vendorID)
+        {
+            using (var context = new EBikesContext())
+            {
+                var results = from x in context.PurchaseOrders
+                              where x.VendorID == vendorID && x.OrderDate == null && x.PurchaseOrderNumber == null
+                              select new PurchaseOrderTotalPOCO
+                              {
+                                  Subtotal = x.SubTotal,
+                                  GST = x.TaxAmount,
+                                  Total = x.SubTotal + x.TaxAmount
+                              };
+
+                return results.FirstOrDefault();
+            }
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public List<PurchaseOrderDetailPOCO> GetPurchaseOrderDetails(int vendorID)
+        {
+            using (var context = new EBikesContext())
+            {
+                var results = from x in context.PurchaseOrderDetails
+                              where x.PurchaseOrder.VendorID == vendorID && x.PurchaseOrder.OrderDate == null && x.PurchaseOrder.PurchaseOrderNumber == null
+                              select new PurchaseOrderDetailPOCO
+                              {
+                                  PartID = x.Part.PartID,
+                                  Description = x.Part.Description,
+                                  QuantityOnHand = x.Part.QuantityOnHand,
+                                  QuantityOnOrder = x.Part.QuantityOnOrder,
+                                  ReorderLevel = x.Part.ReorderLevel,
+                                  Quantity = x.Quantity,
+                                  PurchasePrice = x.PurchasePrice
+                              };
+
+                return results.ToList();
+            }
+        }
+
         /// <summary>
         /// Get a list of Outstanding Orders
         /// </summary>

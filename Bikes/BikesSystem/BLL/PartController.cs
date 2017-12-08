@@ -16,6 +16,45 @@ namespace BikesSystem.BLL
     [DataObject]
     public class PartController
     {
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public List<PartInfoPOCO> GetPartInfoNotOnOrder(int vendorID)
+        {
+            using (var context = new EBikesContext())
+            {
+                var results = (from x in context.Parts
+                              where x.VendorID == vendorID
+                              select new PartInfoPOCO
+                              {
+                                  PartID = x.PartID,
+                                  Description = x.Description,
+                                  QuantityOnHand = x.QuantityOnHand,
+                                  QuantityOnorder = x.QuantityOnOrder,
+                                  ReorderLevel = x.ReorderLevel,
+                                  Buffer = (x.QuantityOnHand + x.QuantityOnOrder) - x.ReorderLevel,
+                                  SellingPrice = x.SellingPrice
+                              }).ToList();
+
+                var ok = (from y in context.PurchaseOrderDetails
+                         where y.PurchaseOrder.VendorID == vendorID && y.PurchaseOrder.OrderDate == null && y.PurchaseOrder.PurchaseOrderNumber == null
+                         select y.PartID).ToList();
+
+                for (int i = results.Count - 1; i >= 0; i--)
+                {
+                    for (int j = 0; j < ok.Count; j++)
+                    {
+                        if (results[i].PartID == ok[j])
+                        {
+                            results.RemoveAt(i);
+                            break;
+                        }
+                    }
+                }
+
+                return results;
+            }
+        }
+
         [DataObjectMethod(DataObjectMethodType.Update, false)]
         public int Part_Update(Part item)
         {

@@ -76,6 +76,7 @@
     <Compile Include="BLL\ShoppingCartItemController.cs" />
     <Compile Include="BLL\StandardJobController.cs" />
     <Compile Include="BLL\UnorderedPurchaseItemCartController.cs" />
+    <Compile Include="BLL\VendorController.cs" />
     <Compile Include="DAL\EBikesContext.cs" />
     <Compile Include="DAL\Security\ApplicationDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
