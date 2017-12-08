@@ -4,6 +4,7 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
+    <link href="../Content/equal-height-columns.css" rel="stylesheet" />
     <style type="text/css">
         .steps {
             text-align: center;
@@ -68,6 +69,14 @@
         .tabHr {
             clear: right;
         }
+
+        #info div div {
+            margin: 5px;
+        }
+
+        .paymentMethodList tbody tr td {
+            padding: 0px 5px;
+        }
     </style>
 
     <div class="steps">
@@ -124,11 +133,14 @@
                                 <asp:Label ID="OverviewLabel" runat="server" Text='<%# string.Format(
                                     "There are {0} items in your shopping cart (last updated on {1}).",
                                     ((IList)Eval("Parts")).Count,
-                                    ((DateTime)Eval("LastUpdated")).Date) %>'></asp:Label></span>
+                                    ((DateTime)Eval("LastUpdated")).Date) %>'></asp:Label>
+                                <a href="#info" data-toggle="tab"
+                                    class="btn btn-primary">Continue</a>
+                            </span>
                         </ItemTemplate>
                         <EmptyDataTemplate>
-                            <span>There are no items in your cart.
-                                Add some items to your cart before checking out.</span>
+                            <span>You don't have a shopping cart.
+                                Please add some items before checking out.</span>
                         </EmptyDataTemplate>
                     </asp:ListView>
                 </div>
@@ -140,7 +152,116 @@
                         </a></h2>
                     <hr class="tabHr" />
 
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <span class="glyphicon glyphicon-info-sign"></span> Instructions
+                        </div>
+                        <div class="panel-body">
+                            [Instructions about paying here...]
+                         </div>
+                    </div>
 
+                    <h3>Billing Details</h3>
+                    <div class="row-eq-height">
+                        <div class="col-md-2">
+                            <asp:Label ID="Label1" runat="server" Text="Name"
+                                AssociatedControlID="TextBox1"></asp:Label>
+                        </div>
+                        <div class="col">
+                            <asp:TextBox ID="TextBox1" runat="server" Enabled="false"></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="row-eq-height">
+                        <div class="col-md-2">
+                            <asp:Label ID="Label2" runat="server" Text="Email"
+                                AssociatedControlID="TextBox2"></asp:Label>
+                        </div>
+                        <div class="col">
+                            <asp:TextBox ID="TextBox2" runat="server" Enabled="false"></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="row-eq-height">
+                        <div class="col-md-2">
+                            <asp:Label ID="Label3" runat="server" Text="Address"
+                                AssociatedControlID="TextBox3"></asp:Label>
+                        </div>
+                        <div class="col">
+                            <asp:TextBox ID="TextBox3" runat="server" Enabled="false"></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="row-eq-height">
+                        <div class="col-md-2">
+                            <asp:Label ID="Label4" runat="server" Text="Phone"
+                                AssociatedControlID="TextBox4"></asp:Label>
+                        </div>
+                        <div class="col">
+                            <asp:TextBox ID="TextBox4" runat="server" Enabled="false"></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="row-eq-height">
+                        <div class="col-md-2">
+                            <asp:Label ID="Label5" runat="server" Text="Payment Method"
+                                AssociatedControlID="PaymentMethodList"></asp:Label>
+                        </div>
+                        <div class="col">
+                            <asp:RadioButtonList ID="PaymentMethodList" runat="server"
+                                RepeatDirection="Horizontal" CssClass="paymentMethodList">
+                                <asp:ListItem Text="Credit" Value="C"></asp:ListItem>
+                                <asp:ListItem Text="Debit" Value="D"></asp:ListItem>
+                            </asp:RadioButtonList>
+                        </div>
+                    </div>
+
+                    <h3>Shipping Details</h3>
+                    <div class="row-eq-height">
+                        <div class="col-md-2">
+                            <asp:Label ID="Label6" runat="server" Text="Name"
+                                AssociatedControlID="TextBox1"></asp:Label>
+                        </div>
+                        <div class="col">
+                            <asp:TextBox ID="TextBox5" runat="server" Enabled="false"></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="row-eq-height">
+                        <div class="col-md-2">
+                            <asp:Label ID="Label7" runat="server" Text="Email"
+                                AssociatedControlID="TextBox2"></asp:Label>
+                        </div>
+                        <div class="col">
+                            <asp:TextBox ID="TextBox6" runat="server" Enabled="false"></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="row-eq-height">
+                        <div class="col-md-2">
+                            <asp:Label ID="Label8" runat="server" Text="Address"
+                                AssociatedControlID="TextBox3"></asp:Label>
+                        </div>
+                        <div class="col">
+                            <asp:TextBox ID="TextBox7" runat="server" Enabled="false"></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="row-eq-height">
+                        <div class="col-md-2">
+                            <asp:Label ID="Label9" runat="server" Text="Phone"
+                                AssociatedControlID="TextBox4"></asp:Label>
+                        </div>
+                        <div class="col">
+                            <asp:TextBox ID="TextBox8" runat="server" Enabled="false"></asp:TextBox>
+                        </div>
+                    </div>
+
+                    <div class="row-eq-height">
+                        <div class="col-md-2">
+                            
+                        </div>
+                        <div class="col">
+                            <span><a href="#view" data-toggle="tab"
+                                    class="btn btn-primary">Back</a>&nbsp;&nbsp;
+
+                            <a href="#order" data-toggle="tab"
+                                    class="btn btn-primary">Continue</a></span>
+                        </div>
+                    </div>
                 </div>
                 <div class="tab-pane fade" id="order">
                     <h2>Your Shopping Cart
