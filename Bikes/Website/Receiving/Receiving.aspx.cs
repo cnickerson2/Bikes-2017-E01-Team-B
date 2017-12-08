@@ -16,6 +16,8 @@ public partial class Receiving_Receiving : System.Web.UI.Page
     {
 
         if (!User.IsInRole("WebsiteAdmins") && !User.IsInRole("Receiving")) Response.Redirect("../Account/Login.aspx");
+
+        
         
     }
 
@@ -117,10 +119,34 @@ public partial class Receiving_Receiving : System.Web.UI.Page
 
                 outDetails.Add(outDetail);
             }
+            List<UnorderedPurchaseItemCart> cartItems = new List<UnorderedPurchaseItemCart>();
+            foreach (ListViewItem item in UnorderedCartListView.Items)
+            {
+                int quantity = 0;
+                if (!int.TryParse((item.FindControl("QuantityLabel") as Label).Text, out quantity))
+                {
+                    Message.Text = (item.FindControl("DescriptionLabel") as Label).Text + "'s quantity is invalid";
+                    noErrors = false;
+                }
+                else
+                {
+                    UnorderedPurchaseItemCart cartItem = new UnorderedPurchaseItemCart
+                    {
+                        VendorPartNumber = (item.FindControl("VendorPartNumberLabel") as Label).Text,
+                        Description = (item.FindControl("DescriptionLabel") as Label).Text,
+                        Quantity = quantity,
+                        PurchaseOrderNumber = int.Parse((SelectedOrderFormView.FindControl("PO") as Label).Text),
+                        CartID = int.Parse((item.FindControl("CartIDLabel") as Label).Text)
+                    };
+                    cartItems.Add(cartItem);
+                }
+
+            }
             if (noErrors)
             {
+               
                 PurchaseOrderController sysmgr = new PurchaseOrderController();
-                sysmgr.PurchaseOrder_ReceiveOrder(outDetails);
+                sysmgr.PurchaseOrder_ReceiveOrder(outDetails,cartItems);
             }
             else
             {
@@ -165,7 +191,7 @@ public partial class Receiving_Receiving : System.Web.UI.Page
         }
         catch(Exception ex)
         {
-            Message.Text = ex.Message;
+            Message.Text = ex.InnerException.InnerException.Message;
         }     
         
     }

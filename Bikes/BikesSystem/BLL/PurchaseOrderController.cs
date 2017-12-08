@@ -45,7 +45,7 @@ namespace BikesSystem.BLL
         }
 
         [DataObjectMethod(DataObjectMethodType.Update, false)]
-        public int PurchaseOrder_ReceiveOrder(List<OutstandingPurchaseOrderDetails> outstandingDetailsList)
+        public int PurchaseOrder_ReceiveOrder(List<OutstandingPurchaseOrderDetails> outstandingDetailsList, List<UnorderedPurchaseItemCart> cartItems)
         {
             using (var context = new EBikesContext())
             {
@@ -104,14 +104,15 @@ namespace BikesSystem.BLL
                         newReturnOrderDetail = context.ReturnedOrderDetails.Add(newReturnOrderDetail);
 
                         //Add this to the Cart
-                        UnorderedPurchaseItemCart newCartItem = new UnorderedPurchaseItemCart
-                        {
-                            PurchaseOrderNumber = outDetail.PurchaseOrderNumber == null ? 0 : (int)outDetail.PurchaseOrderNumber,
-                            Description = outDetail.PartDescription,
-                            VendorPartNumber = string.IsNullOrWhiteSpace(outDetail.VendorPartNumber) ? "N/A" : outDetail.VendorPartNumber,
-                            Quantity = outDetail.ReturningAmount
-                        };
-                        newCartItem = context.UnorderedPurchaseItemCarts.Add(newCartItem);
+                        //UnorderedPurchaseItemCart newCartItem = new UnorderedPurchaseItemCart
+                        //{
+                        //    PurchaseOrderNumber = outDetail.PurchaseOrderNumber == null ? 0 : (int)outDetail.PurchaseOrderNumber,
+                        //    Description = outDetail.PartDescription,
+                        //    VendorPartNumber = string.IsNullOrWhiteSpace(outDetail.VendorPartNumber) ? "N/A" : outDetail.VendorPartNumber,
+                        //    Quantity = outDetail.ReturningAmount
+                        //};
+                        //newCartItem = context.UnorderedPurchaseItemCarts.Add(newCartItem);
+
                         
                     }
                     if (outDetail.QuantityOutstanding - outDetail.ReceivingAmount > 0)
@@ -119,7 +120,31 @@ namespace BikesSystem.BLL
                         //Order is not complete if there are receiving amounts still
                         isOrderCompleted = false;
                     }
+
                 }
+                //Add the Cart Items to the returns
+                if(cartItems.Count > 0)
+                {
+                    foreach(UnorderedPurchaseItemCart cartItem in cartItems)
+                    {
+                        ReturnedOrderDetail newCartReturn = new ReturnedOrderDetail
+                        {
+                            ItemDescription = cartItem.Description,
+                            Quantity = cartItem.Quantity,
+                            Reason = "Not Ordered",
+                            VendorPartNumber = cartItem.VendorPartNumber,
+                            ReceiveOrderID = newReceiveOrder.ReceiveOrderID
+                        };
+
+                        newCartReturn = context.ReturnedOrderDetails.Add(newCartReturn);
+
+                        //Remove the item from the cart
+                        UnorderedPurchaseItemCart removeThis = context.UnorderedPurchaseItemCarts.Find(cartItem.CartID);
+                        context.UnorderedPurchaseItemCarts.Remove(removeThis);
+                    }
+                }
+
+                
 
                 //Complete the order
                 if (isOrderCompleted)
@@ -145,8 +170,9 @@ namespace BikesSystem.BLL
                 foreach(PurchaseOrderDetail orderDetail in closingPurchaseOrder.PurchaseOrderDetails)
                 {
                     orderDetail.Part.QuantityOnOrder -= orderDetail.Quantity;
-                    orderDetail.Quantity = 0;
-                    context.Entry(orderDetail).State = System.Data.Entity.EntityState.Modified;
+                    context.Entry(orderDetail.Part).State = System.Data.Entity.EntityState.Modified;
+                    //orderDetail.Quantity = 0;
+                    //context.Entry(orderDetail).State = System.Data.Entity.EntityState.Modified;
                 }
 
                 closingPurchaseOrder.Notes = closureNotes;

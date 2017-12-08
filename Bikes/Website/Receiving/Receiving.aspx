@@ -171,7 +171,6 @@
                     <SortedDescendingHeaderStyle BackColor="#275353" />
                 </asp:GridView>
                 <br />
-                <h3>Extra Items</h3>
                 <asp:ListView ID="UnorderedCartListView" runat="server" DataSourceID="UnorderedCartODS" InsertItemPosition="FirstItem" Visible ="false" DataKeyNames="CartID">
                     
                     <EmptyDataTemplate>
@@ -186,6 +185,8 @@
                             <td>
                                 <asp:LinkButton runat="server" CommandName="Insert" Text="Insert" ID="InsertButton" />
                             </td>
+                            <td runat="server" visible="false">
+                                <asp:TextBox Text='<%# Bind("CartID") %>' runat="server" ID="CartIDTextBox" Enabled="False" Visible="False" /></td>
                             <td>
                                 <asp:TextBox Text='<%# Bind("VendorPartNumber") %>' runat="server" ID="VendorPartNumberTextBox" /></td>
                             <td>
@@ -199,6 +200,8 @@
                             <td>
                                 <asp:LinkButton runat="server" CommandName="Delete" Text="Remove" ID="DeleteButton" />
                             </td>
+                            <td runat="server" visible="false">
+                                <asp:Label Text='<%# Eval("CartID") %>' runat="server" ID="CartIDLabel" Visible="False" /></td>
                             <td>
                                 <asp:Label Text='<%# Eval("VendorPartNumber") %>' runat="server" ID="VendorPartNumberLabel" /></td>
                             <td>
@@ -214,6 +217,7 @@
                                     <table runat="server" id="itemPlaceholderContainer" style="background-color: #FFFFFF; border-collapse: collapse; border-color: #999999; border-style: none; border-width: 1px; font-family: Verdana, Arial, Helvetica, sans-serif;" border="1">
                                         <tr runat="server" style="background-color: #DCDCDC; color: #000000;">
                                             <th runat="server"></th>
+                                            <th runat="server" visible="False">CartID</th>
                                             <th runat="server">Vendor Part #</th>
                                             <th runat="server">Description</th>
                                             <th runat="server">Qty</th>
