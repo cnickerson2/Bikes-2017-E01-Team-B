@@ -29,8 +29,10 @@ namespace BikesSystem.BLL
             {
                 OnlineCustomerController customers = new OnlineCustomerController();
                 ShoppingCartController carts = new ShoppingCartController();
+                ShoppingCartItemController items = new ShoppingCartItemController();
                 OnlineCustomer customer;
                 ShoppingCart cart;
+                ShoppingCartItem item;
 
                 customer = customers.GetOnlineCustomer(user, context);
                 if (customer == null)
@@ -38,8 +40,20 @@ namespace BikesSystem.BLL
                 cart = carts.GetShoppingCart(user, context);
                 if (cart == null)
                     cart = carts.CreateShoppingCart(customer.OnlineCustomerID, context);
-                new ShoppingCartItemController().CreateShoppingCartItem(cart.ShoppingCartID,
-                    productId, quantity, context);
+                
+                item = items.GetShoppingCartItem(cart.ShoppingCartID, productId, context);
+                if (item == null)
+                {
+                    item = items.CreateShoppingCartItem(cart.ShoppingCartID,
+                        productId, context);
+                    item.Quantity = quantity;
+                    context.ShoppingCartItems.Add(item);
+                }
+                else
+                {
+                    item.Quantity += quantity;
+                    context.Entry(item).Property("Quantity").IsModified = true;
+                }
                 context.SaveChanges();
             }
         }
