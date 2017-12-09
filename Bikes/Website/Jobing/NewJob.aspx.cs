@@ -5,15 +5,10 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class Jobing_Jobs : System.Web.UI.Page
+public partial class Jobing_NewJob : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
 
-    }
-
-    protected void NewJobButton_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("NewJob.aspx");
     }
 }

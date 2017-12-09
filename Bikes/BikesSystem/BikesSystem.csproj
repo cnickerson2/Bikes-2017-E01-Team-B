@@ -63,6 +63,7 @@
     <Compile Include="BLL\CategoryController.cs" />
     <Compile Include="BLL\EmployeeController.cs" />
     <Compile Include="BLL\JobController.cs" />
+    <Compile Include="BLL\JobCustomerController.cs" />
     <Compile Include="BLL\JobDetailPartController.cs" />
     <Compile Include="BLL\JobDetailsController.cs" />
     <Compile Include="BLL\OnlineCustomerController.cs" />

@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
 
-    <asp:Button ID="NewJobButton" runat="server" Text="New Job" /> <!--This needs to go to JobDetails...I think-->
+    <asp:Button ID="NewJobButton" runat="server" Text="New Job" OnClick="NewJobButton_Click" /> <!--This needs to go to JobDetails...I think-->
     <asp:ListView ID="JobListListView" runat="server" DataSourceID="JobListODS">
         <AlternatingItemTemplate>
             <tr style="background-color: #FFFFFF; color: #284775;">
