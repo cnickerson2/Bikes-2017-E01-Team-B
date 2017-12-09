@@ -10,19 +10,19 @@ namespace BikesSystem.BLL
 {
     public class ShoppingCartItemController
     {
-        internal ShoppingCartItem GetShoppingCartItem(int shoppingCartId, int productId,
+        internal ShoppingCartItem GetShoppingCartItem(ShoppingCart cart, int productId,
             EBikesContext context)
         {
             return context.ShoppingCartItems.Where((item) =>
-                item.ShoppingCartID == shoppingCartId && item.PartID == productId).FirstOrDefault();
+                item.ShoppingCartID == cart.ShoppingCartID && item.PartID == productId).FirstOrDefault();
         }
 
-        internal ShoppingCartItem CreateShoppingCartItem(int shoppingCartId, int productId,
+        internal ShoppingCartItem CreateShoppingCartItem(ShoppingCart cart, int productId,
             EBikesContext context)
         {
             ShoppingCartItem item = new ShoppingCartItem()
             {
-                ShoppingCartID = shoppingCartId,
+                ShoppingCart = cart,
                 PartID = productId,
                 Quantity = 0
             };

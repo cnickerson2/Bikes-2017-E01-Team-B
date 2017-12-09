@@ -100,10 +100,14 @@
                         <asp:Label Text='<%# Eval("Price", "{0:C}") %>' runat="server" ID="PriceLabel" />
                         <asp:Label Text='<%# Eval("Description") %>' runat="server" ID="DescriptionLabel" />
                         <asp:Label Text='<%# Eval("Quantity", "{0} in stock.") %>' runat="server" ID="QuantityLabel" />
+                        <br /><asp:Label Text='<%# Eval("PartId", "id: {0}") %>' runat="server" ID="Test1" />
                         <br />
                     </span>
                 </ItemTemplate>
             </asp:ListView>
+            <!-- Temporary Add method until the LoginView can be fixed. -->
+            <asp:TextBox ID="Test2" runat="server"></asp:TextBox>
+            <asp:Button ID="Test3" runat="server" Text="Test Add" OnClick="Test3_Click" />
         </div>
     </div>
 

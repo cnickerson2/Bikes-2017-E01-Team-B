@@ -39,15 +39,13 @@ namespace BikesSystem.BLL
                     customer = customers.CreateOnlineCustomer(user.Identity.Name, context);
                 cart = carts.GetShoppingCart(user, context);
                 if (cart == null)
-                    cart = carts.CreateShoppingCart(customer.OnlineCustomerID, context);
+                    cart = carts.CreateShoppingCart(customer, context);
                 
-                item = items.GetShoppingCartItem(cart.ShoppingCartID, productId, context);
+                item = items.GetShoppingCartItem(cart, productId, context);
                 if (item == null)
                 {
-                    item = items.CreateShoppingCartItem(cart.ShoppingCartID,
-                        productId, context);
+                    item = items.CreateShoppingCartItem(cart, productId, context);
                     item.Quantity = quantity;
-                    context.ShoppingCartItems.Add(item);
                 }
                 else
                 {

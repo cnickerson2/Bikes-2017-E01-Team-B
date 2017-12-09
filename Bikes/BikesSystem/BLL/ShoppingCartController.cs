@@ -64,13 +64,13 @@ namespace BikesSystem.BLL
             }
         }
 
-        internal ShoppingCart CreateShoppingCart(int customerId, EBikesContext context)
+        internal ShoppingCart CreateShoppingCart(OnlineCustomer customer, EBikesContext context)
         {
             ShoppingCart cart = new ShoppingCart()
             {
-                OnlineCustomerID = customerId,
                 CreatedOn = DateTime.Now
             };
+            cart.OnlineCustomer = customer;
             context.ShoppingCarts.Add(cart);
             return cart;
         }
