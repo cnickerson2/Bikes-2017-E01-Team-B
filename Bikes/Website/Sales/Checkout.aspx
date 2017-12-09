@@ -70,6 +70,30 @@
             clear: right;
         }
 
+        th, td {
+            padding: 5px;
+        }
+
+        .input-group-addon {
+            background-color: #555;
+            color: #ccc;
+        }
+
+        .input-group-addon img {
+            width: 16px;
+            height: 16px;
+        }
+
+        a.input-group-addon:hover {
+            color: #ccc;
+        }
+
+        .summary {
+            float: right;
+            width: 250px;
+            margin: 10px;
+        }
+
         #info div div {
             margin: 5px;
         }
@@ -127,13 +151,78 @@
                     </asp:Panel>
                     <asp:Panel ID="View" runat="server"
                         OnLoad="View_PreRender" Visible="false">
-                        <%--<asp:ListView ID="ViewPartsList" runat="server"></asp:ListView>--%>
-                        <br /><br />
-                        <span>Total: <asp:Label runat="server" ID="ViewTotalLabel" /><br />
+                        <asp:ListView ID="ViewPartsList" runat="server"
+                            OnItemCommand="PartsList_ItemCommand">
+                            <LayoutTemplate>
+                                <table runat="server" ID="ViewPartsListTable">
+                                    <tr runat="server">
+                                        <td runat="server">
+                                            <table runat="server" id="Table" border="0">
+                                                <tr runat="server">
+                                                    <th runat="server" style="min-width: 300px">Description</th>
+                                                    <th runat="server" style="width: 170px">Count</th>
+                                                    <th runat="server">Price</th>
+                                                </tr>
+                                                <tr runat="server" id="itemPlaceholder"></tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr runat="server">
+                                        <td runat="server">
+                                            <asp:DataPager runat="server" ID="DataPager">
+                                                <Fields>
+                                                    <asp:NumericPagerField></asp:NumericPagerField>
+                                                </Fields>
+                                            </asp:DataPager>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </LayoutTemplate>
+                            <ItemTemplate>
+                                <tr>
+                                    <td>
+                                        <asp:Label ID="DescriptionLabel" runat="server" Text='<%# Eval("Description") %>'></asp:Label>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <asp:TextBox ID="QuantityBox" runat="server"
+                                            CssClass="form-control" Width="4em"
+                                            text='<%# Eval("Quantity") %>'></asp:TextBox>
+
+                                            <asp:LinkButton ID="RefreshButton" runat="server"
+                                                CommandName="Refresh"
+                                                CssClass="input-group-addon">
+                                                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                                                <span class="sr-only">Refresh the amount of the item.</span>
+                                            </asp:LinkButton>
+                                            <asp:LinkButton ID="RemoveButton" runat="server"
+                                                CommandName="Remove"
+                                                CssClass="input-group-addon">
+                                                <img src="../Content/Images/trashcanIcon.svg"
+                                                    alt="Remove the item from your shopping cart." />
+                                            </asp:LinkButton>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <asp:Label ID="PriceLabel" runat="server"
+                                            Text='<%# string.Format("{0:C} ({1:C} each)",
+                                                (decimal)Eval("Price")*(int)Eval("Quantity"),
+                                                (decimal)Eval("Price")) %>'></asp:Label>
+                                    </td>
+                                </tr>
+                                <tr runat="server" visible='<%# (int)Eval("Quantity") > (int)Eval("QuantityOnHand") %>'>
+                                    <td>
+                                        out of stock notice
+                                    </td>
+                                </tr>
+                            </ItemTemplate>
+                        </asp:ListView>
+                        <br />
+                        <div class="summary">Total: <asp:Label runat="server" ID="ViewTotalLabel" /><br />
                             <asp:Label ID="ViewOverviewLabel" runat="server"></asp:Label><br />
                             <a href="#info" data-toggle="tab"
                                 class="btn btn-primary">Continue</a>
-                        </span>
+                        </div>
                     </asp:Panel>
                 </div>
                 <div class="tab-pane fade" id="info">

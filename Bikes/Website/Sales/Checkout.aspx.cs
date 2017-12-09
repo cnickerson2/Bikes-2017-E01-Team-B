@@ -32,16 +32,15 @@ public partial class Sales_Checkout : System.Web.UI.Page
         {
             ShoppingCartController controller = new ShoppingCartController();
             OnlineShoppingCart cart = controller.GetOnlineShoppingCart(User);
-            // Apparently I can't bind a single entity to a listview ): So manual setting it is!
             if (cart == null)
             {
                 ViewEmpty.Visible = true;
             }
             else
             {
-                // ViewPartsList.DataSource = cart.Parts;
-                // ViewPartsList.DataBind();
-                ViewTotalLabel.Text = cart.Total.ToString();
+                ViewPartsList.DataSource = cart.Parts;
+                ViewPartsList.DataBind();
+                ViewTotalLabel.Text = cart.Total.ToString("C");
                 ViewOverviewLabel.Text = string.Format(
                     "There are {0} items in your shopping cart{1}.",
                     cart.Parts.Count,
@@ -61,5 +60,10 @@ public partial class Sales_Checkout : System.Web.UI.Page
         {
             return "";
         }
+    }
+
+    protected void PartsList_ItemCommand(object sender, ListViewCommandEventArgs e)
+    {
+
     }
 }
