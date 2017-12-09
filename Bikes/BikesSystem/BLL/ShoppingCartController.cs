@@ -27,7 +27,7 @@ namespace BikesSystem.BLL
                     onlineCart = new OnlineShoppingCart()
                     {
                         Total = 0,
-                        LastUpdated = cart.UpdatedOn.Value,
+                        LastUpdated = cart.UpdatedOn,
                         Parts = (from item in cart.ShoppingCartItems
                                  orderby item.Part.Description
                                  select new OnlineShoppingCartItem

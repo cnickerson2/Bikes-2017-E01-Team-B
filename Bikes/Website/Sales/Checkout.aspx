@@ -121,28 +121,20 @@
                         </a></h2>
                     <hr class="tabHr" />
 
-                    <asp:ListView ID="View" runat="server"
-                        OnPreRender="View_PreRender">
-                        <LayoutTemplate>
-                            <div runat="server" id="itemPlaceholderContainer" style=""><span runat="server" id="itemPlaceholder" /></div>
-                        </LayoutTemplate>
-                        <ItemTemplate>
-                            <%--<asp:ListView ID="PartsList" runat="server" DataSource='<%# Eval("Parts") %>'></asp:ListView>--%>
-                            <br /><br />
-                            <span>Total: <asp:Label Text='<%# Eval("Total", "{0:C}") %>' runat="server" ID="TotalLabel" /><br />
-                                <asp:Label ID="OverviewLabel" runat="server" Text='<%# string.Format(
-                                    "There are {0} items in your shopping cart (last updated on {1}).",
-                                    ((IList)Eval("Parts")).Count,
-                                    ((DateTime)Eval("LastUpdated")).Date) %>'></asp:Label>
-                                <a href="#info" data-toggle="tab"
-                                    class="btn btn-primary">Continue</a>
-                            </span>
-                        </ItemTemplate>
-                        <EmptyDataTemplate>
-                            <span>You don't have a shopping cart.
-                                Please add some items before checking out.</span>
-                        </EmptyDataTemplate>
-                    </asp:ListView>
+                    <asp:Panel ID="ViewEmpty" runat="server" Visible="false">
+                        <p>You don't have a shopping cart.
+                           Please add some items before checking out.</p>
+                    </asp:Panel>
+                    <asp:Panel ID="View" runat="server"
+                        OnLoad="View_PreRender" Visible="false">
+                        <%--<asp:ListView ID="ViewPartsList" runat="server"></asp:ListView>--%>
+                        <br /><br />
+                        <span>Total: <asp:Label runat="server" ID="ViewTotalLabel" /><br />
+                            <asp:Label ID="ViewOverviewLabel" runat="server"></asp:Label><br />
+                            <a href="#info" data-toggle="tab"
+                                class="btn btn-primary">Continue</a>
+                        </span>
+                    </asp:Panel>
                 </div>
                 <div class="tab-pane fade" id="info">
                     <h2>Your Purchase Info

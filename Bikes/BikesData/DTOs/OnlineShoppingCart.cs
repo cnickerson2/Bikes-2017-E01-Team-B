@@ -10,7 +10,7 @@ namespace BikesData.DTOs
     public class OnlineShoppingCart
     {
         public decimal Total { get; set; }
-        public DateTime LastUpdated { get; set; }
+        public DateTime? LastUpdated { get; set; }
         public List<OnlineShoppingCartItem> Parts { get; set; }
     }
 }

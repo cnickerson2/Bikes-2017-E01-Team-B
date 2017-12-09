@@ -1,4 +1,5 @@
-﻿using BikesSystem.BLL;
+﻿using BikesData.DTOs;
+using BikesSystem.BLL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,8 +31,35 @@ public partial class Sales_Checkout : System.Web.UI.Page
         MessageUserControl.TryRun(() =>
         {
             ShoppingCartController controller = new ShoppingCartController();
-            View.DataSource = controller.GetOnlineShoppingCart(User);
-            View.DataBind();
+            OnlineShoppingCart cart = controller.GetOnlineShoppingCart(User);
+            // Apparently I can't bind a single entity to a listview ): So manual setting it is!
+            if (cart == null)
+            {
+                ViewEmpty.Visible = true;
+            }
+            else
+            {
+                // ViewPartsList.DataSource = cart.Parts;
+                // ViewPartsList.DataBind();
+                ViewTotalLabel.Text = cart.Total.ToString();
+                ViewOverviewLabel.Text = string.Format(
+                    "There are {0} items in your shopping cart{1}.",
+                    cart.Parts.Count,
+                    FormatUpdate(cart.LastUpdated));
+                View.Visible = true;
+            }
         });
+    }
+
+    protected string FormatUpdate(DateTime? Date)
+    {
+        if (Date.HasValue)
+        {
+            return string.Format(" (last updated on {0})", Date.Value.Date.ToString());
+        }
+        else
+        {
+            return "";
+        }
     }
 }
