@@ -16,7 +16,10 @@ public partial class Jobing_JobDetails : System.Web.UI.Page
 
     protected void Page_PreRenderComplete(object sender, EventArgs e)
     {
-
+        if (JobIDHidden.Value == "")
+        {
+            MessageUserControl.ShowInfo("Information", "Note: If you click Add Service, you will be taken to the New Job page.");
+        }
     }
 
     protected void AddServiceButton_Click(object sender, EventArgs e)
@@ -27,16 +30,37 @@ public partial class Jobing_JobDetails : System.Web.UI.Page
         }
         else
         {
-            JobDetailsController sysmgr = new JobDetailsController();
-            JobDetail newService = new JobDetail();
-            newService.Comments = CommentsTextbox.Text;
-            newService.Description = DescriptionTextbox.Text;
-            newService.JobHours = decimal.Parse(HoursTextbox.Text);
-            newService.CouponID = int.Parse(CouponDropdownList.SelectedValue);
-            newService.JobID = int.Parse(JobIDHidden.Value);
+            if (CommentsTextbox.Text == "")
+            {
+                MessageUserControl.ShowInfo("Warning", "You must enter a comment about the service.");
+            }
+            else
+            {
+                if (DescriptionTextbox.Text == "")
+                {
+                    MessageUserControl.ShowInfo("Warning", "You must enter a description about the service.");
+                }
+                else
+                {
+                    if (HoursTextbox.Text == "")
+                    {
+                        MessageUserControl.ShowInfo("Warning", "You must enter the amount of hours the service took to complete.");
+                    }
+                    else
+                    {
+                        JobDetailsController sysmgr = new JobDetailsController();
+                        JobDetail newService = new JobDetail();
+                        newService.Comments = CommentsTextbox.Text;
+                        newService.Description = DescriptionTextbox.Text;
+                        newService.JobHours = decimal.Parse(HoursTextbox.Text);
+                        newService.CouponID = int.Parse(CouponDropdownList.SelectedValue);
+                        newService.JobID = int.Parse(JobIDHidden.Value);
 
-            sysmgr.Add_Service(newService);
-            CurrentServicesListView.DataBind();
+                        sysmgr.Add_Service(newService);
+                        CurrentServicesListView.DataBind();
+                    }
+                }
+            }
         }
     }
 
