@@ -2,7 +2,21 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
 
-    <asp:Button ID="NewJobButton" runat="server" Text="New Job" OnClick="NewJobButton_Click" /> <!--This needs to go to JobDetails...I think-->
+    <h2>Current Jobs List</h2>
+
+    <p>Below is a list of all Current Jobs.</p>
+    
+    <p>You can manage services for a specific job by clicking "Manage Services"</p>
+
+    <p>You can manage the details for the services of a specific job by clicking "Manage Details"</p>
+
+    <p>Or, you can create a new job by clicking the "New Job" Button.</p>
+    <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <asp:Button ID="NewJobButton" runat="server" Text="New Job" OnClick="NewJobButton_Click" /> 
+    <br />
+    <br />
+    <!--This needs to go to JobDetails...I think-->
     <asp:ListView ID="JobListListView" runat="server" DataSourceID="JobListODS">
         <AlternatingItemTemplate>
             <tr style="background-color: #FFFFFF; color: #284775;">
@@ -18,6 +32,16 @@
                     <asp:Label Text='<%# Eval("CustomerName") %>' runat="server" ID="CustomerNameLabel" /></td>
                 <td>
                     <asp:Label Text='<%# Eval("Phone") %>' runat="server" ID="PhoneLabel" /></td>
+                <td>
+                    <asp:LinkButton ID="ManageServices" runat="server"
+                             CssClass="btn" CommandArgument='<%# Eval("JobID") %>' OnCommand="ManageServices_Command" >
+                            <span aria-hidden="true" >Manage Services</span>
+                        </asp:LinkButton></td>
+                <td>
+                    <asp:LinkButton ID="ManageDetails" runat="server"
+                             CssClass="btn" CommandArgument='<%# Eval("JobID") %>' OnCommand="ManageDetails_Command" >
+                            <span aria-hidden="true" >Manage Details</span>
+                        </asp:LinkButton></td>
             </tr>
         </AlternatingItemTemplate>
         <EmptyDataTemplate>
@@ -41,6 +65,16 @@
                     <asp:Label Text='<%# Eval("CustomerName") %>' runat="server" ID="CustomerNameLabel" /></td>
                 <td>
                     <asp:Label Text='<%# Eval("Phone") %>' runat="server" ID="PhoneLabel" /></td>
+                <td>
+                    <asp:LinkButton ID="ManageServices" runat="server"
+                             CssClass="btn" CommandArgument='<%# Eval("JobID") %>' OnCommand="ManageServices_Command" >
+                            <span aria-hidden="true" >Manage Services</span>
+                        </asp:LinkButton></td>
+                <td>
+                    <asp:LinkButton ID="ManageDetails" runat="server"
+                             CssClass="btn" CommandArgument='<%# Eval("JobID") %>' OnCommand="ManageDetails_Command" >
+                            <span aria-hidden="true" >Manage Details</span>
+                        </asp:LinkButton></td>
             </tr>
         </ItemTemplate>
         <LayoutTemplate>
@@ -55,6 +89,8 @@
                                 <th runat="server">Done</th>
                                 <th runat="server">Customer</th>
                                 <th runat="server">Contact Number</th>
+                                <th runat="server"></th>
+                                <th runat="server"></th>
                             </tr>
                             <tr runat="server" id="itemPlaceholder"></tr>
                         </table>

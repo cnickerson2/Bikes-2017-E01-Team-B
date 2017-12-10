@@ -19,5 +19,7 @@ namespace BikesData.POCOs
         public int? CouponID { get; set; }
 
         public int JobID { get; set; }
+
+        public string StatusCode { get; set; }
     }
 }

@@ -57,6 +57,11 @@
         <AlternatingItemTemplate>
             <tr style="background-color: #FFFFFF; color: #284775;">
                 <td>
+                    <asp:LinkButton ID="Remove" runat="server"
+                             CssClass="btn" CommandArgument='<%# Eval("JobDetailID") %>' OnCommand="Remove_Command" >
+                            <span aria-hidden="true" >Remove</span>
+                        </asp:LinkButton></td>
+                <td>
                     <asp:Label Text='<%# Eval("JobDetailID") %>' runat="server" ID="JobDetailIDLabel" /></td>
                 <td>
                     <asp:Label Text='<%# Eval("Description") %>' runat="server" ID="DescriptionLabel" /></td>
@@ -80,6 +85,11 @@
         <ItemTemplate>
             <tr style="background-color: #E0FFFF; color: #333333;">
                 <td>
+                    <asp:LinkButton ID="Remove" runat="server"
+                             CssClass="btn" CommandArgument='<%# Eval("JobDetailID") %>' OnCommand="Remove_Command" >
+                            <span aria-hidden="true" >Remove</span>
+                        </asp:LinkButton></td>
+                <td>
                     <asp:Label Text='<%# Eval("JobDetailID") %>' runat="server" ID="JobDetailIDLabel" /></td>
                 <td>
                     <asp:Label Text='<%# Eval("Description") %>' runat="server" ID="DescriptionLabel" /></td>
@@ -99,6 +109,7 @@
                     <td runat="server">
                         <table runat="server" id="itemPlaceholderContainer" style="background-color: #FFFFFF; border-collapse: collapse; border-color: #999999; border-style: none; border-width: 1px; font-family: Verdana, Arial, Helvetica, sans-serif;" border="1">
                             <tr runat="server" style="background-color: #E0FFFF; color: #333333;">
+                                <th runat="server"></th>
                                 <th runat="server">JobDetailID</th>
                                 <th runat="server">Description</th>
                                 <th runat="server">JobHours</th>

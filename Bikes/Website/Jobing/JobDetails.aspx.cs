@@ -53,8 +53,16 @@ public partial class Jobing_JobDetails : System.Web.UI.Page
                         newService.Comments = CommentsTextbox.Text;
                         newService.Description = DescriptionTextbox.Text;
                         newService.JobHours = decimal.Parse(HoursTextbox.Text);
-                        newService.CouponID = int.Parse(CouponDropdownList.SelectedValue);
                         newService.JobID = int.Parse(JobIDHidden.Value);
+
+                        if (CouponDropdownList.SelectedValue == "0")
+                        {
+                            //do nothing
+                        }
+                        else
+                        {
+                            newService.CouponID = int.Parse(CouponDropdownList.SelectedValue);
+                        }
 
                         sysmgr.Add_Service(newService);
                         CurrentServicesListView.DataBind();
@@ -77,5 +85,12 @@ public partial class Jobing_JobDetails : System.Web.UI.Page
             DescriptionTextbox.Text = sysmgr.StandardJobInformation_Get(standardID).Description;
             HoursTextbox.Text = sysmgr.StandardJobInformation_Get(int.Parse(PresetDropdownList.SelectedValue)).StandardHours.ToString();
         }
+    }
+
+    protected void Remove_Command(object sender, CommandEventArgs e)
+    {
+        JobDetailsController sysmgr = new JobDetailsController();
+        sysmgr.Remove_Service(int.Parse(e.CommandArgument.ToString()));
+        CurrentServicesListView.DataBind();
     }
 }

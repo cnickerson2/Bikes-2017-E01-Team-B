@@ -27,6 +27,7 @@ namespace BikesSystem.BLL
                                   Comments = x.Comments,
                                   CouponID = x.CouponID,
                                   JobID = x.JobID,
+                                  StatusCode = x.Job.StatusCode,
                                   JobDetailID = x.JobDetailID
                               };
                 return results.ToList();
@@ -44,7 +45,7 @@ namespace BikesSystem.BLL
         }
 
         [DataObjectMethod(DataObjectMethodType.Delete, false)]
-        public int Remove_Service(JobDetail service)
+        public int Remove_Service(int service)
         {
             using (var context = new EBikesContext())
             {
