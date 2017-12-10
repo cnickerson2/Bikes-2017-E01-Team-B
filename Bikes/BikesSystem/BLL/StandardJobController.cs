@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace BikesSystem.BLL
 {
+    [DataObject]
     public class StandardJobController
     {
         [DataObjectMethod(DataObjectMethodType.Select, false)]

@@ -14,6 +14,11 @@ public partial class Jobing_JobDetails : System.Web.UI.Page
         JobIDHidden.Value = Request.QueryString["id"];
     }
 
+    protected void Page_PreRenderComplete(object sender, EventArgs e)
+    {
+
+    }
+
     protected void AddServiceButton_Click(object sender, EventArgs e)
     {
         if (JobIDHidden.Value == "")
@@ -32,6 +37,21 @@ public partial class Jobing_JobDetails : System.Web.UI.Page
 
             sysmgr.Add_Service(newService);
             CurrentServicesListView.DataBind();
+        }
+    }
+
+    protected void PresetButton_Click(object sender, EventArgs e)
+    {
+        if (int.Parse(PresetDropdownList.SelectedValue) == 0)
+        {
+            //do nothing...probably
+        }
+        else
+        {
+            StandardJobController sysmgr = new StandardJobController();
+            int standardID = int.Parse(PresetDropdownList.SelectedValue);
+            DescriptionTextbox.Text = sysmgr.StandardJobInformation_Get(standardID).Description;
+            HoursTextbox.Text = sysmgr.StandardJobInformation_Get(int.Parse(PresetDropdownList.SelectedValue)).StandardHours.ToString();
         }
     }
 }

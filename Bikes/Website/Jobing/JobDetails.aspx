@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="JobDetails.aspx.cs" Inherits="Jobing_JobDetails" %>
 
+<%@ Register Src="~/UserControls/MessageUserControl.ascx" TagPrefix="uc1" TagName="MessageUserControl" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
     
     <asp:HiddenField ID="JobIDHidden" runat="server"/>
@@ -8,17 +10,20 @@
 
     <p>Please enter all fields with Service Data, then click the "Add Service" Button.</p>
 
+    <uc1:MessageUserControl runat="server" ID="MessageUserControl" />
+
     <!--Top Row Controls-->
     <asp:Label ID="PresetLabel" runat="server" Text="Presets:"></asp:Label>
-    <asp:DropDownList ID="PresetDropdownList" runat="server" AppendDataBoundItems="true">
+    &nbsp;&nbsp;&nbsp;
+    <asp:DropDownList ID="PresetDropdownList" runat="server" AppendDataBoundItems="true" DataSourceID="PresetDDLODS" DataTextField="Description" DataValueField="StandardJobID">
         <asp:ListItem Text="Select..." Value=""></asp:ListItem>
     </asp:DropDownList>
     &nbsp;&nbsp;&nbsp;
-    <asp:Button ID="PresetButton" runat="server" Text="Select" /><!--This needs to update the fields necessary based on the ddl-->
+    <asp:Button ID="PresetButton" runat="server" Text="Select" OnClick="PresetButton_Click" /><!--This needs to update the fields necessary based on the ddl-->
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <asp:Label ID="CouponLabel" runat="server" Text="Coupon:"></asp:Label>
     &nbsp;&nbsp;&nbsp;
-    <asp:DropDownList ID="CouponDropdownList" runat="server" AppendDataBoundItems="true">
+    <asp:DropDownList ID="CouponDropdownList" runat="server" AppendDataBoundItems="true" DataSourceID="CouponDDLODS" DataTextField="CouponIDValue" DataValueField="CouponID">
         <asp:ListItem Text="Select..." Value=""></asp:ListItem>
     </asp:DropDownList>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -28,11 +33,12 @@
 
     <!--Second Row Controls-->
     <asp:Label ID="DescriptionLabel" runat="server" Text="Description"></asp:Label>
+    &nbsp;&nbsp;&nbsp;
     <asp:TextBox ID="DescriptionTextbox" runat="server" Width="314px"></asp:TextBox>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <asp:Label ID="HoursLabel" runat="server" Text="Hours"></asp:Label>
     &nbsp;&nbsp;&nbsp;
-    <asp:TextBox ID="HoursTextbox" runat="server" TextMode="Number" Width="39px"></asp:TextBox>
+    <asp:TextBox ID="HoursTextbox" runat="server" TextMode="Number" Width="60px"></asp:TextBox>
 
     <br />
 
@@ -40,8 +46,8 @@
 
     <!--Third Row Controls-->
     <asp:Label ID="CommentsLabel" runat="server" Text="Comments"></asp:Label>
-    <br />
-    <asp:TextBox ID="CommentsTextbox" runat="server" Height="86px" Width="450px"></asp:TextBox>
+    &nbsp;&nbsp;&nbsp;
+    <asp:TextBox ID="CommentsTextbox" runat="server" Height="86px" Width="472px"></asp:TextBox>
 
     <br />
     <br />
@@ -133,7 +139,9 @@
         </SelectParameters>
     </asp:ObjectDataSource>
     
-    <asp:ObjectDataSource ID="PresetDDLODS" runat="server"></asp:ObjectDataSource>
+    <asp:ObjectDataSource ID="PresetDDLODS" runat="server" OldValuesParameterFormatString="original_{0}" SelectMethod="StandardJob_List" TypeName="BikesSystem.BLL.StandardJobController"></asp:ObjectDataSource>
+
+    <asp:ObjectDataSource ID="CouponDDLODS" runat="server" OldValuesParameterFormatString="original_{0}" SelectMethod="Coupon_List" TypeName="BikesSystem.BLL.CouponController"></asp:ObjectDataSource>
 
     <!--
         USE THIS CODE FOR THE VIEW, REMOVE, DELETE, ETC LINKS
