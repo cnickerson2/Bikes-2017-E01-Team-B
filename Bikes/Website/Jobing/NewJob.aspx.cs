@@ -11,10 +11,10 @@ public partial class Jobing_NewJob : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!Request.IsAuthenticated)
+        /*if (!Request.IsAuthenticated)
         {
             Response.Redirect("~/Account/Login.aspx");
-        }
+        }*/
     }
 
     protected void CheckForException(object sender, ObjectDataSourceStatusEventArgs e)
@@ -57,9 +57,9 @@ public partial class Jobing_NewJob : System.Web.UI.Page
                         newJob.StatusCode = "I";
                         newJob.VehicleIdentification = VehicleIDTextbox.Text;
 
-                        sysmgr.Job_Add(newJob);
+                        int id = sysmgr.Job_Add(newJob);
 
-                        Response.Redirect("JobDetails.aspx");
+                        Response.Redirect("JobDetails.aspx?id=" + id.ToString());
                     }
                 }
             }

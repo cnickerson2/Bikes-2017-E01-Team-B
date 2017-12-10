@@ -1,4 +1,5 @@
 ﻿using BikesData.Entities;
+using BikesData.POCOs;
 using BikesSystem.DAL;
 using System;
 using System.Collections.Generic;
@@ -13,22 +14,20 @@ namespace BikesSystem.BLL
     public class JobDetailsController
     {
         [DataObjectMethod(DataObjectMethodType.Select, false)]
-        public List<JobDetail> List_CurrentServices(int jobid)
+        public List<CurrentService> List_CurrentServices(int jobid)
         {
             using (var context = new EBikesContext())
             {
                 var results = from x in context.JobDetails
                               where x.JobID == jobid
-                              select new JobDetail
+                              select new CurrentService
                               {
                                   Description = x.Description,
                                   JobHours = x.JobHours,
-                                  Coupon = x.Coupon,
                                   Comments = x.Comments,
-                                  JobDetailID = x.JobDetailID,
                                   CouponID = x.CouponID,
-                                  Completed = x.Completed,
-                                  JobID = x.JobID
+                                  JobID = x.JobID,
+                                  JobDetailID = x.JobDetailID
                               };
                 return results.ToList();
             }

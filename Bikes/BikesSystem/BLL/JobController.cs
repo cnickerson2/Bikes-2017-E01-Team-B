@@ -43,13 +43,13 @@ namespace BikesSystem.BLL
         }
 
         [DataObjectMethod(DataObjectMethodType.Select, false)]
-        public void Job_Add(Job item)
+        public int Job_Add(Job item)
         {
             using (var context = new EBikesContext())
             {
                 item = context.Jobs.Add(item);
                 context.SaveChanges();
-                //I don't think I need a return unless I need to return jobid to forward the user to the services page?
+                return item.JobID;
             }
         }
     }

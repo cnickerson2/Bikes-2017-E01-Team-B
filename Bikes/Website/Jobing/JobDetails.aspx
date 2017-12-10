@@ -1,35 +1,139 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="JobDetails.aspx.cs" Inherits="Jobing_JobDetails" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
+    
+    <asp:HiddenField ID="JobIDHidden" runat="server"/>
+    
+    <h2>Current Job Services</h2>
+
+    <p>Please enter all fields with Service Data, then click the "Add Service" Button.</p>
 
     <!--Top Row Controls-->
     <asp:Label ID="PresetLabel" runat="server" Text="Presets:"></asp:Label>
     <asp:DropDownList ID="PresetDropdownList" runat="server" AppendDataBoundItems="true">
         <asp:ListItem Text="Select..." Value=""></asp:ListItem>
     </asp:DropDownList>
+    &nbsp;&nbsp;&nbsp;
     <asp:Button ID="PresetButton" runat="server" Text="Select" /><!--This needs to update the fields necessary based on the ddl-->
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <asp:Label ID="CouponLabel" runat="server" Text="Coupon:"></asp:Label>
+    &nbsp;&nbsp;&nbsp;
     <asp:DropDownList ID="CouponDropdownList" runat="server" AppendDataBoundItems="true">
         <asp:ListItem Text="Select..." Value=""></asp:ListItem>
     </asp:DropDownList>
-    <asp:Button ID="AddServiceButton" runat="server" Text="Button" /><!--New job created here if it doesn't exist. If job does exist, add service to existing job. TRANSACTION-->
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <asp:Button ID="AddServiceButton" runat="server" Text="Add Service" OnClick="AddServiceButton_Click" />
+    <br />
+    <br />
 
     <!--Second Row Controls-->
     <asp:Label ID="DescriptionLabel" runat="server" Text="Description"></asp:Label>
-    <asp:TextBox ID="DescriptionTextbox" runat="server"></asp:TextBox>
+    <asp:TextBox ID="DescriptionTextbox" runat="server" Width="314px"></asp:TextBox>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <asp:Label ID="HoursLabel" runat="server" Text="Hours"></asp:Label>
-    <asp:TextBox ID="HoursTextbox" runat="server"></asp:TextBox>
+    &nbsp;&nbsp;&nbsp;
+    <asp:TextBox ID="HoursTextbox" runat="server" TextMode="Number" Width="39px"></asp:TextBox>
+
+    <br />
+
+    <br />
 
     <!--Third Row Controls-->
     <asp:Label ID="CommentsLabel" runat="server" Text="Comments"></asp:Label>
-    <asp:TextBox ID="CommentsTextbox" runat="server"></asp:TextBox>
+    <br />
+    <asp:TextBox ID="CommentsTextbox" runat="server" Height="86px" Width="450px"></asp:TextBox>
+
+    <br />
+    <br />
 
     <!--ListView Controls-->
-    <asp:ListView ID="CurrentServicesListView" runat="server"></asp:ListView>
+    <asp:ListView ID="CurrentServicesListView" runat="server" DataSourceID="CurrentServicesODS">
+        <AlternatingItemTemplate>
+            <tr style="background-color: #FFFFFF; color: #284775;">
+                <td>
+                    <asp:Label Text='<%# Eval("JobDetailID") %>' runat="server" ID="JobDetailIDLabel" /></td>
+                <td>
+                    <asp:Label Text='<%# Eval("Description") %>' runat="server" ID="DescriptionLabel" /></td>
+                <td>
+                    <asp:Label Text='<%# Eval("JobHours") %>' runat="server" ID="JobHoursLabel" /></td>
+                <td>
+                    <asp:Label Text='<%# Eval("Comments") %>' runat="server" ID="CommentsLabel" /></td>
+                <td>
+                    <asp:Label Text='<%# Eval("CouponID") %>' runat="server" ID="CouponIDLabel" /></td>
+                <td>
+                    <asp:Label Text='<%# Eval("JobID") %>' runat="server" ID="JobIDLabel" /></td>
+            </tr>
+        </AlternatingItemTemplate>
+        <EmptyDataTemplate>
+            <table runat="server" style="background-color: #FFFFFF; border-collapse: collapse; border-color: #999999; border-style: none; border-width: 1px;">
+                <tr>
+                    <td>No data was returned.</td>
+                </tr>
+            </table>
+        </EmptyDataTemplate>
+        <ItemTemplate>
+            <tr style="background-color: #E0FFFF; color: #333333;">
+                <td>
+                    <asp:Label Text='<%# Eval("JobDetailID") %>' runat="server" ID="JobDetailIDLabel" /></td>
+                <td>
+                    <asp:Label Text='<%# Eval("Description") %>' runat="server" ID="DescriptionLabel" /></td>
+                <td>
+                    <asp:Label Text='<%# Eval("JobHours") %>' runat="server" ID="JobHoursLabel" /></td>
+                <td>
+                    <asp:Label Text='<%# Eval("Comments") %>' runat="server" ID="CommentsLabel" /></td>
+                <td>
+                    <asp:Label Text='<%# Eval("CouponID") %>' runat="server" ID="CouponIDLabel" /></td>
+                <td>
+                    <asp:Label Text='<%# Eval("JobID") %>' runat="server" ID="JobIDLabel" /></td>
+            </tr>
+        </ItemTemplate>
+        <LayoutTemplate>
+            <table runat="server">
+                <tr runat="server">
+                    <td runat="server">
+                        <table runat="server" id="itemPlaceholderContainer" style="background-color: #FFFFFF; border-collapse: collapse; border-color: #999999; border-style: none; border-width: 1px; font-family: Verdana, Arial, Helvetica, sans-serif;" border="1">
+                            <tr runat="server" style="background-color: #E0FFFF; color: #333333;">
+                                <th runat="server">JobDetailID</th>
+                                <th runat="server">Description</th>
+                                <th runat="server">JobHours</th>
+                                <th runat="server">Comments</th>
+                                <th runat="server">CouponID</th>
+                                <th runat="server">JobID</th>
+                            </tr>
+                            <tr runat="server" id="itemPlaceholder"></tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr runat="server">
+                    <td runat="server" style="text-align: center; background-color: #5D7B9D; font-family: Verdana, Arial, Helvetica, sans-serif; color: #FFFFFF"></td>
+                </tr>
+            </table>
+        </LayoutTemplate>
+        <SelectedItemTemplate>
+            <tr style="background-color: #E2DED6; font-weight: bold; color: #333333;">
+                <td>
+                    <asp:Label Text='<%# Eval("JobDetailID") %>' runat="server" ID="JobDetailIDLabel" /></td>
+                <td>
+                    <asp:Label Text='<%# Eval("Description") %>' runat="server" ID="DescriptionLabel" /></td>
+                <td>
+                    <asp:Label Text='<%# Eval("JobHours") %>' runat="server" ID="JobHoursLabel" /></td>
+                <td>
+                    <asp:Label Text='<%# Eval("Comments") %>' runat="server" ID="CommentsLabel" /></td>
+                <td>
+                    <asp:Label Text='<%# Eval("CouponID") %>' runat="server" ID="CouponIDLabel" /></td>
+                <td>
+                    <asp:Label Text='<%# Eval("JobID") %>' runat="server" ID="JobIDLabel" /></td>
+            </tr>
+        </SelectedItemTemplate>
+    </asp:ListView>
 
     <asp:ObjectDataSource ID="CurrentServicesODS" runat="server" DataObjectTypeName="BikesData.Entities.JobDetail" DeleteMethod="Remove_Service" OldValuesParameterFormatString="original_{0}" SelectMethod="List_CurrentServices" TypeName="BikesSystem.BLL.JobDetailsController">
-
+        <SelectParameters>
+            <asp:ControlParameter ControlID="JobIDHidden" PropertyName="Value" Name="jobid" Type="Int32"></asp:ControlParameter>
+        </SelectParameters>
     </asp:ObjectDataSource>
+    
+    <asp:ObjectDataSource ID="PresetDDLODS" runat="server"></asp:ObjectDataSource>
 
     <!--
         USE THIS CODE FOR THE VIEW, REMOVE, DELETE, ETC LINKS
