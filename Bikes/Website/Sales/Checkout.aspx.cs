@@ -30,7 +30,6 @@ public partial class Sales_Checkout : System.Web.UI.Page
 
     protected void View_PreRender(object sender, EventArgs e)
     {
-        // FIXME: The total is wrong (it should be the total cost of all items, not the count of all items).
         if (sender == ViewPartsList || sender == ReviewPartsList || !IsPostBack)
         {
             OnlineShoppingCart cart = null;

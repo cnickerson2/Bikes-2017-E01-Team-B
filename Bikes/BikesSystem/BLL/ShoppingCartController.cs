@@ -40,7 +40,7 @@ namespace BikesSystem.BLL
                                      LastUpdated = DateTime.Now
                                  }).ToList()
                     };
-                    onlineCart.Total = onlineCart.Parts.Count;
+                    onlineCart.Total = onlineCart.Parts.Sum((item) => item.Price*item.Quantity);
                 }
                 return onlineCart;
             }
