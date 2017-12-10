@@ -87,7 +87,7 @@
                             </RoleGroups>
                             <LoggedInTemplate>
                                 <asp:LinkButton ID="AddButton" runat="server"
-                                    CssClass="btn btn-primary"
+                                    CssClass="btn btn-default addButton"
                                     Text='<%# int.Parse(Eval("Added").ToString()) > 0 ?
                                         string.Format(ADD_EXTRA, Eval("Added")) :
                                         "Add" %>'

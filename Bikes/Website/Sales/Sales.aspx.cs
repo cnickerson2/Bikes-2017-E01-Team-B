@@ -11,10 +11,8 @@ using System.Web.UI.WebControls;
 public partial class Sales_Sales : System.Web.UI.Page
 {
     private const string EMPLOYEE_ERROR = "You are unable to use your employee account to shop online.";
-    protected const string ADD_EXTRA = @"<!-- Temporary icon. Need a shopping cart icon. -->
-                                         <img src='../Content/Images/xIcon.svg' width='16' height='16' />
-                                         <asp:Label runat='server' ID='AddedAmount'
-                                             Text='{0}' />";
+    protected const string ADD_EXTRA = @"<img src='../Content/Images/shoppingCart.svg' />
+                                         <span runat='server' ID='AddedAmount'>{0}</span>";
 
     protected void Page_Load(object sender, EventArgs e)
     {

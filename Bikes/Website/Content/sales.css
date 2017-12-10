@@ -9,9 +9,9 @@
     color: #000;
 }
 
-    .category:hover {
-        color: #000;
-    }
+.category:hover {
+    color: #000;
+}
 
 .categoryDescription {
     padding-left: 1em;
@@ -33,10 +33,15 @@
     border-radius: 4px;
 }
 
-    .categorySelected:hover {
-        background-color: #dedede;
-    }
+.categorySelected:hover {
+    background-color: #dedede;
+}
 
 .categoryDescriptionSelected {
     padding-left: 0px;
+}
+
+.addButton img {
+    width: 1em;
+    height: 1em;
 }
