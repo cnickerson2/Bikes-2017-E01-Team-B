@@ -61,8 +61,8 @@
                              CssClass="btn" CommandArgument='<%# Eval("JobDetailID") %>' OnCommand="Remove_Command" >
                             <span aria-hidden="true" >Remove</span>
                         </asp:LinkButton></td>
-                <td>
-                    <asp:Label Text='<%# Eval("JobDetailID") %>' runat="server" ID="JobDetailIDLabel" /></td>
+                <%--<td>
+                    <asp:Label Text='<%# Eval("JobDetailID") %>' runat="server" ID="JobDetailIDLabel" /></td>--%>
                 <td>
                     <asp:Label Text='<%# Eval("Description") %>' runat="server" ID="DescriptionLabel" /></td>
                 <td>
@@ -71,8 +71,8 @@
                     <asp:Label Text='<%# Eval("Comments") %>' runat="server" ID="CommentsLabel" /></td>
                 <td>
                     <asp:Label Text='<%# Eval("CouponID") %>' runat="server" ID="CouponIDLabel" /></td>
-                <td>
-                    <asp:Label Text='<%# Eval("JobID") %>' runat="server" ID="JobIDLabel" /></td>
+                <!--<td>
+                    <asp:Label Text='<%# Eval("JobID") %>' runat="server" ID="JobIDLabel" /></td>-->
             </tr>
         </AlternatingItemTemplate>
         <EmptyDataTemplate>
@@ -89,8 +89,8 @@
                              CssClass="btn" CommandArgument='<%# Eval("JobDetailID") %>' OnCommand="Remove_Command" >
                             <span aria-hidden="true" >Remove</span>
                         </asp:LinkButton></td>
-                <td>
-                    <asp:Label Text='<%# Eval("JobDetailID") %>' runat="server" ID="JobDetailIDLabel" /></td>
+                <%--<td>
+                    <asp:Label Text='<%# Eval("JobDetailID") %>' runat="server" ID="JobDetailIDLabel" /></td>--%>
                 <td>
                     <asp:Label Text='<%# Eval("Description") %>' runat="server" ID="DescriptionLabel" /></td>
                 <td>
@@ -99,8 +99,8 @@
                     <asp:Label Text='<%# Eval("Comments") %>' runat="server" ID="CommentsLabel" /></td>
                 <td>
                     <asp:Label Text='<%# Eval("CouponID") %>' runat="server" ID="CouponIDLabel" /></td>
-                <td>
-                    <asp:Label Text='<%# Eval("JobID") %>' runat="server" ID="JobIDLabel" /></td>
+                <!--<td>
+                    <asp:Label Text='<%# Eval("JobID") %>' runat="server" ID="JobIDLabel" /></td>-->
             </tr>
         </ItemTemplate>
         <LayoutTemplate>
@@ -110,12 +110,12 @@
                         <table runat="server" id="itemPlaceholderContainer" style="background-color: #FFFFFF; border-collapse: collapse; border-color: #999999; border-style: none; border-width: 1px; font-family: Verdana, Arial, Helvetica, sans-serif;" border="1">
                             <tr runat="server" style="background-color: #E0FFFF; color: #333333;">
                                 <th runat="server"></th>
-                                <th runat="server">JobDetailID</th>
+                                <%--<th runat="server">JobDetailID</th>--%>
                                 <th runat="server">Description</th>
-                                <th runat="server">JobHours</th>
+                                <th runat="server">Hours</th>
                                 <th runat="server">Comments</th>
                                 <th runat="server">CouponID</th>
-                                <th runat="server">JobID</th>
+                                <%--<th runat="server">JobID</th>--%>
                             </tr>
                             <tr runat="server" id="itemPlaceholder"></tr>
                         </table>
@@ -128,8 +128,8 @@
         </LayoutTemplate>
         <SelectedItemTemplate>
             <tr style="background-color: #E2DED6; font-weight: bold; color: #333333;">
-                <td>
-                    <asp:Label Text='<%# Eval("JobDetailID") %>' runat="server" ID="JobDetailIDLabel" /></td>
+                <%--<td>
+                    <asp:Label Text='<%# Eval("JobDetailID") %>' runat="server" ID="JobDetailIDLabel" /></td>--%>
                 <td>
                     <asp:Label Text='<%# Eval("Description") %>' runat="server" ID="DescriptionLabel" /></td>
                 <td>
@@ -138,8 +138,8 @@
                     <asp:Label Text='<%# Eval("Comments") %>' runat="server" ID="CommentsLabel" /></td>
                 <td>
                     <asp:Label Text='<%# Eval("CouponID") %>' runat="server" ID="CouponIDLabel" /></td>
-                <td>
-                    <asp:Label Text='<%# Eval("JobID") %>' runat="server" ID="JobIDLabel" /></td>
+                <%--<td>
+                    <asp:Label Text='<%# Eval("JobID") %>' runat="server" ID="JobIDLabel" /></td>--%>
             </tr>
         </SelectedItemTemplate>
     </asp:ListView>
