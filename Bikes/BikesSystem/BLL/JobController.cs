@@ -52,5 +52,30 @@ namespace BikesSystem.BLL
                 return item.JobID;
             }
         }
+
+        public void JobStatus_Update(int jobid, string codeChar)
+        {
+            using (var context = new EBikesContext())
+            {
+                Job temp = context.Jobs.Find(jobid);
+                temp.StatusCode = codeChar;
+
+                if (codeChar == "S")
+                {
+                    temp.JobDateStarted = DateTime.Now;
+                }
+                if (codeChar == "D")
+                {
+                    temp.JobDateDone = DateTime.Now;
+                }
+                if (codeChar == "O")
+                {
+                    temp.JobDateOut = DateTime.Now;
+                }
+                context.Entry(temp).State = System.Data.Entity.EntityState.Modified;
+                context.SaveChanges();
+
+            }
+        }
     }
 }

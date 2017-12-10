@@ -55,13 +55,12 @@ namespace BikesSystem.BLL
             }
         }
 
-        public void StartService(JobDetail service)
+        public JobDetail ServiceDetails_Get(int serviceid)
         {
             using (var context = new EBikesContext())
             {
-                var existingItem = context.JobDetails.Find(service);
-                existingItem.Completed = false;
-                context.SaveChanges();
+                JobDetail service = context.JobDetails.Find(serviceid);
+                return service;
             }
         }
     }
