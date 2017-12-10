@@ -28,7 +28,7 @@ public partial class Sales_Checkout : System.Web.UI.Page
 
     protected void View_PreRender(object sender, EventArgs e)
     {
-        if (sender == ViewPartsList || !IsPostBack)
+        if (sender == ViewPartsList || sender == ReviewPartsList || !IsPostBack)
         {
             MessageUserControl.TryRun(() =>
             {
@@ -37,17 +37,21 @@ public partial class Sales_Checkout : System.Web.UI.Page
                 if (cart == null)
                 {
                     ViewEmpty.Visible = true;
+                    ReviewEmpty.Visible = true;
                 }
                 else
                 {
                     ViewPartsList.DataSource = cart.Parts;
+                    ReviewPartsList.DataSource = cart.Parts;
                     ViewPartsList.DataBind();
+                    ReviewPartsList.DataBind();
                     ViewTotalLabel.Text = cart.Total.ToString("C");
                     ViewOverviewLabel.Text = string.Format(
                         "There are {0} items in your shopping cart{1}.",
                         cart.Parts.Count,
                         FormatUpdate(cart.LastUpdated));
                     View.Visible = true;
+                    Review.Visible = true;
                 }
             });
         }
@@ -91,7 +95,6 @@ public partial class Sales_Checkout : System.Web.UI.Page
             
             new ShoppingCartItemController().ChangeShoppingCartItemQuantity(User, itemId, quantity);
             View_PreRender(sender, e);
-            view.DataBind();
         }, "Changed item amount", "The item has been updated successfully.");
     }
 

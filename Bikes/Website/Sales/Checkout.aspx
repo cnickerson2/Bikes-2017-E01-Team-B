@@ -101,6 +101,33 @@
         .paymentMethodList tbody tr td {
             padding: 0px 5px;
         }
+
+        .reviewComp {
+            float: left;
+            margin: 5px;
+        }
+
+        .couponLabel {
+            vertical-align: top;
+            margin-right: 5px;
+        }
+
+        .coupons {
+            display: inline-block;
+        }
+
+        .applyCouponButton {
+            width: 100%;
+        }
+
+        .reviewTotals {
+            float: right;
+        }
+
+        .orderButton {
+            clear: right;
+            margin: 10px;
+        }
     </style>
 
     <div class="steps">
@@ -360,7 +387,114 @@
                         </a></h2>
                     <hr class="tabHr" />
 
-                    
+                    <asp:Panel ID="ReviewEmpty" runat="server" Visible="false">
+                        <p>You don't have a shopping cart.
+                           Please add some items before checking out.</p>
+                    </asp:Panel>
+                    <asp:Panel ID="Review" runat="server"
+                        OnLoad="View_PreRender" Visible="false">
+                        <asp:ListView ID="ReviewPartsList" runat="server"
+                            OnItemCommand="PartsList_ItemCommand">
+                            <LayoutTemplate>
+                                <table runat="server" ID="ReviewPartsListTable">
+                                    <tr runat="server">
+                                        <td runat="server">
+                                            <table runat="server" id="Table" border="0">
+                                                <tr runat="server">
+                                                    <th runat="server" style="min-width: 300px">Description</th>
+                                                    <th runat="server" style="width: 170px">Count</th>
+                                                    <th runat="server">Price</th>
+                                                </tr>
+                                                <tr runat="server" id="itemPlaceholder"></tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr runat="server">
+                                        <td runat="server">
+                                            <asp:DataPager runat="server" ID="DataPager">
+                                                <Fields>
+                                                    <asp:NumericPagerField></asp:NumericPagerField>
+                                                </Fields>
+                                            </asp:DataPager>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </LayoutTemplate>
+                            <ItemTemplate>
+                                <tr>
+                                    <td>
+                                        <asp:HiddenField ID="ItemIdValue" runat="server"
+                                            Value='<%# Eval("ShoppingCartItemId") %>' />
+                                        <asp:Label ID="DescriptionLabel" runat="server"
+                                            Text='<%# Eval("Description") %>'></asp:Label>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <asp:TextBox ID="QuantityBox" runat="server"
+                                                CssClass="form-control" Width="4em"
+                                                TextMode="Number" MaxLength="3"
+                                                text='<%# Eval("Quantity") %>'></asp:TextBox>
+
+                                            <asp:LinkButton ID="RefreshButton" runat="server"
+                                                CommandName="Refresh" CommandArgument='<%# Eval("ShoppingCartItemId") %>'
+                                                CssClass="input-group-addon">
+                                                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                                                <span class="sr-only">Refresh the amount of the item.</span>
+                                            </asp:LinkButton>
+                                            <asp:LinkButton ID="RemoveButton" runat="server"
+                                                CommandName="Remove" CommandArgument='<%# Eval("ShoppingCartItemId") %>'
+                                                CssClass="input-group-addon">
+                                                <img src="../Content/Images/trashcanIcon.svg"
+                                                    alt="Remove the item from your shopping cart." />
+                                            </asp:LinkButton>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <asp:Label ID="PriceLabel" runat="server"
+                                            Text='<%# string.Format("{0:C} ({1:C} each)",
+                                                (decimal)Eval("Price")*(int)Eval("Quantity"),
+                                                (decimal)Eval("Price")) %>'></asp:Label>
+                                    </td>
+                                </tr>
+                                <tr runat="server" visible='<%# (int)Eval("Quantity") > (int)Eval("QuantityOnHand") %>'>
+                                    <td>
+                                        <asp:Label ID="OutOfStockLabel" runat="server" Text='<%#
+                                            string.Format("Out of stock{0}{1}.",
+                                                (int)Eval("Quantity") > (int)Eval("QuantityOnHand") + 1 ?
+                                                    string.Format(" by {0} items", (int)Eval("Quantity") - (int)Eval("QuantityOnHand")) : "",
+                                                ((DateTime?)Eval("LastUpdated")).HasValue ?
+                                                    string.Format(" (updated: {0:d})", ((DateTime?)Eval("LastUpdated")).Value) : "") %>'></asp:Label>
+                                    </td>
+                                </tr>
+                            </ItemTemplate>
+                        </asp:ListView>
+                        <br />
+
+                        <div class="reviewComp">
+                            <asp:Label ID="CouponLabel" runat="server" Text="Coupon"
+                                CssClass="couponLabel"
+                                AssociatedControlID="CouponsList"></asp:Label>
+                            <div class="coupons">
+                                <asp:DropDownList ID="CouponsList" runat="server"></asp:DropDownList><br />
+                                <asp:LinkButton ID="ApplyCouponButton" runat="server"
+                                    CssClass="btn btn-default applyCouponButton">Apply</asp:LinkButton>
+                            </div>
+                        </div>
+
+                        <div class="reviewTotals reviewComp">
+                            <asp:Label ID="ReviewSubtotalLabel" runat="server" Text="Subtotal {0:C}"></asp:Label><br />
+                            <asp:Label ID="ReviewDiscountLabel" runat="server" Text="Discount: {0:C}"></asp:Label><br />
+                            <asp:Label ID="ReviewTotalLabel" runat="server" Text="Total: {0:C}"></asp:Label>
+                        </div>
+                        <a href="#info" data-toggle="tab"
+                            class="btn btn-default btn-lg btn-block orderButton">Back</a>
+                        <asp:LinkButton ID="PlaceOrder" runat="server"
+                            CssClass="btn btn-primary btn-lg btn-block"
+                            Visible="false">Place Order</asp:LinkButton>
+                        <asp:LinkButton ID="PlaceOrderInStock" runat="server"
+                            CssClass="btn btn-primary btn-lg btn-block"
+                            Visible="false">Order In-Stock Items Only</asp:LinkButton>
+                    </asp:Panel>
                 </div>
             </div>
         </ContentTemplate>
