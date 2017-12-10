@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\CategoryController.cs" />
+    <Compile Include="BLL\CouponController.cs" />
     <Compile Include="BLL\EmployeeController.cs" />
     <Compile Include="BLL\JobController.cs" />
     <Compile Include="BLL\JobCustomerController.cs" />

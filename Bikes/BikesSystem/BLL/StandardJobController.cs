@@ -19,5 +19,14 @@ namespace BikesSystem.BLL
                 return context.StandardJobs.Find(standardjobid);
             }
         }
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public List<StandardJob> StandardJob_List()
+        {
+            using (var context = new EBikesContext())
+            {
+                return context.StandardJobs.ToList();
+            }
+        }
     }
 }
