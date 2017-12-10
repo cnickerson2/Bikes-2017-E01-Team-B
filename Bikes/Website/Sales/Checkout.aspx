@@ -215,7 +215,7 @@
                                     <td>
                                         <div class="input-group">
                                             <asp:TextBox ID="QuantityBox" runat="server"
-                                                CssClass="form-control" Width="4em"
+                                                CssClass="form-control" Width="5em"
                                                 TextMode="Number" MaxLength="3"
                                                 text='<%# Eval("Quantity") %>'></asp:TextBox>
 
@@ -430,7 +430,7 @@
                                     <td>
                                         <div class="input-group">
                                             <asp:TextBox ID="QuantityBox" runat="server"
-                                                CssClass="form-control" Width="4em"
+                                                CssClass="form-control" Width="5em"
                                                 TextMode="Number" MaxLength="3"
                                                 text='<%# Eval("Quantity") %>'></asp:TextBox>
 
@@ -489,16 +489,18 @@
                         <div class="reviewTotals reviewComp">
                             <asp:Label ID="ReviewSubtotalLabel" runat="server" Text="Subtotal {0:C}"></asp:Label><br />
                             <asp:Label ID="ReviewDiscountLabel" runat="server" Text="Discount: {0:C}"></asp:Label><br />
+                            <asp:Label ID="ReviewTaxLabel" runat="server" Text="Tax (GST): {0:C}"></asp:Label><br />
+                            <br />
                             <asp:Label ID="ReviewTotalLabel" runat="server" Text="Total: {0:C}"></asp:Label>
                         </div>
                         <a href="#info" data-toggle="tab"
                             class="btn btn-default btn-lg btn-block orderButton">Back</a>
                         <asp:LinkButton ID="PlaceOrder" runat="server"
-                            CssClass="btn btn-primary btn-lg btn-block"
-                            Visible="false">Place Order</asp:LinkButton>
+                            CssClass="btn btn-primary btn-lg btn-block orderButton"
+                            Visible="false" OnClick="PlaceOrder_Click">Order</asp:LinkButton>
                         <asp:LinkButton ID="PlaceOrderInStock" runat="server"
-                            CssClass="btn btn-primary btn-lg btn-block"
-                            Visible="false">Order In-Stock Items Only</asp:LinkButton>
+                            CssClass="btn btn-primary btn-lg btn-block orderButton"
+                            Visible="false" OnClick="PlaceOrder_Click">Order In-Stock Items Only</asp:LinkButton>
                     </asp:Panel>
                 </div>
             </div>

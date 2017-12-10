@@ -13,6 +13,7 @@ public partial class Sales_Checkout : System.Web.UI.Page
 {
     private const string EMPLOYEE_ERROR = "You are unable to use your employee account to shop online.";
     private const string CHECKOUT_AUTH_ERROR = "Please login before checking out.";
+    private const decimal GST = 0.05m;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -35,6 +36,7 @@ public partial class Sales_Checkout : System.Web.UI.Page
             OnlineShoppingCart cart = null;
             bool discountSet = false;
             bool totalsSet = false;
+            bool taxSet = false;
 
             MessageUserControl.TryRun(() =>
             {
@@ -65,41 +67,54 @@ public partial class Sales_Checkout : System.Web.UI.Page
             {
                 int? couponId = new UserManager().GetCoupon(User);
                 decimal discount;
-                if (couponId.HasValue)
+                if (cart != null)
                 {
-                    CouponsList.SelectedValue = couponId.Value.ToString();
-                    discount = cart.Total/(new CouponController().GetDiscount(couponId.Value));
-                    ReviewDiscountLabel.Text = string.Format(ReviewDiscountLabel.Text,
-                        discount.ToString("C"));
-                }
-                else
-                {
-                    discount = 0;
-                    ReviewDiscountLabel.Text = string.Format(ReviewDiscountLabel.Text,
-                        discount.ToString("C"));
-                }
-                discountSet = true;
-                if (totalsSet && cart != null)
-                {
-                    ReviewSubtotalLabel.Text = string.Format(ReviewSubtotalLabel.Text,
-                        cart.Total.ToString("C"));
-                    if (discount > 0)
+                    if (couponId.HasValue)
                     {
-                        ReviewTotalLabel.Text = string.Format(ReviewTotalLabel.Text,
-                            (cart.Total - discount).ToString("C"));
+                        CouponsList.SelectedValue = couponId.Value.ToString();
+                        discount = cart.Total / (new CouponController().GetDiscount(couponId.Value));
+                        ReviewDiscountLabel.Text = string.Format(ReviewDiscountLabel.Text,
+                            discount.ToString("C"));
                     }
                     else
                     {
-                        ReviewTotalLabel.Text = string.Format(ReviewTotalLabel.Text,
-                            cart.Total.ToString("C"));
+                        discount = 0;
+                        ReviewDiscountLabel.Text = string.Format(ReviewDiscountLabel.Text,
+                            discount.ToString("C"));
                     }
-                    
-                    totalsSet = true;
+                    discountSet = true;
+
+                    ReviewTaxLabel.Text = string.Format(ReviewTaxLabel.Text,
+                        (cart.Total*GST).ToString("C"));
+                    taxSet = true;
+
+                    if (totalsSet)
+                    {
+                        ReviewSubtotalLabel.Text = string.Format(ReviewSubtotalLabel.Text,
+                            cart.Total.ToString("C"));
+                        if (discount > 0)
+                        {
+                            ReviewTotalLabel.Text = string.Format(ReviewTotalLabel.Text,
+                                (cart.Total - discount).ToString("C"));
+                        }
+                        else
+                        {
+                            ReviewTotalLabel.Text = string.Format(ReviewTotalLabel.Text,
+                                cart.Total.ToString("C"));
+                        }
+
+                        totalsSet = true;
+                    }
                 }
             });
             if (!discountSet)
             {
                 ReviewDiscountLabel.Text = string.Format(ReviewDiscountLabel.Text,
+                    "unknown, try refreshing");
+            }
+            if (!taxSet)
+            {
+                ReviewTaxLabel.Text = string.Format(ReviewTaxLabel.Text,
                     "unknown, try refreshing");
             }
             if (!totalsSet)
@@ -110,6 +125,19 @@ public partial class Sales_Checkout : System.Web.UI.Page
                     "unknown, try refreshing");
                 ReviewTotalLabel.Text = string.Format(ReviewTotalLabel.Text,
                     "unknown, try refreshing");
+            }
+            if (discountSet && taxSet && totalsSet)
+            {
+                if (cart.Parts.Any((item) => item.Quantity > item.QuantityOnHand))
+                {
+                    PlaceOrder.Visible = false;
+                    PlaceOrderInStock.Visible = true;
+                }
+                else
+                {
+                    PlaceOrderInStock.Visible = false;
+                    PlaceOrder.Visible = true;
+                }
             }
         }
     }
@@ -185,5 +213,10 @@ public partial class Sales_Checkout : System.Web.UI.Page
             }
         }
         throw new Exception("Unable to locate the item.");
+    }
+
+    protected void PlaceOrder_Click(object sender, EventArgs e)
+    {
+        // Place the order!
     }
 }
