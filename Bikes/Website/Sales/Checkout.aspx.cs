@@ -28,26 +28,29 @@ public partial class Sales_Checkout : System.Web.UI.Page
 
     protected void View_PreRender(object sender, EventArgs e)
     {
-        MessageUserControl.TryRun(() =>
+        if (sender == ViewPartsList || !IsPostBack)
         {
-            ShoppingCartController controller = new ShoppingCartController();
-            OnlineShoppingCart cart = controller.GetOnlineShoppingCart(User);
-            if (cart == null)
+            MessageUserControl.TryRun(() =>
             {
-                ViewEmpty.Visible = true;
-            }
-            else
-            {
-                ViewPartsList.DataSource = cart.Parts;
-                ViewPartsList.DataBind();
-                ViewTotalLabel.Text = cart.Total.ToString("C");
-                ViewOverviewLabel.Text = string.Format(
-                    "There are {0} items in your shopping cart{1}.",
-                    cart.Parts.Count,
-                    FormatUpdate(cart.LastUpdated));
-                View.Visible = true;
-            }
-        });
+                ShoppingCartController controller = new ShoppingCartController();
+                OnlineShoppingCart cart = controller.GetOnlineShoppingCart(User);
+                if (cart == null)
+                {
+                    ViewEmpty.Visible = true;
+                }
+                else
+                {
+                    ViewPartsList.DataSource = cart.Parts;
+                    ViewPartsList.DataBind();
+                    ViewTotalLabel.Text = cart.Total.ToString("C");
+                    ViewOverviewLabel.Text = string.Format(
+                        "There are {0} items in your shopping cart{1}.",
+                        cart.Parts.Count,
+                        FormatUpdate(cart.LastUpdated));
+                    View.Visible = true;
+                }
+            });
+        }
     }
 
     protected string FormatUpdate(DateTime? Date)
@@ -64,6 +67,52 @@ public partial class Sales_Checkout : System.Web.UI.Page
 
     protected void PartsList_ItemCommand(object sender, ListViewCommandEventArgs e)
     {
+        MessageUserControl.TryRun(() =>
+        {
+            ListView view;
+            int itemId;
+            int quantity;
 
+            view = (ListView)sender;
+            itemId = int.Parse(e.CommandArgument.ToString());
+            if (e.CommandName == "Refresh")
+            {
+                quantity = GetQuantity(view, itemId);
+
+                if (quantity < 1)
+                {
+                    throw new Exception("The item quantity must be a positive whole number (please do not include + or - symbols).");
+                }
+            }
+            else
+            {
+                quantity = 0;
+            }
+            
+            new ShoppingCartItemController().ChangeShoppingCartItemQuantity(User, itemId, quantity);
+            View_PreRender(sender, e);
+            view.DataBind();
+        }, "Changed item amount", "The item has been updated successfully.");
+    }
+
+    private int GetQuantity(ListView view, int itemId)
+    {
+        string itemIdStr = itemId.ToString();
+        foreach (ListViewDataItem item in view.Items)
+        {
+            if ((item.FindControl("ItemIdValue") as HiddenField).Value == itemIdStr)
+            {
+                int quantity;
+                if (int.TryParse((item.FindControl("QuantityBox") as TextBox).Text, out quantity))
+                {
+                    return quantity;
+                }
+                else
+                {
+                    throw new Exception("The amount is not a valid whole number.");
+                }
+            }
+        }
+        throw new Exception("Unable to locate the item.");
     }
 }

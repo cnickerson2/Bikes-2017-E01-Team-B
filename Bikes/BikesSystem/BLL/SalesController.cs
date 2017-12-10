@@ -41,7 +41,7 @@ namespace BikesSystem.BLL
                 if (cart == null)
                     cart = carts.CreateShoppingCart(customer, context);
                 
-                item = items.GetShoppingCartItem(cart, productId, context);
+                item = items.GetShoppingCartPart(cart, productId, context);
                 if (item == null)
                 {
                     item = items.CreateShoppingCartItem(cart, productId, context);

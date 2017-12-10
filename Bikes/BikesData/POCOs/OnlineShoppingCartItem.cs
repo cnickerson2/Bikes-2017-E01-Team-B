@@ -8,6 +8,7 @@ namespace BikesData.POCOs
 {
     public class OnlineShoppingCartItem
     {
+        public int ShoppingCartItemId { get; set; }
         public string Description { get; set; }
         public int Quantity { get; set; }
         public int QuantityOnHand { get; set; }

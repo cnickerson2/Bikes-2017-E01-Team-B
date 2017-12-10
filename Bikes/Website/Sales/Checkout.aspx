@@ -134,7 +134,6 @@
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <uc1:MessageUserControl runat="server" ID="MessageUserControl" />
-            <asp:ValidationSummary ID="ValidationSummary" runat="server" />
 
             <div class="tab-content container">
                 <div class="tab-pane fade in active" id="view">
@@ -181,22 +180,26 @@
                             <ItemTemplate>
                                 <tr>
                                     <td>
-                                        <asp:Label ID="DescriptionLabel" runat="server" Text='<%# Eval("Description") %>'></asp:Label>
+                                        <asp:HiddenField ID="ItemIdValue" runat="server"
+                                            Value='<%# Eval("ShoppingCartItemId") %>' />
+                                        <asp:Label ID="DescriptionLabel" runat="server"
+                                            Text='<%# Eval("Description") %>'></asp:Label>
                                     </td>
                                     <td>
                                         <div class="input-group">
                                             <asp:TextBox ID="QuantityBox" runat="server"
-                                            CssClass="form-control" Width="4em"
-                                            text='<%# Eval("Quantity") %>'></asp:TextBox>
+                                                CssClass="form-control" Width="4em"
+                                                TextMode="Number" MaxLength="3"
+                                                text='<%# Eval("Quantity") %>'></asp:TextBox>
 
                                             <asp:LinkButton ID="RefreshButton" runat="server"
-                                                CommandName="Refresh"
+                                                CommandName="Refresh" CommandArgument='<%# Eval("ShoppingCartItemId") %>'
                                                 CssClass="input-group-addon">
                                                 <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
                                                 <span class="sr-only">Refresh the amount of the item.</span>
                                             </asp:LinkButton>
                                             <asp:LinkButton ID="RemoveButton" runat="server"
-                                                CommandName="Remove"
+                                                CommandName="Remove" CommandArgument='<%# Eval("ShoppingCartItemId") %>'
                                                 CssClass="input-group-addon">
                                                 <img src="../Content/Images/trashcanIcon.svg"
                                                     alt="Remove the item from your shopping cart." />
@@ -212,7 +215,12 @@
                                 </tr>
                                 <tr runat="server" visible='<%# (int)Eval("Quantity") > (int)Eval("QuantityOnHand") %>'>
                                     <td>
-                                        out of stock notice
+                                        <asp:Label ID="OutOfStockLabel" runat="server" Text='<%#
+                                            string.Format("Out of stock{0}{1}.",
+                                                (int)Eval("Quantity") > (int)Eval("QuantityOnHand") + 1 ?
+                                                    string.Format(" by {0} items", (int)Eval("Quantity") - (int)Eval("QuantityOnHand")) : "",
+                                                ((DateTime?)Eval("LastUpdated")).HasValue ?
+                                                    string.Format(" (updated: {0:d})", ((DateTime?)Eval("LastUpdated")).Value) : "") %>'></asp:Label>
                                     </td>
                                 </tr>
                             </ItemTemplate>

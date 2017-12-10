@@ -32,6 +32,7 @@ namespace BikesSystem.BLL
                                  orderby item.Part.Description
                                  select new OnlineShoppingCartItem
                                  {
+                                     ShoppingCartItemId = item.ShoppingCartItemID,
                                      Description = item.Part.Description,
                                      Quantity = item.Quantity,
                                      QuantityOnHand = item.Part.QuantityOnHand,
