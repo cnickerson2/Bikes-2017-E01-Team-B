@@ -1,5 +1,6 @@
 ﻿using BikesData.DTOs;
 using BikesData.Entities;
+using BikesData.POCOs;
 using BikesSystem.BLL;
 using BikesSystem.BLL.Security;
 using System;
@@ -217,6 +218,18 @@ public partial class Sales_Checkout : System.Web.UI.Page
 
     protected void PlaceOrder_Click(object sender, EventArgs e)
     {
-        // Place the order!
+        MessageUserControl.TryRun(() =>
+        {
+            if (PaymentMethodList.SelectedIndex < 0)
+            {
+                throw new Exception("You must select a payment type first.");
+            }
+
+            new SalesController().PlaceOnlineOrder(User, new OrderDetails()
+            {
+                PaymentType = PaymentMethodList.SelectedValue,
+                GST = GST
+            });
+        }, "Order placed", "Your order has successfully been placed.");
     }
 }

@@ -64,6 +64,7 @@
     <Compile Include="POCOs\OnlineCategory.cs" />
     <Compile Include="POCOs\OnlinePart.cs" />
     <Compile Include="POCOs\OnlineShoppingCartItem.cs" />
+    <Compile Include="POCOs\OrderDetails.cs" />
     <Compile Include="POCOs\OutstandingPurchaseOrders.cs" />
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Coupon.cs" />

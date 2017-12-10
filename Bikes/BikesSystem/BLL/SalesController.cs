@@ -1,4 +1,6 @@
-﻿using BikesData.Entities;
+﻿using BikesData.DTOs;
+using BikesData.Entities;
+using BikesData.POCOs;
 using BikesSystem.BLL.Security;
 using BikesSystem.DAL;
 using System;
@@ -53,6 +55,48 @@ namespace BikesSystem.BLL
                     context.Entry(item).Property("Quantity").IsModified = true;
                 }
                 context.SaveChanges();
+            }
+        }
+
+        public void PlaceOnlineOrder(IPrincipal user, OrderDetails details)
+        {
+            using (EBikesContext context = new EBikesContext())
+            {
+                ShoppingCart cart = new ShoppingCartController().GetShoppingCart(user, context);
+                SaleDetail saleItem;
+
+                if (cart != null)
+                {
+                    Sale sale = new Sale()
+                    {
+                        UserName = user.Identity.Name,
+                        // FIXME: The user is not an employee.
+                        EmployeeID = 0,
+                        SubTotal = cart.ShoppingCartItems.Sum((item) => item.Quantity*item.Part.SellingPrice),
+                        CouponID = new UserManager().GetCoupon(user),
+                        PaymentType = details.PaymentType
+                    };
+                    sale.TaxAmount = sale.SubTotal*details.GST;
+                    
+                    foreach (ShoppingCartItem item in cart.ShoppingCartItems)
+                    {
+                        sale.SaleDetails.Add(saleItem = new SaleDetail()
+                        {
+                            Quantity = item.Quantity,
+                            SellingPrice = item.Part.SellingPrice,
+                            Backordered = false,
+                            Part = item.Part
+                        });
+                    }
+
+                    sale.PaymentToken = Guid.NewGuid();
+                    sale.SaleDate = DateTime.Now;
+                    context.Sales.Add(sale);
+                }
+                else
+                {
+                    throw new Exception("Unable to locate your shopping cart.");
+                }
             }
         }
     }
