@@ -20,5 +20,14 @@ namespace BikesSystem.BLL
                 return context.Coupons.ToList();
             }
         }
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public IDictionary<int, string> GetCoupons()
+        {
+            using (var context = new EBikesContext())
+            {
+                return context.Coupons.ToDictionary(coupon => coupon.CouponID, coupon => coupon.CouponIDValue);
+            }
+        }
     }
 }

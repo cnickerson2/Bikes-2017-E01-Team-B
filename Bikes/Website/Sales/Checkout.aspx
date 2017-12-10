@@ -475,7 +475,9 @@
                                 CssClass="couponLabel"
                                 AssociatedControlID="CouponsList"></asp:Label>
                             <div class="coupons">
-                                <asp:DropDownList ID="CouponsList" runat="server"></asp:DropDownList><br />
+                                <asp:DropDownList ID="CouponsList" runat="server"
+                                    DataSourceID="CouponsListODS"
+                                    DataTextField="Value" DataValueField="Key"></asp:DropDownList><br />
                                 <asp:LinkButton ID="ApplyCouponButton" runat="server"
                                     CssClass="btn btn-default applyCouponButton">Apply</asp:LinkButton>
                             </div>
@@ -499,5 +501,10 @@
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>
+
+    <asp:ObjectDataSource ID="CouponsListODS" runat="server"
+        OldValuesParameterFormatString="original_{0}"
+        SelectMethod="GetCoupons"
+        TypeName="BikesSystem.BLL.CouponController"></asp:ObjectDataSource>
 </asp:Content>
 
