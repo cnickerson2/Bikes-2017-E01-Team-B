@@ -29,7 +29,9 @@
                 <td>
                     <asp:Label Text='<%# Eval("Description") %>' runat="server" ID="DescriptionLabel" /></td>
                 <td>
-                    <asp:Label Text='<%# Eval("Completed") %>' runat="server" ID="StatusCodeLabel" /></td>
+                    <asp:Label runat="server" HeaderText="Active" SortExpression="Active">
+                        <ItemTemplate><%# (Eval("Completed") == null ? "" : bool.Parse(Eval("Completed").ToString()) == false ? "Started" : "Done") %></ItemTemplate>
+                    </asp:Label></td>
                 <td>
                     <asp:LinkButton ID="Select" runat="server"
                              CssClass="btn" CommandArgument='<%# Eval("JobDetailID") %>' OnCommand="Select_Command" >
@@ -59,7 +61,9 @@
                 <td>
                     <asp:Label Text='<%# Eval("Description") %>' runat="server" ID="DescriptionLabel" /></td>
                 <td>
-                    <asp:Label Text='<%# Eval("Completed") %>' runat="server" ID="StatusCodeLabel" /></td>
+                    <asp:Label runat="server" HeaderText="Active" SortExpression="Active">
+                        <ItemTemplate><%# (Eval("Completed") == null ? "" : bool.Parse(Eval("Completed").ToString()) == false ? "Started" : "Done") %></ItemTemplate>
+                    </asp:Label></td>
                 <td>
                     <asp:LinkButton ID="Select" runat="server"
                              CssClass="btn" CommandArgument='<%# Eval("JobDetailID") %>' OnCommand="Select_Command" >
@@ -103,7 +107,9 @@
                 <td>
                     <asp:Label Text='<%# Eval("Description") %>' runat="server" ID="DescriptionLabel" /></td>
                 <td>
-                    <asp:Label Text='<%# Eval("Completed") %>' runat="server" ID="StatusCodeLabel" /></td>
+                    <asp:Label runat="server" HeaderText="Active" SortExpression="Active">
+                        <ItemTemplate><%# (Eval("Completed") == null ? "" : bool.Parse(Eval("Completed").ToString()) == false ? "Started" : "Done") %></ItemTemplate>
+                    </asp:Label></td>
                 <td>
                     <asp:LinkButton ID="Select" runat="server"
                              CssClass="btn" CommandArgument='<%# Eval("JobDetailID") %>' OnCommand="Select_Command" >
