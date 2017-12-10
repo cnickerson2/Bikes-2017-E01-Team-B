@@ -39,7 +39,7 @@ namespace BikesSystem.BLL
                          where y.PurchaseOrder.VendorID == vendorID && y.PurchaseOrder.OrderDate == null && y.PurchaseOrder.PurchaseOrderNumber == null
                          select y.PartID).ToList();
 
-                for (int i = results.Count - 1; i >= 0; i--)
+                for (int i = results.Count() - 1; i >= 0; i--)
                 {
                     for (int j = 0; j < ok.Count; j++)
                     {
