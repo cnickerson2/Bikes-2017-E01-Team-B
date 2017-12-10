@@ -18,10 +18,9 @@
     <br />
     <asp:Label ID="Label1" runat="server" Text="Services" Font-Size="Large"></asp:Label>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <asp:LinkButton ID="StartServiceButton" runat="server"
-                             CssClass="btn" CommandArgument="" OnCommand="StartServiceButton_Click" >
-                            <span aria-hidden="true" >Select</span>
-                        </asp:LinkButton>
+    <asp:Button ID="StartServiceButton" runat="server"
+                              CommandArgument="" OnCommand="StartServiceButton_Click" Text="Start Service" >
+                        </asp:Button>
 
     <!--ListView Control-->
     <asp:ListView ID="CurrentJobServicesListView" runat="server" DataSourceID="CurrentJobServicesODS">

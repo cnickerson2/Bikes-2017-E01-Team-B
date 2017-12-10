@@ -17,6 +17,14 @@ public partial class Jobing_JobServiceDetails : System.Web.UI.Page
         if (Request.QueryString["select"] != null)
         {
             selectedID = int.Parse(Request.QueryString["select"]);
+
+
+            JobDetailsController sysmgr = new JobDetailsController();
+            JobDetail service = sysmgr.ServiceDetails_Get(int.Parse(Request.QueryString["select"].ToString()));
+
+            DescriptionHolder.Text = service.Description;
+            HoursHolder.Text = service.JobHours.ToString();
+            CommentsHolder.Text = service.Comments;
         }
     }
 
@@ -30,13 +38,8 @@ public partial class Jobing_JobServiceDetails : System.Web.UI.Page
 
     protected void Select_Command(object sender, CommandEventArgs e)
     {
-        JobDetailsController sysmgr = new JobDetailsController();
-        JobDetail service = sysmgr.ServiceDetails_Get(int.Parse(e.CommandArgument.ToString()));
 
-        DescriptionHolder.Text = service.Description;
-        HoursHolder.Text = service.JobHours.ToString();
-        CommentsHolder.Text = service.Comments;
-        Response.Redirect("JobServiceDetails.aspx?id=" + JobIDHidden.Value + "&select=" + e.CommandArgument);
+        Response.Redirect("JobServiceDetails.aspx?id=" + JobIDHidden.Value + "&select=" + e.CommandArgument); 
     }
 
     protected void Done_Command(object sender, CommandEventArgs e)
