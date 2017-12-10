@@ -44,8 +44,8 @@ public partial class Jobing_JobServiceDetails : System.Web.UI.Page
 
     protected void Done_Command(object sender, CommandEventArgs e)
     {
-        JobController sysmgr = new JobController();
-        sysmgr.JobStatus_Update(int.Parse(e.CommandArgument.ToString()), "D");
+        JobDetailsController sysmgr = new JobDetailsController();
+        sysmgr.Service_Update(int.Parse(e.CommandArgument.ToString()), 1);
         CurrentJobServicesListView.DataBind();
     }
 
@@ -53,7 +53,19 @@ public partial class Jobing_JobServiceDetails : System.Web.UI.Page
     {
         JobDetailsController sysmgr = new JobDetailsController();
         sysmgr.Remove_Service(int.Parse(e.CommandArgument.ToString()));
-        CurrentJobServicesListView.DataBind();
+        if (Request.QueryString["select"] != null)
+        {
+            if (Request.QueryString["select"] == e.CommandArgument.ToString())
+            {
+                Response.Redirect("JobServiceDetails.aspx?id=" + JobIDHidden.Value);
+            }
+            else
+            {
+                Response.Redirect("JobServiceDetails.aspx?id=" + JobIDHidden.Value + "&select=" + Request.QueryString["select"]);
+            }
+        }
+        MessageUserControl.ShowInfo("Service removed.");
+
     }
 
     protected void StartServiceButton_Click(object sender, EventArgs e)
@@ -65,8 +77,8 @@ public partial class Jobing_JobServiceDetails : System.Web.UI.Page
         }
         else
         {
-            JobController sysmgr = new JobController();
-            sysmgr.JobStatus_Update(int.Parse(JobIDHidden.Value), "S");
+            JobDetailsController sysmgr = new JobDetailsController();
+            sysmgr.Service_Update(int.Parse(Request.QueryString["select"]), 0);
             CurrentJobServicesListView.DataBind();
         }
     }

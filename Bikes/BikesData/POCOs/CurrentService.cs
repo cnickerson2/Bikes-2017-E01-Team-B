@@ -20,6 +20,6 @@ namespace BikesData.POCOs
 
         public int JobID { get; set; }
 
-        public string StatusCode { get; set; }
+        public bool? Completed { get; set; }
     }
 }

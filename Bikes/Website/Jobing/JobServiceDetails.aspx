@@ -29,7 +29,7 @@
                 <td>
                     <asp:Label Text='<%# Eval("Description") %>' runat="server" ID="DescriptionLabel" /></td>
                 <td>
-                    <asp:Label Text='<%# Eval("StatusCode") %>' runat="server" ID="StatusCodeLabel" /></td>
+                    <asp:Label Text='<%# Eval("Completed") %>' runat="server" ID="StatusCodeLabel" /></td>
                 <td>
                     <asp:LinkButton ID="Select" runat="server"
                              CssClass="btn" CommandArgument='<%# Eval("JobDetailID") %>' OnCommand="Select_Command" >
@@ -37,7 +37,7 @@
                         </asp:LinkButton></td>
                 <td>
                     <asp:LinkButton ID="Done" runat="server"
-                             CssClass="btn" CommandArgument='<%# Eval("JobID") %>' OnCommand="Done_Command" >
+                             CssClass="btn" CommandArgument='<%# Eval("JobDetailID") %>' OnCommand="Done_Command" >
                             <span aria-hidden="true" >Done</span>
                         </asp:LinkButton></td>
                 <td>
@@ -59,7 +59,7 @@
                 <td>
                     <asp:Label Text='<%# Eval("Description") %>' runat="server" ID="DescriptionLabel" /></td>
                 <td>
-                    <asp:Label Text='<%# Eval("StatusCode") %>' runat="server" ID="StatusCodeLabel" /></td>
+                    <asp:Label Text='<%# Eval("Completed") %>' runat="server" ID="StatusCodeLabel" /></td>
                 <td>
                     <asp:LinkButton ID="Select" runat="server"
                              CssClass="btn" CommandArgument='<%# Eval("JobDetailID") %>' OnCommand="Select_Command" >
@@ -67,7 +67,7 @@
                         </asp:LinkButton></td>
                 <td>
                     <asp:LinkButton ID="Done" runat="server"
-                             CssClass="btn" CommandArgument='<%# Eval("JobID") %>' OnCommand="Done_Command" >
+                             CssClass="btn" CommandArgument='<%# Eval("JobDetailID") %>' OnCommand="Done_Command" >
                             <span aria-hidden="true" >Done</span>
                         </asp:LinkButton></td>
                 <td>
@@ -84,7 +84,7 @@
                         <table runat="server" id="itemPlaceholderContainer" style="background-color: #FFFFFF; border-collapse: collapse; border-color: #999999; border-style: none; border-width: 1px; font-family: Verdana, Arial, Helvetica, sans-serif;" border="1">
                             <tr runat="server" style="background-color: #E0FFFF; color: #333333;">
                                 <th runat="server">Description</th>
-                                <th runat="server">StatusCode</th>
+                                <th runat="server">Status</th>
                                 <th runat="server"></th>
                                 <th runat="server"></th>
                                 <th runat="server"></th>
@@ -103,7 +103,7 @@
                 <td>
                     <asp:Label Text='<%# Eval("Description") %>' runat="server" ID="DescriptionLabel" /></td>
                 <td>
-                    <asp:Label Text='<%# Eval("StatusCode") %>' runat="server" ID="StatusCodeLabel" /></td>
+                    <asp:Label Text='<%# Eval("Completed") %>' runat="server" ID="StatusCodeLabel" /></td>
                 <td>
                     <asp:LinkButton ID="Select" runat="server"
                              CssClass="btn" CommandArgument='<%# Eval("JobDetailID") %>' OnCommand="Select_Command" >
@@ -111,7 +111,7 @@
                         </asp:LinkButton></td>
                 <td>
                     <asp:LinkButton ID="Done" runat="server"
-                             CssClass="btn" CommandArgument='<%# Eval("JobID") %>' OnCommand="Done_Command" >
+                             CssClass="btn" CommandArgument='<%# Eval("JobDetailID") %>' OnCommand="Done_Command" >
                             <span aria-hidden="true" >Done</span>
                         </asp:LinkButton></td>
                 <td>

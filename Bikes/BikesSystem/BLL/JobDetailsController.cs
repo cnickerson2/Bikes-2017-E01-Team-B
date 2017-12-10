@@ -27,7 +27,7 @@ namespace BikesSystem.BLL
                                   Comments = x.Comments,
                                   CouponID = x.CouponID,
                                   JobID = x.JobID,
-                                  StatusCode = x.Job.StatusCode,
+                                  Completed = x.Completed,
                                   JobDetailID = x.JobDetailID
                               };
                 return results.ToList();
@@ -61,6 +61,27 @@ namespace BikesSystem.BLL
             {
                 JobDetail service = context.JobDetails.Find(serviceid);
                 return service;
+            }
+        }
+
+        //note that the int, progress, is meant to be handled by 0 (started) and 1 (done)
+        public void Service_Update(int serviceid, int progress)
+        {
+            using (var context = new EBikesContext())
+            {
+                JobDetail temp = context.JobDetails.Find(serviceid);
+
+                if (progress == 0)
+                {
+                    temp.Completed = false;
+                }
+                if (progress == 1)
+                {
+                    temp.Completed = true;
+                }
+                context.Entry(temp).State = System.Data.Entity.EntityState.Modified;
+                context.SaveChanges();
+
             }
         }
     }
