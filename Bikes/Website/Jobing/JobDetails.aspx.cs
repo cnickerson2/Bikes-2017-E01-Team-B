@@ -18,7 +18,7 @@ public partial class Jobing_JobDetails : System.Web.UI.Page
     {
         if (JobIDHidden.Value == "")
         {
-            MessageUserControl.ShowInfo("Information", "Note: If you click Add Service, you will be taken to the New Job page.");
+            MessageUserControl.ShowInfo("Information", "Note: If you click Add Service, you will be taken to the New Job page. Alternatively, <a href='Jobs.aspx'>Click Here to go back to the Current Jobs List</a>");
         }
     }
 
@@ -55,7 +55,7 @@ public partial class Jobing_JobDetails : System.Web.UI.Page
                         newService.JobHours = decimal.Parse(HoursTextbox.Text);
                         newService.JobID = int.Parse(JobIDHidden.Value);
 
-                        if (CouponDropdownList.SelectedValue == "0")
+                        if (CouponDropdownList.SelectedValue == "")
                         {
                             //do nothing
                         }
@@ -66,6 +66,7 @@ public partial class Jobing_JobDetails : System.Web.UI.Page
 
                         sysmgr.Add_Service(newService);
                         CurrentServicesListView.DataBind();
+                        MessageUserControl.ShowInfo("Information", "Service successfully added.");
                     }
                 }
             }
@@ -74,9 +75,9 @@ public partial class Jobing_JobDetails : System.Web.UI.Page
 
     protected void PresetButton_Click(object sender, EventArgs e)
     {
-        if (int.Parse(PresetDropdownList.SelectedValue) == 0)
+        if (PresetDropdownList.SelectedValue == "")
         {
-            //do nothing...probably
+            MessageUserControl.ShowInfo("Information", "You must select a preset from the Dropdown List to get information for a preset job.");
         }
         else
         {
@@ -84,6 +85,7 @@ public partial class Jobing_JobDetails : System.Web.UI.Page
             int standardID = int.Parse(PresetDropdownList.SelectedValue);
             DescriptionTextbox.Text = sysmgr.StandardJobInformation_Get(standardID).Description;
             HoursTextbox.Text = sysmgr.StandardJobInformation_Get(int.Parse(PresetDropdownList.SelectedValue)).StandardHours.ToString();
+            MessageUserControl.ShowInfo("Information", "Preset Job Information applied.");
         }
     }
 
@@ -92,5 +94,6 @@ public partial class Jobing_JobDetails : System.Web.UI.Page
         JobDetailsController sysmgr = new JobDetailsController();
         sysmgr.Remove_Service(int.Parse(e.CommandArgument.ToString()));
         CurrentServicesListView.DataBind();
+        MessageUserControl.ShowInfo("Information", "Service removed.");
     }
 }
