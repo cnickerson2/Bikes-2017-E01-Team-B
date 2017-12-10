@@ -38,7 +38,6 @@ public partial class Jobing_JobServiceDetails : System.Web.UI.Page
 
     protected void Select_Command(object sender, CommandEventArgs e)
     {
-
         Response.Redirect("JobServiceDetails.aspx?id=" + JobIDHidden.Value + "&select=" + e.CommandArgument); 
     }
 
@@ -65,12 +64,11 @@ public partial class Jobing_JobServiceDetails : System.Web.UI.Page
             }
         }
         MessageUserControl.ShowInfo("Service removed.");
-
+        CurrentJobServicesListView.DataBind();
     }
 
     protected void StartServiceButton_Click(object sender, EventArgs e)
     {
-        
         if (selectedID == 0)
         {
             MessageUserControl.ShowInfo("Warning", "You can't start a service without selecting a service from the list!");
@@ -80,6 +78,28 @@ public partial class Jobing_JobServiceDetails : System.Web.UI.Page
             JobDetailsController sysmgr = new JobDetailsController();
             sysmgr.Service_Update(int.Parse(Request.QueryString["select"]), 0);
             CurrentJobServicesListView.DataBind();
+        }
+    }
+
+    protected void AddCommentButton_Click(object sender, EventArgs e)
+    {
+        if (selectedID == 0)
+        {
+            MessageUserControl.ShowInfo("Warning", "You must select a Service first.");
+        }
+        else
+        {
+            if (CommentTextbox.Text == "")
+            {
+                MessageUserControl.ShowInfo("Warning", "You must enter a comment first.");
+            }
+            else
+            {
+                JobDetailsController sysmgr = new JobDetailsController();
+                sysmgr.Comment_Update(int.Parse(Request.QueryString["select"]), CommentTextbox.Text);
+                Response.Redirect("JobServiceDetails.aspx?id=" + JobIDHidden.Value + "&select=" + Request.QueryString["select"]);
+                MessageUserControl.ShowInfo("Information", "Comment has been added.");
+            }
         }
     }
 }

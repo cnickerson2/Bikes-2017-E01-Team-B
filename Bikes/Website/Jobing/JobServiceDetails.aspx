@@ -148,9 +148,9 @@
     <!--Holds the comments for the service-->
 
     <!--Fifth Level Controls-->
-    <asp:Button ID="AddCommentButton" runat="server" Text="Add" />
+    <asp:Button ID="AddCommentButton" runat="server" Text="Add" OnClick="AddCommentButton_Click" />
     &nbsp;&nbsp;&nbsp;
-    <asp:TextBox ID="CommentTextbox" runat="server" Text="Add any additional comments discovered while doing the service"></asp:TextBox>
+    <asp:TextBox ID="CommentTextbox" runat="server" Placeholder="Add any additional comments discovered while doing the service" Width="487px"></asp:TextBox>
 
     <!--Sixth Level Controls-->
     <asp:ListView ID="JobDetailPartsListView" runat="server"></asp:ListView>

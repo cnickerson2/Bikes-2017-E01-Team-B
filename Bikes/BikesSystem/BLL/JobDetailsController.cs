@@ -81,7 +81,19 @@ namespace BikesSystem.BLL
                 }
                 context.Entry(temp).State = System.Data.Entity.EntityState.Modified;
                 context.SaveChanges();
+            }
+        }
 
+        //appends comment to end of existing comments
+        public void Comment_Update(int serviceid, string newcomment)
+        {
+            using (var context = new EBikesContext())
+            {
+                JobDetail temp = context.JobDetails.Find(serviceid);
+
+                temp.Comments += " " + newcomment;
+                context.Entry(temp).State = System.Data.Entity.EntityState.Modified;
+                context.SaveChanges();
             }
         }
     }
