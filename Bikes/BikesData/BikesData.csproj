@@ -95,6 +95,7 @@
     <Compile Include="POCOs\PurchaseOrderTotalPOCO.cs" />
     <Compile Include="POCOs\RegisteredEmployeePOCO.cs" />
     <Compile Include="POCOs\ReturnedOrderDetailsForOutstandingOrders.cs" />
+    <Compile Include="POCOs\UpdatePurchaseOrderDetailPOCO.cs" />
     <Compile Include="POCOs\VendorIdentification.cs" />
     <Compile Include="POCOs\VendorInfoPOCO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -18,6 +18,69 @@ namespace BikesSystem.BLL
     public class PurchaseOrderController
     {
 
+        /*public void PlaceOrder(int vendorID)
+        {
+            using (var context = new EBikesContext())
+            {
+                var pOrder = (from x in context.PurchaseOrders
+                               where x.VendorID == vendorID && x.OrderDate == null && x.PurchaseOrderNumber == null
+                               select x).FirstOrDefault();
+
+                var maxNumber = (from x in context.PurchaseOrders
+                                 where x.VendorID == vendorID && x.OrderDate != null && x.PurchaseOrderNumber != null
+                                 select x.PurchaseOrderNumber).Max();
+
+                pOrder.OrderDate = DateTime.Now;
+                pOrder.PurchaseOrderNumber = maxNumber + 1;
+
+
+            }
+        }*/
+
+        public void UpdatePurchaseOrderDetails(List<UpdatePurchaseOrderDetailPOCO> list)
+        {
+            using (var context = new EBikesContext())
+            {
+                foreach(UpdatePurchaseOrderDetailPOCO item in list)
+                {
+                    var detail = (from x in context.PurchaseOrderDetails
+                                 where x.PurchaseOrderDetailID == item.DetailID
+                                 select x).FirstOrDefault();
+
+                    detail.Quantity = item.Quantity;
+                    detail.PurchasePrice = item.Price;
+                }
+
+                context.SaveChanges();
+            }
+        }
+
+        public void UpdateTotals(int vendorID)
+        {
+            using (var context = new EBikesContext())
+            {
+                var order = (from x in context.PurchaseOrders
+                             where x.VendorID == vendorID && x.OrderDate == null && x.PurchaseOrderNumber == null
+                             select x).FirstOrDefault();
+
+                var details = (from x in context.PurchaseOrderDetails
+                               where x.PurchaseOrderID == order.PurchaseOrderID
+                               select x).ToList();
+
+                decimal subtotal = 0;
+
+                foreach (PurchaseOrderDetail deet in details)
+                {
+                    subtotal += deet.Quantity * deet.PurchasePrice;
+                }
+
+                order.SubTotal = subtotal;
+                order.TaxAmount = subtotal * 0.05m;
+
+                context.SaveChanges();
+            }
+        }
+
         public void DeleteCurrentPurchaseOrder(int vendorID)
         {
             using (var context = new EBikesContext())
@@ -136,7 +199,8 @@ namespace BikesSystem.BLL
                                   QuantityOnOrder = x.Part.QuantityOnOrder,
                                   ReorderLevel = x.Part.ReorderLevel,
                                   Quantity = x.Quantity,
-                                  PurchasePrice = x.PurchasePrice
+                                  PurchasePrice = x.PurchasePrice,
+                                  PurchaseOrderDetailID = x.PurchaseOrderDetailID
                               };
 
                 return results.ToList();

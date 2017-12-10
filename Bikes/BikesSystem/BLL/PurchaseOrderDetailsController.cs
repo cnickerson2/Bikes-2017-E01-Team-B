@@ -16,6 +16,53 @@ namespace BikesSystem.BLL
     [DataObject]
     public class PurchaseOrderDetailsController
     {
+
+        public void AddDetail(int vendorID, int partID)
+        {
+            using (var context = new EBikesContext())
+            {
+                var puID = (from x in context.PurchaseOrders
+                               where x.VendorID == vendorID && x.OrderDate == null && x.PurchaseOrderNumber == null
+                               select x.PurchaseOrderID).FirstOrDefault();
+
+                var part = (from x in context.Parts
+                            where x.PartID == partID
+                            select x).FirstOrDefault();
+
+                PurchaseOrderDetail newD = new PurchaseOrderDetail();
+                newD.PartID = partID;
+                newD.PurchaseOrderID = puID;
+                newD.PurchasePrice = part.PurchasePrice;
+                newD.Quantity = 1;
+
+                context.PurchaseOrderDetails.Add(newD);
+
+                context.SaveChanges();
+            }
+
+            new PurchaseOrderController().UpdateTotals(vendorID);
+        }
+
+        public void RemoveDetail(int vendorID, int partID)
+        {
+            using (var context = new EBikesContext())
+            {
+                var results = (from x in context.PurchaseOrders
+                               where x.VendorID == vendorID && x.OrderDate == null && x.PurchaseOrderNumber == null
+                               select x.PurchaseOrderID).FirstOrDefault();
+
+                var detail = (from x in context.PurchaseOrderDetails
+                              where x.PartID == partID && x.PurchaseOrderID == results
+                              select x).FirstOrDefault();
+
+                context.PurchaseOrderDetails.Remove(detail);
+
+                context.SaveChanges();
+            }
+
+            new PurchaseOrderController().UpdateTotals(vendorID);
+        }
+
         /// <summary>
         /// Get a single Outstanding Order's Information
         /// </summary>

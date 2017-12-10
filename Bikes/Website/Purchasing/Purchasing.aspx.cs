@@ -1,4 +1,5 @@
 ﻿using BikesData.Entities.Security;
+using BikesData.POCOs;
 using BikesSystem.BLL;
 using System;
 using System.Collections.Generic;
@@ -50,8 +51,65 @@ public partial class Purchasing_Purchasing : System.Web.UI.Page
         VendorDDL.SelectedValue = "0";
     }
 
-    protected void RemoveItem_Click(object sender, EventArgs e)
+    protected void PurchaseOrderView_ItemCommand(object sender, ListViewCommandEventArgs e)
     {
+        string commandName = e.CommandName;
+        int partID = int.Parse((string)e.CommandArgument);
 
+        if (commandName == "Remove")
+        {
+            (new PurchaseOrderDetailsController()).RemoveDetail(int.Parse(VendorDDL.SelectedValue), partID);
+        }
+
+        Refresh();
+    }
+
+    protected void Place_Button_Click(object sender, EventArgs e)
+    {
+        /*if (VendorDDL.SelectedValue != "0")
+        {
+            new PurchaseOrderController().PlaceOrder(int.Parse(VendorDDL.SelectedValue));
+
+            VendorDDL.SelectedValue = "0";
+        }*/
+    }
+
+    protected void Update_Button_Click(object sender, EventArgs e)
+    {
+        List<UpdatePurchaseOrderDetailPOCO> list = new List<UpdatePurchaseOrderDetailPOCO>();
+
+        foreach (ListViewDataItem item in PurchaseOrderView.Items)
+        {
+            var detailID = int.Parse(((HiddenField)item.FindControl("PurchaseOrderDetailIDHidden")).Value);
+            var quantity = int.Parse(((TextBox)item.FindControl("QuantityBox")).Text);
+            var price = decimal.Parse(((TextBox)item.FindControl("PurchasePriceBox")).Text);
+
+            list.Add(new UpdatePurchaseOrderDetailPOCO(detailID, quantity, price));
+        }
+
+        new PurchaseOrderController().UpdatePurchaseOrderDetails(list);
+        new PurchaseOrderController().UpdateTotals(int.Parse(VendorDDL.SelectedValue));
+
+        Refresh();
+    }
+
+    public void Refresh()
+    {
+        PurchaseOrderView.DataBind();
+        PurchaseOrderTotalsView.DataBind();
+        CurrentInventoryView.DataBind();
+    }
+
+    protected void CurrentInventoryView_ItemCommand(object sender, ListViewCommandEventArgs e)
+    {
+        string commandName = e.CommandName;
+        int partID = int.Parse((string)e.CommandArgument);
+
+        if (commandName == "Add")
+        {
+            (new PurchaseOrderDetailsController()).AddDetail(int.Parse(VendorDDL.SelectedValue), partID);
+        }
+
+        Refresh();
     }
 }

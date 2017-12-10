@@ -32,9 +32,10 @@
     <h1>Current Purchase Order</h1>
     <br>
 
-    <asp:ListView ID="PurchaseOrderView" runat="server" DataSourceID="PurchaseOrderView_ODS" >
+    <asp:ListView ID="PurchaseOrderView" runat="server" DataSourceID="PurchaseOrderView_ODS" OnItemCommand="PurchaseOrderView_ItemCommand" >
         <AlternatingItemTemplate>
             <tr style="background-color: #FFFFFF; color: #284775;">
+                <asp:HiddenField ID="PurchaseOrderDetailIDHidden" runat="server" Value='<%# Eval("PurchaseOrderDetailID") %>'/>
                 <td>
                     <asp:Label Text='<%# Eval("PartID") %>' runat="server" ID="PartIDLabel" /></td>
                 <td>
@@ -46,11 +47,13 @@
                 <td>
                     <asp:Label Text='<%# Eval("ReorderLevel") %>' runat="server" ID="ReorderLevelLabel" /></td>
                 <td>
-                    <asp:Label Text='<%# Eval("Quantity") %>' runat="server" ID="QuantityLabel" /></td>
+                    <asp:TextBox ID="QuantityBox" runat="server" Text='<%# Eval("Quantity") %>' style="margin: 4px;" type="number"></asp:TextBox>
+                </td>
                 <td>
-                    <asp:Label Text='<%# Eval("PurchasePrice") %>' runat="server" ID="PurchasePriceLabel" /></td>
+                    <asp:TextBox ID="PurchasePriceBox" runat="server" Text='<%# ((decimal)Eval("PurchasePrice")).ToString("F2") %>' style="margin: 4px;"></asp:TextBox>
+                    </td>
                 <td>
-                    <asp:LinkButton ID="RemoveItem" runat="server" OnClick="RemoveItem_Click">Remove</asp:LinkButton></td>
+                    <asp:LinkButton ID="RemoveItem" runat="server" CommandName="Remove" CommandArgument='<%# Eval("PartID") %>'>Remove</asp:LinkButton></td>
             </tr>
         </AlternatingItemTemplate>
         <EmptyDataTemplate>
@@ -62,6 +65,7 @@
         </EmptyDataTemplate>
         <ItemTemplate>
             <tr style="background-color: #E0FFFF; color: #333333;">
+                <asp:HiddenField ID="PurchaseOrderDetailIDHidden" runat="server" Value='<%# Eval("PurchaseOrderDetailID") %>'/>
                 <td>
                     <asp:Label Text='<%# Eval("PartID") %>' runat="server" ID="PartIDLabel" /></td>
                 <td>
@@ -73,11 +77,12 @@
                 <td>
                     <asp:Label Text='<%# Eval("ReorderLevel") %>' runat="server" ID="ReorderLevelLabel" /></td>
                 <td>
-                    <asp:Label Text='<%# Eval("Quantity") %>' runat="server" ID="QuantityLabel" /></td>
+                    <asp:TextBox ID="QuantityBox" runat="server" Text='<%# Eval("Quantity") %>' style="margin: 4px;" type="number"></asp:TextBox>
+                </td>
+                 <td>
+                    <asp:TextBox ID="PurchasePriceBox" runat="server" Text='<%# ((decimal)Eval("PurchasePrice")).ToString("F2") %>' style="margin: 4px;"></asp:TextBox>
                 <td>
-                    <asp:Label Text='<%# Eval("PurchasePrice") %>' runat="server" ID="PurchasePriceLabel" /></td>
-                <td>
-                    <asp:LinkButton ID="RemoveItem" runat="server" OnClick="RemoveItem_Click">Remove</asp:LinkButton></td>
+                    <asp:LinkButton ID="RemoveItem" runat="server" CommandName="Remove" CommandArgument='<%# Eval("PartID") %>'>Remove</asp:LinkButton></td>
             </tr>
         </ItemTemplate>
         <LayoutTemplate>
@@ -106,24 +111,25 @@
     </asp:ListView>
     <br>
 
-    <asp:Button ID="Update_Button" runat="server" Text="Update" />
-    <asp:Button style="margin-left: 12px;" ID="Place_Button" runat="server" Text="Place" />
+    <asp:Button ID="Update_Button" runat="server" Text="Update" OnClick="Update_Button_Click" />
+    <asp:Button style="margin-left: 12px;" ID="Place_Button" runat="server" Text="Place" OnClick="Place_Button_Click"/>
     <asp:Button style="margin-left: 12px;" ID="Delete_Button" runat="server" Text="Delete" OnClick="Delete_Button_Click"/>
     <asp:Button style="margin-left: 12px;" ID="Clear_Button" runat="server" Text="Clear" OnClick="Clear_Button_Click" />
+    <br>
     <br>
 
     <asp:GridView ID="PurchaseOrderTotalsView" runat="server" AutoGenerateColumns="False" DataSourceID="PurchaseOrderTotalsView_ODS">
         <Columns>
-            <asp:BoundField DataField="Subtotal" HeaderText="Subtotal" SortExpression="Subtotal"></asp:BoundField>
-            <asp:BoundField DataField="GST" HeaderText="GST" SortExpression="GST"></asp:BoundField>
-            <asp:BoundField DataField="Total" HeaderText="Total" SortExpression="Total"></asp:BoundField>
+            <asp:BoundField DataField="Subtotal" HeaderText="Subtotal" SortExpression="Subtotal" DataFormatString="{0:C}"></asp:BoundField>
+            <asp:BoundField DataField="GST" HeaderText="GST" SortExpression="GST" DataFormatString="{0:C}"></asp:BoundField>
+            <asp:BoundField DataField="Total" HeaderText="Total" SortExpression="Total" DataFormatString="{0:C}"></asp:BoundField>
         </Columns>
     </asp:GridView>
 
     <h1>Current Inventory</h1>
     <br>
 
-    <asp:ListView ID="CurrentInventoryView" runat="server" DataSourceID="CurrentInventoryView_ODS">
+    <asp:ListView ID="CurrentInventoryView" runat="server" DataSourceID="CurrentInventoryView_ODS" OnItemCommand="CurrentInventoryView_ItemCommand">
         <AlternatingItemTemplate>
             <tr style="background-color: #FFF8DC;">
                 <td>
@@ -137,9 +143,11 @@
                 <td>
                     <asp:Label Text='<%# Eval("ReorderLevel") %>' runat="server" ID="ReorderLevelLabel" /></td>
                 <td>
-                    <asp:Label Text='<%# Eval("SellingPrice") %>' runat="server" ID="SellingPriceLabel" /></td>
+                    <asp:Label Text='<%# ((decimal)Eval("SellingPrice")).ToString("C") %>' runat="server" ID="SellingPriceLabel" /></td>
                 <td>
                     <asp:Label Text='<%# Eval("Buffer") %>' runat="server" ID="BufferLabel" /></td>
+                <td>
+                    <asp:LinkButton ID="AddItem" runat="server" CommandName="Add" CommandArgument='<%# Eval("PartID") %>'>Add</asp:LinkButton></td>
             </tr>
         </AlternatingItemTemplate>
         <EmptyDataTemplate>
@@ -162,9 +170,11 @@
                 <td>
                     <asp:Label Text='<%# Eval("ReorderLevel") %>' runat="server" ID="ReorderLevelLabel" /></td>
                 <td>
-                    <asp:Label Text='<%# Eval("SellingPrice") %>' runat="server" ID="SellingPriceLabel" /></td>
+                    <asp:Label Text='<%# ((decimal)Eval("SellingPrice")).ToString("C") %>' runat="server" ID="SellingPriceLabel" /></td>
                 <td>
                     <asp:Label Text='<%# Eval("Buffer") %>' runat="server" ID="BufferLabel" /></td>
+                <td>
+                    <asp:LinkButton ID="AddItem" runat="server" CommandName="Add" CommandArgument='<%# Eval("PartID") %>'>Add</asp:LinkButton></td>
             </tr>
         </ItemTemplate>
         <LayoutTemplate>

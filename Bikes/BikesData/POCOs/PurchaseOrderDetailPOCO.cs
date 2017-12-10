@@ -15,5 +15,6 @@ namespace BikesData.POCOs
         public int ReorderLevel { get; set; }
         public int Quantity { get; set; }
         public decimal PurchasePrice { get; set; }
+        public int PurchaseOrderDetailID { get; set; }
     }
 }
