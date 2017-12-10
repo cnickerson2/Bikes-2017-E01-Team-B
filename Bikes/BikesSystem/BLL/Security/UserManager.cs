@@ -134,6 +134,18 @@ namespace BikesSystem.BLL.Security
             return result;
         }
 
+        public void SetCoupon(IPrincipal user, int? couponId)
+        {
+            ApplicationUser appUser = FindByNameAsync(user.Identity.Name).Result;
+            appUser.CouponId = couponId;
+            UpdateAsync(appUser).Wait();
+        }
+
+        public int? GetCoupon(IPrincipal user)
+        {
+            return FindByNameAsync(user.Identity.Name).Result.CouponId;
+        }
+        
         #region UserRole Administration
 
         [DataObjectMethod(DataObjectMethodType.Select, false)]

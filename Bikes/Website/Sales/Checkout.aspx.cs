@@ -1,5 +1,7 @@
 ﻿using BikesData.DTOs;
+using BikesData.Entities;
 using BikesSystem.BLL;
+using BikesSystem.BLL.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,12 +30,17 @@ public partial class Sales_Checkout : System.Web.UI.Page
 
     protected void View_PreRender(object sender, EventArgs e)
     {
+        // FIXME: The total is wrong (it should be the total cost of all items, not the count of all items).
         if (sender == ViewPartsList || sender == ReviewPartsList || !IsPostBack)
         {
+            OnlineShoppingCart cart = null;
+            bool discountSet = false;
+            bool totalsSet = false;
+
             MessageUserControl.TryRun(() =>
             {
-                ShoppingCartController controller = new ShoppingCartController();
-                OnlineShoppingCart cart = controller.GetOnlineShoppingCart(User);
+                cart = new ShoppingCartController().GetOnlineShoppingCart(User);
+
                 if (cart == null)
                 {
                     ViewEmpty.Visible = true;
@@ -52,9 +59,71 @@ public partial class Sales_Checkout : System.Web.UI.Page
                         FormatUpdate(cart.LastUpdated));
                     View.Visible = true;
                     Review.Visible = true;
+                    totalsSet = true;
                 }
             });
+            MessageUserControl.TryRun(() =>
+            {
+                int? couponId = new UserManager().GetCoupon(User);
+                decimal discount;
+                if (couponId.HasValue)
+                {
+                    CouponsList.SelectedValue = couponId.Value.ToString();
+                    discount = cart.Total/(new CouponController().GetDiscount(couponId.Value));
+                    ReviewDiscountLabel.Text = string.Format(ReviewDiscountLabel.Text,
+                        discount.ToString("C"));
+                }
+                else
+                {
+                    discount = 0;
+                    ReviewDiscountLabel.Text = string.Format(ReviewDiscountLabel.Text,
+                        discount.ToString("C"));
+                }
+                discountSet = true;
+                if (totalsSet && cart != null)
+                {
+                    ReviewSubtotalLabel.Text = string.Format(ReviewSubtotalLabel.Text,
+                        cart.Total.ToString("C"));
+                    if (discount > 0)
+                    {
+                        ReviewTotalLabel.Text = string.Format(ReviewTotalLabel.Text,
+                            (cart.Total - discount).ToString("C"));
+                    }
+                    else
+                    {
+                        ReviewTotalLabel.Text = string.Format(ReviewTotalLabel.Text,
+                            cart.Total.ToString("C"));
+                    }
+                    
+                    totalsSet = true;
+                }
+            });
+            if (!discountSet)
+            {
+                ReviewDiscountLabel.Text = string.Format(ReviewDiscountLabel.Text,
+                    "unknown, try refreshing");
+            }
+            if (!totalsSet)
+            {
+                ViewTotalLabel.Text = string.Format(ViewTotalLabel.Text,
+                    "unknown, try refreshing");
+                ReviewSubtotalLabel.Text = string.Format(ReviewSubtotalLabel.Text,
+                    "unknown, try refreshing");
+                ReviewTotalLabel.Text = string.Format(ReviewTotalLabel.Text,
+                    "unknown, try refreshing");
+            }
         }
+    }
+
+    protected void ApplyCouponButton_Click(object sender, EventArgs e)
+    {
+        MessageUserControl.TryRun(() =>
+        {
+            int? couponId = int.Parse(CouponsList.SelectedValue);
+            if (couponId == 0)
+                couponId = null;
+            new UserManager().SetCoupon(User, couponId);
+        }, "Coupon applied", "The coupon has successfully been applied.");
     }
 
     protected string FormatUpdate(DateTime? Date)

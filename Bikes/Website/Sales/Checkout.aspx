@@ -254,7 +254,7 @@
                         </asp:ListView>
                         <br />
                         <div class="summary">Total: <asp:Label runat="server" ID="ViewTotalLabel" /><br />
-                            <asp:Label ID="ViewOverviewLabel" runat="server"></asp:Label><br />
+                            <asp:Label ID="ViewOverviewLabel" runat="server" /><br />
                             <a href="#info" data-toggle="tab"
                                 class="btn btn-primary">Continue</a>
                         </div>
@@ -391,8 +391,7 @@
                         <p>You don't have a shopping cart.
                            Please add some items before checking out.</p>
                     </asp:Panel>
-                    <asp:Panel ID="Review" runat="server"
-                        OnLoad="View_PreRender" Visible="false">
+                    <asp:Panel ID="Review" runat="server" Visible="false">
                         <asp:ListView ID="ReviewPartsList" runat="server"
                             OnItemCommand="PartsList_ItemCommand">
                             <LayoutTemplate>
@@ -477,9 +476,13 @@
                             <div class="coupons">
                                 <asp:DropDownList ID="CouponsList" runat="server"
                                     DataSourceID="CouponsListODS"
-                                    DataTextField="Value" DataValueField="Key"></asp:DropDownList><br />
+                                    DataTextField="Value" DataValueField="Key"
+                                    AppendDataBoundItems="true">
+                                    <asp:ListItem Text="None" Value="0"></asp:ListItem>
+                                </asp:DropDownList><br />
                                 <asp:LinkButton ID="ApplyCouponButton" runat="server"
-                                    CssClass="btn btn-default applyCouponButton">Apply</asp:LinkButton>
+                                    CssClass="btn btn-default applyCouponButton"
+                                    OnClick="ApplyCouponButton_Click">Apply</asp:LinkButton>
                             </div>
                         </div>
 

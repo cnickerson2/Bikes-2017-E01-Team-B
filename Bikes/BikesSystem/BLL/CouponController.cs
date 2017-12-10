@@ -29,5 +29,13 @@ namespace BikesSystem.BLL
                 return context.Coupons.ToDictionary(coupon => coupon.CouponID, coupon => coupon.CouponIDValue);
             }
         }
+
+        public int GetDiscount(int couponId)
+        {
+            using (var context = new EBikesContext())
+            {
+                return context.Coupons.Find(couponId).CouponDiscount;
+            }
+        }
     }
 }
