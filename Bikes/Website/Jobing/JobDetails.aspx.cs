@@ -30,15 +30,15 @@ public partial class Jobing_JobDetails : System.Web.UI.Page
         }
         else
         {
-            if (CommentsTextbox.Text == "")
+            if (DescriptionTextbox.Text == "")
             {
-                MessageUserControl.ShowInfo("Warning", "You must enter a comment about the service.");
+                MessageUserControl.ShowInfo("Warning", "You must enter a description about the service.");
             }
             else
             {
-                if (DescriptionTextbox.Text == "")
+                if (DescriptionTextbox.Text.Count() > 100)
                 {
-                    MessageUserControl.ShowInfo("Warning", "You must enter a description about the service.");
+                    MessageUserControl.ShowInfo("Warning", "Description cannot be longer than 100 characters");
                 }
                 else
                 {
@@ -48,25 +48,33 @@ public partial class Jobing_JobDetails : System.Web.UI.Page
                     }
                     else
                     {
-                        JobDetailsController sysmgr = new JobDetailsController();
-                        JobDetail newService = new JobDetail();
-                        newService.Comments = CommentsTextbox.Text;
-                        newService.Description = DescriptionTextbox.Text;
-                        newService.JobHours = decimal.Parse(HoursTextbox.Text);
-                        newService.JobID = int.Parse(JobIDHidden.Value);
-
-                        if (CouponDropdownList.SelectedValue == "")
+                        decimal hours;
+                        if (decimal.TryParse(HoursTextbox.Text, out hours))
                         {
-                            //do nothing
+                            JobDetailsController sysmgr = new JobDetailsController();
+                            JobDetail newService = new JobDetail();
+                            newService.Comments = CommentsTextbox.Text;
+                            newService.Description = DescriptionTextbox.Text;
+                            newService.JobHours = decimal.Parse(HoursTextbox.Text);
+                            newService.JobID = int.Parse(JobIDHidden.Value);
+
+                            if (CouponDropdownList.SelectedValue == "")
+                            {
+                                //do nothing
+                            }
+                            else
+                            {
+                                newService.CouponID = int.Parse(CouponDropdownList.SelectedValue);
+                            }
+
+                            sysmgr.Add_Service(newService);
+                            CurrentServicesListView.DataBind();
+                            MessageUserControl.ShowInfo("Information", "Service successfully added.");
                         }
                         else
                         {
-                            newService.CouponID = int.Parse(CouponDropdownList.SelectedValue);
+                            MessageUserControl.ShowInfo("Warning", "Hours cannot contain letters or multiple decimal points.");
                         }
-
-                        sysmgr.Add_Service(newService);
-                        CurrentServicesListView.DataBind();
-                        MessageUserControl.ShowInfo("Information", "Service successfully added.");
                     }
                 }
             }

@@ -38,7 +38,7 @@
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <asp:Label ID="HoursLabel" runat="server" Text="Hours"></asp:Label>
     &nbsp;&nbsp;&nbsp;
-    <asp:TextBox ID="HoursTextbox" runat="server" TextMode="Number" Width="60px"></asp:TextBox>
+    <asp:TextBox ID="HoursTextbox" runat="server" Width="60px"></asp:TextBox>
 
     <br />
 

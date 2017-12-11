@@ -17,8 +17,6 @@ public partial class Jobing_Jobs : System.Web.UI.Page
         Response.Redirect("NewJob.aspx");
     }
 
-
-
     protected void ManageServices_Command(object sender, CommandEventArgs e)
     {
         Response.Redirect("JobDetails.aspx?id=" + e.CommandArgument);
