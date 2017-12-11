@@ -32,7 +32,7 @@ namespace BikesSystem.BLL
                                   QuantityOnorder = x.QuantityOnOrder,
                                   ReorderLevel = x.ReorderLevel,
                                   Buffer = (x.QuantityOnHand + x.QuantityOnOrder) - x.ReorderLevel,
-                                  SellingPrice = x.SellingPrice
+                                  PurchasePrice = x.PurchasePrice
                               }).ToList();
 
                 var ok = (from y in context.PurchaseOrderDetails

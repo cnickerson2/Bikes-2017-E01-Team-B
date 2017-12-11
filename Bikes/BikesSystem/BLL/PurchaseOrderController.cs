@@ -18,7 +18,7 @@ namespace BikesSystem.BLL
     public class PurchaseOrderController
     {
 
-        /*public void PlaceOrder(int vendorID)
+        public void PlaceOrder(int vendorID)
         {
             using (var context = new EBikesContext())
             {
@@ -30,12 +30,28 @@ namespace BikesSystem.BLL
                                  where x.VendorID == vendorID && x.OrderDate != null && x.PurchaseOrderNumber != null
                                  select x.PurchaseOrderNumber).Max();
 
+                if (maxNumber == null) maxNumber = 0;
+
                 pOrder.OrderDate = DateTime.Now;
                 pOrder.PurchaseOrderNumber = maxNumber + 1;
 
+                var details = (from x in context.PurchaseOrderDetails
+                               where x.PurchaseOrderID == pOrder.PurchaseOrderID
+                               select x).ToList();
 
+                foreach (PurchaseOrderDetail pDetail in details)
+                {
+
+                    var part = (from x in context.Parts
+                                where x.PartID == pDetail.PartID
+                                select x).FirstOrDefault();
+
+                    part.QuantityOnOrder += pDetail.Quantity;
+                }
+
+                context.SaveChanges();
             }
-        }*/
+        }
 
         public void UpdatePurchaseOrderDetails(List<UpdatePurchaseOrderDetailPOCO> list)
         {

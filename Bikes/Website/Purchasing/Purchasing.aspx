@@ -4,6 +4,10 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
+    <link href="../Content/bootstrap.css" rel="stylesheet" />
+    <link href="../Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../Content/bootstrap-theme.css" rel="stylesheet" />
+    <script src="../Scripts/bootstrap.min.js"></script>
     <h1>Purchasing</h1>
     <br>
 
@@ -29,7 +33,7 @@
         </Columns>
     </asp:GridView>
 
-    <h1>Current Purchase Order</h1>
+    <h1 ID="title1" runat="server">Current Purchase Order</h1>
     <br>
 
     <asp:ListView ID="PurchaseOrderView" runat="server" DataSourceID="PurchaseOrderView_ODS" OnItemCommand="PurchaseOrderView_ItemCommand" >
@@ -126,7 +130,7 @@
         </Columns>
     </asp:GridView>
 
-    <h1>Current Inventory</h1>
+    <h1 ID="title2" runat="server">Current Inventory</h1>
     <br>
 
     <asp:ListView ID="CurrentInventoryView" runat="server" DataSourceID="CurrentInventoryView_ODS" OnItemCommand="CurrentInventoryView_ItemCommand">
@@ -143,7 +147,7 @@
                 <td>
                     <asp:Label Text='<%# Eval("ReorderLevel") %>' runat="server" ID="ReorderLevelLabel" /></td>
                 <td>
-                    <asp:Label Text='<%# ((decimal)Eval("SellingPrice")).ToString("C") %>' runat="server" ID="SellingPriceLabel" /></td>
+                    <asp:Label Text='<%# ((decimal)Eval("PurchasePrice")).ToString("C") %>' runat="server" ID="PurchasePriceLabel" /></td>
                 <td>
                     <asp:Label Text='<%# Eval("Buffer") %>' runat="server" ID="BufferLabel" /></td>
                 <td>
@@ -170,7 +174,7 @@
                 <td>
                     <asp:Label Text='<%# Eval("ReorderLevel") %>' runat="server" ID="ReorderLevelLabel" /></td>
                 <td>
-                    <asp:Label Text='<%# ((decimal)Eval("SellingPrice")).ToString("C") %>' runat="server" ID="SellingPriceLabel" /></td>
+                    <asp:Label Text='<%# ((decimal)Eval("PurchasePrice")).ToString("C") %>' runat="server" ID="PurchasePriceLabel" /></td>
                 <td>
                     <asp:Label Text='<%# Eval("Buffer") %>' runat="server" ID="BufferLabel" /></td>
                 <td>
@@ -188,7 +192,7 @@
                                 <th runat="server">QuantityOnHand</th>
                                 <th runat="server">QuantityOnorder</th>
                                 <th runat="server">ReorderLevel</th>
-                                <th runat="server">SellingPrice</th>
+                                <th runat="server">PurchasePrice</th>
                                 <th runat="server">Buffer</th>
                             </tr>
                             <tr runat="server" id="itemPlaceholder"></tr>

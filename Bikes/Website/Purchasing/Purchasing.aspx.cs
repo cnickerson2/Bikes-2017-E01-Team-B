@@ -19,6 +19,14 @@ public partial class Purchasing_Purchasing : System.Web.UI.Page
         {
             LoggedInUserDisplay.Text = "CURRENTLY LOGGED IN USER: " + User.Identity.Name;
         }
+
+        if (VendorDDL.SelectedValue != "0")
+        {
+            IsVisible(true);
+        } else
+        {
+            IsVisible(false);
+        }
     }
 
     protected void GetCreatePOButton_Click(object sender, EventArgs e)
@@ -31,6 +39,12 @@ public partial class Purchasing_Purchasing : System.Web.UI.Page
             {
                 (new PurchaseOrderController()).CreateNewPurchaseOrder(int.Parse(VendorDDL.SelectedValue), 1);
             }
+        } else
+        {
+            MessageUserControl.TryRun(() =>
+            {
+                throw new Exception("YOU MUST SELECT A VENDOR");
+            });
         }
     }
 
@@ -40,15 +54,16 @@ public partial class Purchasing_Purchasing : System.Web.UI.Page
         {
             (new PurchaseOrderController()).DeleteCurrentPurchaseOrder(int.Parse(VendorDDL.SelectedValue));
             VendorDDL.SelectedValue = "0";
-        } else
-        {
-            MessageUserControl.ShowInfo("YOU NEED TO HAVE A VENDOR SELECTED TO DELETE THEIR PURCHASE ORDER");
+            IsVisible(false);
+            MessageUserControl.ShowInfo("SUCCESS", "YOU DELETED THAT PESKY PURCHASE ORDER");
         }
     }
 
     protected void Clear_Button_Click(object sender, EventArgs e)
     {
         VendorDDL.SelectedValue = "0";
+
+        IsVisible(false);
     }
 
     protected void PurchaseOrderView_ItemCommand(object sender, ListViewCommandEventArgs e)
@@ -66,12 +81,16 @@ public partial class Purchasing_Purchasing : System.Web.UI.Page
 
     protected void Place_Button_Click(object sender, EventArgs e)
     {
-        /*if (VendorDDL.SelectedValue != "0")
+        if (VendorDDL.SelectedValue != "0")
         {
             new PurchaseOrderController().PlaceOrder(int.Parse(VendorDDL.SelectedValue));
 
             VendorDDL.SelectedValue = "0";
-        }*/
+        }
+
+        IsVisible(false);
+
+        MessageUserControl.ShowInfo("SUCCESS", "WOW YOU PLACED THE ORDER GOOD JOB");
     }
 
     protected void Update_Button_Click(object sender, EventArgs e)
@@ -111,5 +130,22 @@ public partial class Purchasing_Purchasing : System.Web.UI.Page
         }
 
         Refresh();
+    }
+
+    protected void IsVisible(bool visibility)
+    {
+        PurchaseOrderView.Visible = visibility;
+        CurrentInventoryView.Visible = visibility;
+
+        Place_Button.Visible = visibility;
+        Delete_Button.Visible = visibility;
+        Clear_Button.Visible = visibility;
+        Update_Button.Visible = visibility;
+
+        PurchaseOrderTotalsView.Visible = visibility;
+        VendorInfoView.Visible = visibility;
+
+        title2.Visible = visibility;
+        title1.Visible = visibility;
     }
 }
