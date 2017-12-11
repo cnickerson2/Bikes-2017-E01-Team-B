@@ -170,7 +170,7 @@
                 <td>
                     <asp:Label Text='<%# Eval("Quantity") %>' runat="server" ID="QuantityLabel" Width="100px" /></td>
                 <td>
-                    <asp:Button runat="server"  Text="Delete" ID="DeleteButton" /></td>
+                    <asp:Button runat="server" OnCommand="DeleteParts_Command" CommandArgument='<%# Eval("JobDetailPartID") %>' Text="Delete" ID="DeleteButton" /></td>
             </tr>
         </AlternatingItemTemplate>
         <EditItemTemplate>
@@ -195,7 +195,7 @@
         <InsertItemTemplate>
             <tr style="">
                 <td>
-                    <asp:Button runat="server"  Text="Insert" ID="InsertButton" />
+                    <asp:Button runat="server" Text="Insert" ID="InsertButton" />
                 </td>
                 <td>
                     <asp:TextBox Text='<%# Bind("PartID") %>' runat="server" ID="PartIDTextBox" Width="100px"/></td>
@@ -219,7 +219,7 @@
                 <td>
                     <asp:Label Text='<%# Eval("Quantity") %>' runat="server" ID="QuantityLabel" Width="100px" /></td>
                 <td>
-                    <asp:Button runat="server"  Text="Delete" ID="DeleteButton" /></td>
+                    <asp:Button runat="server" OnCommand="DeleteParts_Command" CommandArgument='<%# Eval("JobDetailPartID") %>' Text="Delete" ID="DeleteButton" /></td>
             </tr>
         </ItemTemplate>
         <LayoutTemplate>

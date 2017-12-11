@@ -103,4 +103,11 @@ public partial class Jobing_JobServiceDetails : System.Web.UI.Page
             }
         }
     }
+
+    protected void DeleteParts_Command(object sender, CommandEventArgs e)
+    {
+        JobDetailPartController sysmgr = new JobDetailPartController();
+        sysmgr.JobDetailPart_Delete(int.Parse(e.CommandArgument.ToString()));
+        JobServicePartListView.DataBind();
+    }
 }

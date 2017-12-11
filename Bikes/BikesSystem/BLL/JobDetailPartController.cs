@@ -44,16 +44,11 @@ namespace BikesSystem.BLL
         }
 
         [DataObjectMethod(DataObjectMethodType.Insert, false)]
-        public void JobDetailPart_Add(CurrentServicePart item, int jobdetailid)
+        public void JobDetailPart_Add(JobDetailPart item)
         {
             using (var context = new EBikesContext())
             {
-                JobDetailPart temp = new JobDetailPart();
-                temp.JobDetailID = jobdetailid;
-                temp.PartID = item.PartID;
-                temp.Quantity = item.Quantity;
-                temp.SellingPrice = item.SellingPrice;
-                context.JobDetailParts.Add(temp);
+                context.JobDetailParts.Add(item);
                 context.SaveChanges();
             }
         }
