@@ -14,6 +14,7 @@ public partial class Jobing_JobServiceDetails : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         JobIDHidden.Value = Request.QueryString["id"];
+        JobServiceIDHidden.Value = Request.QueryString["select"];
         if (Request.QueryString["select"] != null)
         {
             selectedID = int.Parse(Request.QueryString["select"]);

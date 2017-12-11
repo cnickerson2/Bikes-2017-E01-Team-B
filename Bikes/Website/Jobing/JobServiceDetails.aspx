@@ -6,6 +6,8 @@
 
     <asp:HiddenField ID="JobIDHidden" runat="server"/>
 
+    <asp:HiddenField ID="JobServiceIDHidden" runat="server"/>
+
     <h2>Current Job Service Details</h2>
 
     <p>Click "Select" to select a service from the list.</p>
@@ -16,7 +18,7 @@
 
     <!--Top Level Controls-->
     <br />
-    <asp:Label ID="Label1" runat="server" Text="Services" Font-Size="Large"></asp:Label>
+    <asp:Label ID="ServicesLabel" runat="server" Text="Services" Font-Size="Large"></asp:Label>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <asp:Button ID="StartServiceButton" runat="server"
                               CommandArgument="" OnCommand="StartServiceButton_Click" Text="Start Service" >
@@ -153,12 +155,15 @@
     <asp:TextBox ID="CommentTextbox" runat="server" Placeholder="Add any additional comments discovered while doing the service" Width="487px"></asp:TextBox>
 
     <!--Sixth Level Controls-->
-    <asp:ListView ID="JobDetailPartsListView" runat="server"></asp:ListView>
+    <asp:ListView ID="JobDetailPartsListView" runat="server" DataSourceID="JobDetailPartsODS" InsertItemPosition="LastItem">
+    </asp:ListView>
 
     <asp:ObjectDataSource ID="CurrentJobServicesODS" runat="server" OldValuesParameterFormatString="original_{0}" SelectMethod="List_CurrentServices" TypeName="BikesSystem.BLL.JobDetailsController">
         <SelectParameters>
             <asp:ControlParameter ControlID="JobIDHidden" PropertyName="Value" Name="jobid" Type="Int32"></asp:ControlParameter>
         </SelectParameters>
     </asp:ObjectDataSource>
+
+    
 </asp:Content>
 
