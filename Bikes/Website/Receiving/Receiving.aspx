@@ -12,7 +12,7 @@
     </style>
     <h1>Receiving</h1>
     <uc1:MessageUserControl runat="server" ID="MessageUserControl" />
-    <asp:Label ID="Message" runat="server" Text="" Font-Size="Large" ForeColor="#CC0000"></asp:Label>
+    
     <div class="row">
         <div class="col-md-12">
             
