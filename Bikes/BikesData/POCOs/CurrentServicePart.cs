@@ -10,9 +10,13 @@ namespace BikesData.POCOs
     {
         public int JobDetailPartID { get; set; }
 
+        public int JobDetailID { get; set; }
+
         public int PartID { get; set; }
 
         public short Quantity { get; set; }
+
+        public decimal SellingPrice { get; set; }
 
         public string Description { get; set; }
     }

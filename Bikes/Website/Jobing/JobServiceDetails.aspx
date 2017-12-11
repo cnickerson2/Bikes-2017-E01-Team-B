@@ -155,7 +155,109 @@
     <asp:TextBox ID="CommentTextbox" runat="server" Placeholder="Add any additional comments discovered while doing the service" Width="487px"></asp:TextBox>
 
     <!--Sixth Level Controls-->
-    <asp:ListView ID="JobDetailPartsListView" runat="server" DataSourceID="JobDetailPartsODS" InsertItemPosition="LastItem">
+    <br />
+    <br />
+    <asp:ListView ID="JobServicePartListView" runat="server" DataSourceID="PartsODS">
+        <AlternatingItemTemplate>
+            <tr style="background-color: #FFF8DC;">
+                <td>
+                    <asp:Button runat="server"  Text="Edit" ID="EditButton" />
+                </td>
+                <td>
+                    <asp:Label Text='<%# Eval("PartID") %>' runat="server" ID="PartIDLabel" Width="100px"/></td>
+                <td>
+                    <asp:Label Text='<%# Eval("Description") %>' runat="server" ID="DescriptionLabel" /></td>
+                <td>
+                    <asp:Label Text='<%# Eval("Quantity") %>' runat="server" ID="QuantityLabel" Width="100px" /></td>
+                <td>
+                    <asp:Button runat="server"  Text="Delete" ID="DeleteButton" /></td>
+            </tr>
+        </AlternatingItemTemplate>
+        <EditItemTemplate>
+            <tr style="background-color: #008A8C; color: #FFFFFF;">
+                <td>
+                    <asp:Button runat="server"  Text="Update" ID="UpdateButton" />
+                    <asp:Button runat="server"  Text="Cancel" ID="CancelButton" />
+                </td>
+                <td>
+                    <asp:TextBox Text='<%# Bind("PartID") %>' runat="server" ID="PartIDTextBox" Width="100px"/></td>
+                <td>
+                    <asp:TextBox Text='<%# Bind("Quantity") %>' runat="server" ID="QuantityTextBox" Width="100px" /></td>
+            </tr>
+        </EditItemTemplate>
+        <EmptyDataTemplate>
+            <table runat="server" style="background-color: #FFFFFF; border-collapse: collapse; border-color: #999999; border-style: none; border-width: 1px;">
+                <tr>
+                    <td>No data was returned.</td>
+                </tr>
+            </table>
+        </EmptyDataTemplate>
+        <InsertItemTemplate>
+            <tr style="">
+                <td>
+                    <asp:Button runat="server"  Text="Insert" ID="InsertButton" />
+                </td>
+                <td>
+                    <asp:TextBox Text='<%# Bind("PartID") %>' runat="server" ID="PartIDTextBox" Width="100px"/></td>
+                <td>
+                    <asp:Label Text='<%# Eval("Description") %>' runat="server" ID="DescriptionLabel" /></td>
+                <td>
+                    <asp:TextBox Text='<%# Bind("Quantity") %>' runat="server" ID="QuantityTextBox" Width="100px" /></td>
+                <td>
+                    <asp:Button runat="server" CommandName="Cancel" Text="Cancel" ID="CancelButton" /></td>
+            </tr>
+        </InsertItemTemplate>
+        <ItemTemplate>
+            <tr style="background-color: #DCDCDC; color: #000000;">
+                <td>
+                    <asp:Button runat="server"  Text="Edit" ID="EditButton" />
+                </td>
+                <td>
+                    <asp:Label Text='<%# Eval("PartID") %>' runat="server" ID="PartIDLabel" Width="100px"/></td>
+                <td>
+                    <asp:Label Text='<%# Eval("Description") %>' runat="server" ID="DescriptionLabel" /></td>
+                <td>
+                    <asp:Label Text='<%# Eval("Quantity") %>' runat="server" ID="QuantityLabel" Width="100px" /></td>
+                <td>
+                    <asp:Button runat="server"  Text="Delete" ID="DeleteButton" /></td>
+            </tr>
+        </ItemTemplate>
+        <LayoutTemplate>
+            <table runat="server">
+                <tr runat="server">
+                    <td runat="server">
+                        <table runat="server" id="itemPlaceholderContainer" style="background-color: #FFFFFF; border-collapse: collapse; border-color: #999999; border-style: none; border-width: 1px; font-family: Verdana, Arial, Helvetica, sans-serif;" border="1">
+                            <tr runat="server" style="background-color: #DCDCDC; color: #000000;">
+                                <th runat="server"></th>
+                                <th runat="server">PartID</th>
+                                <th runat="server">Description</th>
+                                <th runat="server">Quantity</th>
+                                <th runat="server"></th>
+                            </tr>
+                            <tr runat="server" id="itemPlaceholder"></tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr runat="server">
+                    <td runat="server" style="text-align: center; background-color: #CCCCCC; font-family: Verdana, Arial, Helvetica, sans-serif; color: #000000;"></td>
+                </tr>
+            </table>
+        </LayoutTemplate>
+        <SelectedItemTemplate>
+            <tr style="background-color: #008A8C; font-weight: bold; color: #FFFFFF;">
+                <td>
+                    <asp:Button runat="server"  Text="Edit" ID="EditButton" />
+                </td>
+                <td>
+                    <asp:Label Text='<%# Eval("PartID") %>' runat="server" ID="PartIDLabel" Width="100px"/></td>
+                <td>
+                    <asp:Label Text='<%# Eval("Description") %>' runat="server" ID="DescriptionLabel" /></td>
+                <td>
+                    <asp:Label Text='<%# Eval("Quantity") %>' runat="server" ID="QuantityLabel" /></td>
+                <td>
+                    <asp:Button runat="server"  Text="Delete" ID="DeleteButton" /></td>
+            </tr>
+        </SelectedItemTemplate>
     </asp:ListView>
 
     <asp:ObjectDataSource ID="CurrentJobServicesODS" runat="server" OldValuesParameterFormatString="original_{0}" SelectMethod="List_CurrentServices" TypeName="BikesSystem.BLL.JobDetailsController">
@@ -164,6 +266,10 @@
         </SelectParameters>
     </asp:ObjectDataSource>
 
-    
+    <asp:ObjectDataSource ID="PartsODS" runat="server" OldValuesParameterFormatString="original_{0}" SelectMethod="CurrentParts_List" TypeName="BikesSystem.BLL.JobDetailPartController">
+        <SelectParameters>
+            <asp:ControlParameter ControlID="JobServiceIDHidden" PropertyName="Value" Name="jobserviceid" Type="Int32"></asp:ControlParameter>
+        </SelectParameters>
+    </asp:ObjectDataSource>
 </asp:Content>
 

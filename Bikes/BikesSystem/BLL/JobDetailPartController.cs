@@ -1,4 +1,5 @@
 ﻿using BikesData.Entities;
+using BikesData.POCOs;
 using BikesSystem.DAL;
 using System;
 using System.Collections.Generic;
@@ -15,29 +16,44 @@ namespace BikesSystem.BLL
         [DataObjectMethod(DataObjectMethodType.Select, false)]
         public List<JobDetailPart> JobDetailParts_Get(int jobdetailid)
         {
-            using (var context = new EBikesContext())
+            if (jobdetailid == 0)
             {
-                var results = from x in context.JobDetailParts
-                              where x.JobDetailID == jobdetailid
-                              select new JobDetailPart
-                              {
-                                  JobDetailID = x.JobDetailID,
-                                  JobDetailPartID = x.JobDetailPartID,
-                                  Part = x.Part,
-                                  PartID = x.PartID,
-                                  Quantity = x.Quantity,
-                                  SellingPrice = x.SellingPrice
-                              };
-                return results.ToList();
+                //do nothing or it blows up on init
+                List<JobDetailPart> fake = new List<JobDetailPart>();
+                return fake;
+            }
+            else
+            {
+                using (var context = new EBikesContext())
+                {
+                    var results = from x in context.JobDetailParts
+                                  where x.JobDetailID == jobdetailid
+                                  select new JobDetailPart
+                                  {
+                                      JobDetailID = x.JobDetailID,
+                                      JobDetailPartID = x.JobDetailPartID,
+                                      PartID = x.PartID,
+                                      Quantity = x.Quantity,
+                                      SellingPrice = x.SellingPrice,
+                                      JobDetail = x.JobDetail,
+                                      Part = x.Part
+                                  };
+                    return results.ToList();
+                }
             }
         }
 
         [DataObjectMethod(DataObjectMethodType.Insert, false)]
-        public void JobDetailPart_Add(JobDetailPart item)
+        public void JobDetailPart_Add(CurrentServicePart item, int jobdetailid)
         {
             using (var context = new EBikesContext())
             {
-                item = context.JobDetailParts.Add(item);
+                JobDetailPart temp = new JobDetailPart();
+                temp.JobDetailID = jobdetailid;
+                temp.PartID = item.PartID;
+                temp.Quantity = item.Quantity;
+                temp.SellingPrice = item.SellingPrice;
+                context.JobDetailParts.Add(temp);
                 context.SaveChanges();
             }
         }
@@ -60,6 +76,24 @@ namespace BikesSystem.BLL
                 var existingItem = context.JobDetailParts.Find(jobdetailpartid);
                 context.JobDetailParts.Remove(existingItem);
                 return context.SaveChanges();
+            }
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public List<CurrentServicePart> CurrentParts_List(int jobserviceid)
+        {
+            using (var context = new EBikesContext())
+            {
+                var results = from x in context.JobDetailParts
+                              where x.JobDetailID == jobserviceid
+                              select new CurrentServicePart
+                              {
+                                  JobDetailPartID = x.JobDetailPartID,
+                                  PartID = x.PartID,
+                                  Quantity = x.Quantity,
+                                  Description = x.Part.Description
+                              };
+                return results.ToList();
             }
         }
     }
