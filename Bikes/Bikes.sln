@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikesSystem", "BikesSystem\BikesSystem.csproj", "{5FF43440-2FEE-4EFA-B0C3-304FA7E9C407}"
 EndProject
@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikesData", "BikesData\Bike
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Website", "Website\", "{E7C87808-265F-49B8-8A72-1F18445E34E0}"
 	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.2"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
 		ProjectReferences = "{ef22a990-4666-4ef4-8ac4-024314e115ce}|BikesData.dll;{5ff43440-2fee-4efa-b0c3-304fa7e9c407}|BikesSystem.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_4763"
 		Debug.AspNetCompiler.PhysicalPath = "Website\"
